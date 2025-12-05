@@ -9,3 +9,81 @@
 .hover-nav-link {
   @apply hover:bg-primary py-5 px-12 rounded-full
 }
+/* Liquid Glass Nav 
+.glass-nav {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+
+  box-shadow:
+    inset 0 0 10px rgba(255, 255, 255, 0.4),
+    inset 0 0 25px rgba(255, 255, 255, 0.15),
+    0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Base link styles */
+.nav-link {
+  position: relative;
+  padding: 4px 10px;
+  transition: .25s;
+}
+
+/* Hover underline */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: width .25s;
+}
+
+.nav-link:hover::after {
+  width: 60%;
+}
+
+/* Active Link */
+.active-link::after {
+  width: 60%;
+  background: white !important;
+}
+
+/* Click Animation (Apple Glass Press Effect) */
+.click-animate {
+  transform: scale(0.92);
+}
+
+.click-animate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  animation: clickPulse .4s ease-out forwards;
+}
+
+@keyframes clickPulse {
+  0% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.6); }
+}
+
+/* Orange pill for active tab */
+.active-pill {
+  background: #ff8a33;         /* your orange color */
+  color: white !important;
+  padding: 8px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.nav-link {
+  position: relative;
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: 0.25s ease;
+}
