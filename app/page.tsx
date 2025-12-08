@@ -1,6 +1,9 @@
+import HeroSection from "@/sections/HeroSection"
+
 const HomePage = () => {
   return (
-    <div className=''>
+    <div className='mt-2 sm:mt-10 '>
+      <HeroSection />
     </div>
   )
 }

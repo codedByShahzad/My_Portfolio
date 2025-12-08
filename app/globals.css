@@ -4,6 +4,15 @@
   --font-heading: "Poppins", sans-serif;
   --font-body: "Inter", sans-serif;
   --color-primary: #fd853a;
+  
+  /* Custom Screens (Breakpoints) */
+  --breakpoint-mbs: 320px;
+  --breakpoint-mbm: 375px;
+  --breakpoint-mbl: 425px;
+  --breakpoint-tb: 768px;
+  --breakpoint-lp: 1024px;
+  --breakpoint-lpl: 1440px;
+  --breakpoint-4k: 2560px;
 }
 
 .hover-nav-link {
