@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const HeroSection = () => {
   return (
-    <section className="h-[70vh] mx-2 lg:mx-10 xl:mx-20">
+    <section className="h-[90vh] mx-2 lg:mx-10 xl:mx-20">
       <div className="flex flex-col gap-2 justify-center items-center">
         <div className="relative border py-0.5 px-3 sm:py-1 sm:px-4 w-fit rounded-full ">
           <h3 className="font-semibold text-xs sm:text-base">Hello!</h3>
@@ -34,29 +34,29 @@ const HeroSection = () => {
           <h3>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</h3>
         </div>
         <div className="flex justify-center items-center">
-          <div className="relative flex justify-center items-center">
+          <div className="relative flex justify-center items-center overflow-visible">
             {/* Background Circle */}
             <Image
               alt=""
               width={400}
               height={600}
               src="/images/circle2.png"
-              className="relative inset-0 w-[400px] tb:w-[600px] h-auto z-0"
+              className="relative inset-0 w-[400px] tb:w-[900px] lp:w-[900px] h-auto z-0"
             />
 
             {/* Foreground Photo */}
             <Image
-              className="absolute mbs:bottom-[0.1px] mbm:-bottom-[8.1px] mbl:bottom-[0.5px] z-20  mbs:h-[250px] mbm:h-[300px] mbl:w-[500px] object-contain"
+              className="absolute bottom-0 z-20 object-contain lpl mbs:h-60 mbm:h-[270px] mbl:h-[300px] tb:h-[310px] lp:h-[380px] lpl:h-[650px]"
               alt=""
               width={300}
               height={1000}
-              src="/images/myPhoto2.png"
+              src="/images/myPhoto3.png"
             />
           </div>
         </div>
 
         <div className="hidden sm:block">
-          <h1>Hello World!</h1>
+          <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</h1>
         </div>
       </div>
     </section>
