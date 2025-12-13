@@ -29,6 +29,10 @@
   @apply hover:bg-primary py-5 px-12 rounded-full;
 }
 
+.resume_title {
+  @apply bg-primary py-4 px-10 rounded-full
+}
+
 /* Base link styles */
 .nav-link {
   position: relative;
