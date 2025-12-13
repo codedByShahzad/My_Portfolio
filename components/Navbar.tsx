@@ -1,26 +1,30 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 import { FiMenu, FiX } from "react-icons/fi";
 import logo from "../public/images/SS.png";
 
 const Navbar = () => {
+  const pathname = usePathname();
+
   const items = ["Home", "Project", "Services", "Resume", "About", "Contact"];
 
+  // ✅ FIX: Project should be /projects
   const routes: Record<string, string> = {
     Home: "/",
-    Project: "/project",
+    Project: "/projects",
     Services: "/services",
     Resume: "/resume",
     About: "/about",
     Contact: "/contact",
   };
 
-  const [active, setActive] = useState("Home");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Prevent body scroll when mobile menu is open (nice UX)
+  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
@@ -28,16 +32,34 @@ const Navbar = () => {
     };
   }, [menuOpen]);
 
+  // ✅ Determine active tab from URL
+  const active = useMemo(() => {
+    // exact matches
+    if (pathname === "/") return "Home";
+
+    // highlight "Project" for /projects and nested pages like /project-details/slug
+    if (pathname.startsWith("/projects") || pathname.startsWith("/project-details"))
+      return "Project";
+
+    if (pathname.startsWith("/services")) return "Services";
+    if (pathname.startsWith("/resume")) return "Resume";
+    if (pathname.startsWith("/about")) return "About";
+    if (pathname.startsWith("/contact")) return "Contact";
+
+    return "Home";
+  }, [pathname]);
+
   return (
     <div className="mx-2 lg:mx-10 xl:mx-20 my-5 relative z-50">
-       <div className="absolute -top-30 -left-52 h-[350px] w-[380px] md:w-[580px] xl:w-[980px] rounded-full bg-primary/25 blur-3xl" />
+      <div className="absolute -top-30 -left-52 h-[350px] w-[380px] md:w-[580px] xl:w-[980px] rounded-full bg-primary/25 blur-3xl" />
+
       {/* MAIN BAR */}
       <div
         className={`bg-background text-white py-2 px-3 border border-gray-800 transition-all relative
         ${menuOpen ? "rounded-4xl" : "rounded-4xl md:rounded-[3rem]"}
         `}
       >
-        {/* ---------------- MOBILE HEADER ---------------- */}
+        {/* MOBILE HEADER */}
         <div className="flex w-full items-center justify-between md:hidden md:px-3">
           <div className="bg-primary py-2 px-3 rounded-full">
             <Image src={logo} alt="Logo" width={30} height={30} />
@@ -54,7 +76,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* ---------------- DESKTOP MENU ---------------- */}
+        {/* DESKTOP MENU */}
         <div className="hidden md:flex w-full items-center md:mx-0 justify-between">
           {/* LEFT ITEMS */}
           <ul className="flex items-center gap-2 lg:gap-4 xl:gap-6 list-none">
@@ -66,7 +88,6 @@ const Navbar = () => {
                       ? "bg-primary text-white scale-105"
                       : "text-white/80 hover:text-white scale-100"
                   }`}
-                  onClick={() => setActive(item)}
                 >
                   {item}
                 </li>
@@ -89,7 +110,6 @@ const Navbar = () => {
                       ? "bg-primary text-white scale-105"
                       : "text-white/80 hover:text-white scale-100"
                   }`}
-                  onClick={() => setActive(item)}
                 >
                   {item}
                 </li>
@@ -98,7 +118,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* ---------------- MOBILE OVERLAY MENU (DOES NOT PUSH HERO) ---------------- */}
+        {/* MOBILE OVERLAY MENU */}
         <div
           className={`md:hidden absolute left-0 right-0 top-full z-50 transition-all duration-300 ease-in-out
             ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}
@@ -109,10 +129,7 @@ const Navbar = () => {
               {items.map((item) => (
                 <Link href={routes[item]} key={item}>
                   <li
-                    onClick={() => {
-                      setActive(item);
-                      setMenuOpen(false);
-                    }}
+                    onClick={() => setMenuOpen(false)}
                     className={`cursor-pointer w-full text-center px-10 py-4 rounded-full transition-all duration-300 font-semibold ${
                       active === item
                         ? "bg-primary text-white scale-105"
@@ -128,7 +145,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* OPTIONAL: click-outside backdrop for mobile */}
+      {/* click-outside backdrop for mobile */}
       <div
         className={`md:hidden fixed inset-0 z-40 transition-opacity duration-300
           ${menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}

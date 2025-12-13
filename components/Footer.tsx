@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import ArrowSwapButton from "./ui/ArrowButton";
 import logo from "../public/images/SS.png";
 import { ArrowRight } from "lucide-react";
@@ -54,19 +55,25 @@ const Footer = () => {
             </h3>
 
             <ul className="space-y-3">
-              {["Home", "About Us", "Service", "Resume", "Project"].map((item) => (
-                <li
-                  key={item}
-                  className="group relative w-fit cursor-pointer text-white/65"
-                >
-                  <span className="inline-flex items-center gap-2 group-hover:text-white transition">
-                    {item}
+              {[
+                { label: "Home", href: "/" },
+                { label: "About Us", href: "/about" },
+                { label: "Service", href: "/services" },
+                { label: "Resume", href: "/resume" },
+                { label: "Project", href: "/projects" },
+              ].map((item) => (
+                <li key={item.label} className="group relative w-fit">
+                  <Link
+                    href={item.href}
+                    className="inline-flex items-center gap-2 text-white/65 transition group-hover:text-white"
+                  >
+                    {item.label}
                     <span className="relative w-4 h-4 overflow-hidden">
                       <span className="absolute inset-0 flex items-center justify-center -translate-x-1.5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
                         <ArrowRight className="w-4 h-4" />
                       </span>
                     </span>
-                  </span>
+                  </Link>
 
                   <span className="absolute left-0 -bottom-0.5 h-px w-full origin-left scale-x-0 bg-linear-to-r from-primary to-purple-400 transition-transform duration-300 group-hover:scale-x-100" />
                 </li>
@@ -81,33 +88,55 @@ const Footer = () => {
             </h3>
 
             <ul className="space-y-2 text-white/65">
-              <li className="hover:text-white transition cursor-pointer">
-                +91 7738443636
+              <li>
+                <a
+                  href="tel:+917738443636"
+                  className="hover:text-white transition"
+                >
+                  +91 7738443636
+                </a>
               </li>
-              <li className="hover:text-white transition cursor-pointer">
-                Jaycrea36@gmail.com
+              <li>
+                <a
+                  href="mailto:Jaycrea36@gmail.com"
+                  className="hover:text-white transition"
+                >
+                  Jaycrea36@gmail.com
+                </a>
               </li>
-              <li className="hover:text-white transition cursor-pointer">
-                Portfolio-jcrea.com
+              <li>
+                <a
+                  href="https://portfolio-jcrea.com"
+                  target="_blank"
+                  className="hover:text-white transition"
+                >
+                  Portfolio-jcrea.com
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* MORE (NEW) */}
+          {/* MORE */}
           <div>
             <h3 className="text-lg font-semibold mb-4 bg-linear-to-r from-primary to-purple-400 bg-clip-text text-transparent">
               More
             </h3>
 
             <ul className="space-y-2 text-white/65">
-              <li className="hover:text-white transition cursor-pointer">
-                Book a call
+              <li>
+                <Link href="/book-call" className="hover:text-white transition">
+                  Book a call
+                </Link>
               </li>
-              <li className="hover:text-white transition cursor-pointer">
-                Links
+              <li>
+                <Link href="/links" className="hover:text-white transition">
+                  Links
+                </Link>
               </li>
-              <li className="hover:text-white transition cursor-pointer">
-                RSS
+              <li>
+                <Link href="/rss" className="hover:text-white transition">
+                  RSS
+                </Link>
               </li>
             </ul>
           </div>
