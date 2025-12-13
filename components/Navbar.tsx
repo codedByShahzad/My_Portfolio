@@ -1,110 +1,140 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
-import logo from "../public/images/logo.png";
+import logo from "../public/images/SS.png";
 
 const Navbar = () => {
-  const items = ["Home", "About", "Services", "Resume", "Project", "Contact"];
+  const items = ["Home", "Project", "Services", "Resume", "About", "Contact"];
 
   const routes: Record<string, string> = {
     Home: "/",
-    About: "/about",
+    Project: "/project",
     Services: "/services",
     Resume: "/resume",
-    Project: "/project",
+    About: "/about",
     Contact: "/contact",
   };
 
   const [active, setActive] = useState("Home");
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Prevent body scroll when mobile menu is open (nice UX)
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
-    <div>
+    <div className="mx-2 lg:mx-10 xl:mx-20 my-5 relative z-50">
+       <div className="absolute -top-30 -left-52 h-[350px] w-[380px] md:w-[580px] xl:w-[980px] rounded-full bg-primary/25 blur-3xl" />
+      {/* MAIN BAR */}
       <div
-        className={`bg-black text-white mx-2 lg:mx-10 xl:mx-20 py-2 px-3 my-5  
-        flex flex-col md:flex-row md:items-center md:justify-between 
-        ${  menuOpen ? "rounded-4xl" : "rounded-4xl md:rounded-[3rem]"}
-        
+        className={`bg-background text-white py-2 px-3 border border-gray-800 transition-all relative
+        ${menuOpen ? "rounded-4xl" : "rounded-4xl md:rounded-[3rem]"}
         `}
       >
         {/* ---------------- MOBILE HEADER ---------------- */}
         <div className="flex w-full items-center justify-between md:hidden md:px-3">
-          <Image src={logo} alt="Logo" width={50} height={50} />
+          <div className="bg-primary py-2 px-3 rounded-full">
+            <Image src={logo} alt="Logo" width={30} height={30} />
+          </div>
 
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="text-white text-3xl bg-orange-500 p-2 rounded-full"
+            type="button"
+            onClick={() => setMenuOpen((p) => !p)}
+            className="text-white text-3xl bg-primary p-2 rounded-full"
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
           >
             {menuOpen ? <FiX /> : <FiMenu />}
           </button>
         </div>
 
         {/* ---------------- DESKTOP MENU ---------------- */}
-        <div className="hidden md:flex w-full items-center justify-between">
+        <div className="hidden md:flex w-full items-center md:mx-0 justify-between">
           {/* LEFT ITEMS */}
           <ul className="flex items-center gap-2 lg:gap-4 xl:gap-6 list-none">
             {items.slice(0, 3).map((item) => (
-              <li
-                key={item}
-                className={`cursor-pointer px-4 md:px-6 xl:px-10 py-3 xl:py-4 rounded-full transition-all duration-300 font-semibold ${
-                  active === item
-                    ? "bg-orange-500 text-white scale-105"
-                    : "text-white/80 hover:text-white scale-100"
-                }`}
-                onClick={() => setActive(item)}
-              >
-                <Link href={routes[item]}>{item}</Link>
-              </li>
+              <Link href={routes[item]} key={item}>
+                <li
+                  className={`cursor-pointer px-4 md:px-6 xl:px-10 py-3 xl:py-4 rounded-full transition-all duration-300 font-semibold ${
+                    active === item
+                      ? "bg-primary text-white scale-105"
+                      : "text-white/80 hover:text-white scale-100"
+                  }`}
+                  onClick={() => setActive(item)}
+                >
+                  {item}
+                </li>
+              </Link>
             ))}
           </ul>
 
           {/* LOGO */}
-          <Image src={logo} alt="Logo" width={60} height={60} />
+          <div className="bg-primary py-2 px-3 rounded-full">
+            <Image src={logo} alt="Logo" width={42} height={42} />
+          </div>
 
           {/* RIGHT ITEMS */}
           <ul className="flex items-center gap-2 lg:gap-4 xl:gap-6 list-none">
             {items.slice(3, 6).map((item) => (
-              <li
-                key={item}
-                className={`cursor-pointer px-4 md:px-6 xl:px-10 py-3 xl:py-4 rounded-full transition-all duration-300 font-semibold ${
-                  active === item
-                    ? "bg-orange-500 text-white scale-105"
-                    : "text-white/80 hover:text-white scale-100"
-                }`}
-                onClick={() => setActive(item)}
-              >
-                <Link href={routes[item]}>{item}</Link>
-              </li>
+              <Link href={routes[item]} key={item}>
+                <li
+                  className={`cursor-pointer px-4 md:px-6 xl:px-10 py-3 xl:py-4 rounded-full transition-all duration-300 font-semibold ${
+                    active === item
+                      ? "bg-primary text-white scale-105"
+                      : "text-white/80 hover:text-white scale-100"
+                  }`}
+                  onClick={() => setActive(item)}
+                >
+                  {item}
+                </li>
+              </Link>
             ))}
           </ul>
         </div>
 
-        {/* ---------------- MOBILE DROPDOWN MENU ---------------- */}
-        <ul
-          className={`flex flex-col gap-3 list-none md:hidden px-4 overflow-hidden transition-all duration-300 transform ${
-            menuOpen ? "max-h-112 mt-4 pb-3 opacity-100" : "max-h-0 opacity-0"
-          }`}
+        {/* ---------------- MOBILE OVERLAY MENU (DOES NOT PUSH HERO) ---------------- */}
+        <div
+          className={`md:hidden absolute left-0 right-0 top-full z-50 transition-all duration-300 ease-in-out
+            ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}
+          `}
         >
-          {items.map((item) => (
-            <li
-              key={item}
-              onClick={() => {
-                setActive(item);
-                setMenuOpen(false);
-              }}
-              className={`cursor-pointer w-full text-center px-10 py-4 rounded-full transition-all duration-300 font-semibold ${
-                active === item
-                  ? "bg-orange-500 text-white scale-105"
-                  : "text-white/80 hover:text-white scale-100"
-              }`}
-            >
-              <Link href={routes[item]}>{item}</Link>
-            </li>
-          ))}
-        </ul>
+          <div className="bg-background border border-gray-800 rounded-4xl mt-3 p-4 shadow-lg">
+            <ul className="flex flex-col gap-3 list-none">
+              {items.map((item) => (
+                <Link href={routes[item]} key={item}>
+                  <li
+                    onClick={() => {
+                      setActive(item);
+                      setMenuOpen(false);
+                    }}
+                    className={`cursor-pointer w-full text-center px-10 py-4 rounded-full transition-all duration-300 font-semibold ${
+                      active === item
+                        ? "bg-primary text-white scale-105"
+                        : "text-white/80 hover:text-white scale-100"
+                    }`}
+                  >
+                    {item}
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
+
+      {/* OPTIONAL: click-outside backdrop for mobile */}
+      <div
+        className={`md:hidden fixed inset-0 z-40 transition-opacity duration-300
+          ${menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}
+        onClick={() => setMenuOpen(false)}
+      />
     </div>
   );
 };
