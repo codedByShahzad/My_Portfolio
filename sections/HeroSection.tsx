@@ -1,118 +1,138 @@
+"use client";
+
 import Image from "next/image";
+import ArrowSwapButton from "@/components/ui/ArrowButton";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import p1 from "../public/images/projectLaptop.png";
+import p2 from "../public/images/projectMobile.png";
 
-const HeroSection = () => {
+export default function HeroSection() {
   return (
-    <section className="min-h-screen mx-2 lg:mx-10 xl:mx-20 mt-10">
+    <section className="relative min-h-screen px-2 overflow-hidden">
+      {/* Centered layout */}
+      <div className="relative flex flex-col items-center text-center">
+        {/* Badge */}
+        <HoverBorderGradient
+          containerClassName="rounded-full inline-flex"
+          className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+        >
+          <span className="px-4 py-2 text-sm md:text-base font-semibold">
+            Hi there, I am Shahzad
+          </span>
+        </HoverBorderGradient>
 
-      {/* Top Intro */}
-      <div className="flex flex-col gap-2 justify-center items-center">
-        <div className="relative border py-1 px-4 w-fit rounded-full">
-          <h3 className="font-semibold text-xs sm:text-base">Hello!</h3>
+        {/* Title + subtitle */}
+        <div className="mt-6 space-y-4 max-w-3xl">
+          <p className="text-sm md:text-base text-white/70">
+            Full Stack Web Developer
+          </p>
+          <div className="text-center flex justify-center items-center">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-white text-center break-words">
+  I help founders turn ideas
+  <br className="hidden lg:block" />
 
-          <Image
-            alt=""
-            width={15}
-            height={15}
-            src="/images/lines1.png"
-            className="absolute w-4 sm:w-5 -top-3 -right-3 sm:-top-4 sm:-right-4"
-          />
+  {/* allow wrap on small screens, keep in 1 line only on lg+ */}
+  <span className="inline-block lg:whitespace-nowrap">
+    {" "}into{" "}
+    <span className="bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
+      seamless digital <br className="md:hidden" /> experiences
+    </span>
+  </span>
+</h1>
+
+          </div>
+
+          <p className="text-white/70 max-w-2xl mx-auto">
+            Fast, modern websites & apps with clean UI, scalable code, and
+            smooth animations — built for real users and real business goals.
+          </p>
         </div>
 
-        {/* Heading */}
-        <div className="relative w-fit z-10">
-          <h1
-            className="
-              text-center font-bold
-              text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl
-            "
+        {/* Buttons */}
+        <div className="mt-7 flex flex-col sm:flex-row gap-3 sm:items-center">
+          <ArrowSwapButton
+            label="Lets Connect"
+            href="/projects"
+            className="bg-primary text-white"
+          />
+
+          <a
+            href="#work"
+            className="inline-flex items-center justify-center rounded-full px-6 py-3 border border-white/15 text-white/90 hover:bg-white/5 transition"
           >
-            I'm <span className="text-orange-500">Shahzad</span> <br />
-            Full-Stack Developer
-          </h1>
-
-          {/* Decorative Lines */}
-          <Image
-            alt=""
-            width={30}
-            height={30}
-            src="/images/lines2.png"
-            className="
-              absolute
-              w-0
-              sm:w-[45px]
-              md:w-[70px]
-              xl:w-[100px]
-              -bottom-5 -left-6
-              sm:-bottom-10 sm:-left-10
-              md:-bottom-14 md:-left-14
-              xl:-bottom-20 xl:-left-20
-            "
-          />
-        </div>
-      </div>
-
-      {/* Middle Section */}
-      <div className="mt-8 xl:mt-10 2xl:mt-12 flex justify-center items-center relative">
-
-        {/* Left Text */}
-        <div className="hidden md:block">
-          <Image alt="" width={20} height={20} src="/images/quote-up.png" />
-          <h3>Lorem ipsum dolor sit amet.</h3>
+            View Work
+          </a>
         </div>
 
-        {/* Circle + Photo */}
-        <div className="relative flex justify-center items-center overflow-visible">
+        {/* Devices BELOW text */}
+        <div className="relative mt-14 w-full max-w-5xl flex items-end justify-center">
+          {/* Laptop */}
+          <div className="relative rounded-xl md:rounded-3xl border border-white/10 bg-linear-to-b from-white/10 to-white/5 p-1 md:p-2 shadow-2xl">
+            <div className="relative aspect-16/10  w-[320px] sm:w-[520px] md:w-[700px] xl:w-[800px]  overflow-hidden rounded-lg md:rounded-2xl border border-white/10 bg-black">
+              <Image
+                src={p1}
+                alt="Project desktop preview"
+                fill
+                className="object-fit"
+                priority
+              />
+            </div>
 
-          {/* Background Circle */}
-          <Image
-            alt=""
-            src="/images/circle2.png"
-            width={600}
-            height={600}
-            className="
-              relative z-0
-              w-[300px]
-              sm:w-[400px]
-              md:w-[550px]
-              lg:w-[750px]
-              xl:w-[820px]
-              2xl:w-[1100px]
-            "
-          />
+            {/* base */}
+            <div className="mt-4 h-3 w-full rounded-full bg-white/10" />
+          </div>
 
-          {/* Foreground Photo */}
-          <Image
-            alt=""
-            src="/images/myPhoto3.png"
-            width={500}
-            height={1200}
-            className="
-              absolute bottom-0 z-20
+          {/* Phone overlay */}
+          <div className="relative -ml-10 sm:-ml-16 mb-2 w-[10px] sm:w-[180px] hidden md:block">
+            <div className="rounded-xl md:rounded-3xl border border-white/15 bg-gradient-to-b from-white/10 to-white/5  p-0.5 md:p-1 shadow-2xl">
+              <div className="relative aspect-12/22 w-full overflow-hidden rounded-lg md:rounded-2xl border border-white/10 bg-black">
+                <Image
+                  src={p2}
+                  alt="Project mobile preview"
+                  fill
+                  className="object-fit"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
 
-              w-[170px]
-              sm:w-[200px]
-              md:w-[236px]
-              lg:w-[320px]
-              xl:w-[420px]
-              2xl:w-[560px]
+          {/* floating pills (same size, just premium effects + dot) */}
+          <div className="pill-float pill-1 absolute -top-7 right-6 hidden md:block rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white/85 backdrop-blur-md">
+            <span className="inline-flex items-center gap-2">
+              <span className="pill-dot pill-dot--green" />
+              Clean UI • Smooth Animations
+            </span>
+          </div>
 
-              -mt-20
-              sm:-mt-28
-              md:-mt-36
-              lg:-mt-48
-              xl:-mt-56
-              2xl:-mt-72
-            "
-          />
+          <div className="pill-float pill-2 absolute bottom-8 left-6 hidden md:block rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white/85 backdrop-blur-md">
+            <span className="inline-flex items-center gap-2">
+              <span className="pill-dot pill-dot--red" />
+              Responsive • Production Ready
+            </span>
+          </div>
         </div>
 
-        {/* Right Text */}
-        <div className="hidden md:block">
-          <h1>Lorem ipsum dolor sit amet.</h1>
+        {/* Stats at bottom (optional) */}
+        <div className="mt-10 grid grid-cols-3 gap-3 w-full max-w-md">
+          {[
+            { label: "Projects", value: "20+" },
+            { label: "Stack", value: "Next / Node" },
+            { label: "Focus", value: "UI + Perf" },
+          ].map((x) => (
+            <div
+              key={x.label}
+              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-3"
+            >
+              <p className="text-white font-semibold">{x.value}</p>
+              <p className="text-xs text-white/60">{x.label}</p>
+            </div>
+          ))}
         </div>
+
+        {/* anchor */}
+        <div id="work" className="h-12" />
       </div>
     </section>
   );
-};
-
-export default HeroSection;
+}

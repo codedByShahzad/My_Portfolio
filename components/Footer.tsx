@@ -1,108 +1,167 @@
+"use client";
+
 import Image from "next/image";
-import { HiArrowUpRight } from "react-icons/hi2";
 import { IoSend } from "react-icons/io5";
+import ArrowSwapButton from "./ui/ArrowButton";
+import logo from "../public/images/SS.png"
+import { ArrowRight } from "lucide-react";
+
 
 const Footer = () => {
   return (
-    <footer className="bg-[#272727] text-white rounded-t-2xl px-6 md:px-10 pt-12 pb-10 mt-20">
+    <footer className="relative overflow-hidden rounded-t-3xl px-2 lg:px-10 xl:px-20 pt-12 pb-10 text-white bg-background border-t border-white/10">
+   
       {/* Top Row */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-6">
         <h1 className="text-4xl text-center sm:text-start md:text-5xl font-semibold">
           Lets Connect there
         </h1>
 
-        <button className="bg-orange-500 py-2 px-6 md:py-3 md:px-8 rounded-full text-white text-lg flex items-center">
-          Hire me
-          <span className="ml-1">
-            <HiArrowUpRight size={20} />
-          </span>
-        </button>
+       <ArrowSwapButton
+  label="Hire Me"
+  href="/projects"
+  className="bg-primary text-white"
+  direction="up-right"
+/>
+
       </div>
 
       {/* Divider */}
-      <div className="border-t border-gray-600 my-10"></div>
+      <div className="my-10 border-t border-white/10" />
 
-      {/* Footer Content (responsive width/basis) */}
-      <div className="flex flex-col justify-between lg:flex-row gap-10 pb-14 ">
-        {/* LEFT - Logo + Text (large) */}
+      {/* Footer Content */}
+      <div className="flex flex-col justify-between lg:flex-row gap-10 pb-14">
+        {/* LEFT - Logo + Text */}
         <div className="w-full flex flex-col justify-center md:justify-start md:items-start items-center md:basis-1/2">
-          <div className="mb-6">
-            <Image alt="logo" width={40} height={40} src="/images/logo.png" />
+          <div className="mb-6 inline-flex items-center gap-3">
+           <div className="bg-primary py-2 px-3 rounded-full">
+            <Image src={logo} alt="Logo" width={30} height={30} />
           </div>
 
-          <p className="text-gray-300 text-center md:text-start leading-relaxed max-w-[700px]">
+            {/* optional brand text (remove if you want) */}
+            <span className="text-white/90 font-semibold tracking-wide">
+              Shahzad
+            </span>
+          </div>
+
+          <p className="text-white/65 text-center md:text-start leading-relaxed max-w-[700px]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
             interdum ligula a dignissim. Lorem ipsum dolor sit amet, consectetur
             adipiscing elit. Sed lobortis orci elementum egestas lobortis.
           </p>
-
-          {/* optional social icons area (uncomment & add icons if needed) */}
-          {/* <div className="flex gap-4 mt-6 text-xl text-gray-300">
-            <i className="fa-brands fa-facebook"></i>
-            <i className="fa-brands fa-youtube"></i>
-            <i className="fa-brands fa-instagram"></i>
-            <i className="fa-brands fa-twitter"></i>
-          </div> */}
         </div>
 
-        {/* NAV - smaller */}
-        <div className="flex flex-col sm:flex-row justify-between gap-8">
-            <div className="w-full md:basis-1/6">
-              <h3 className="text-lg font-semibold mb-4 text-orange-500">
-                Navigation
-              </h3>
-              <ul className="space-y-2 text-gray-300">
-                <li>Home</li>
-                <li>About Us</li>
-                <li>Service</li>
-                <li>Resume</li>
-                <li>Project</li>
-              </ul>
-            </div>
+        {/* RIGHT AREA */}
+        <div className="flex flex-col sm:flex-row justify-between gap-8 w-full">
+          {/* NAV */}
+          <div className="w-full md:basis-1/6">
+            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
+              Navigation
+            </h3>
 
-            {/* CONTACT - smaller */}
-            <div className="w-full md:basis-1/6">
-              <h3 className="text-lg font-semibold mb-4 text-orange-500">
-                Contact
-              </h3>
-              <ul className="space-y-2 text-gray-300">
-                <li>+91 7738443636</li>
-                <li>Jaycrea36@gmail.com</li>
-                <li>Portfolio-jcrea.com</li>
-              </ul>
-            </div>
+<ul className="space-y-3">
+  {["Home", "About Us", "Service", "Resume", "Project"].map((x) => (
+    <li
+      key={x}
+      className="group relative w-fit cursor-pointer text-white/65"
+    >
+      {/* Text + Arrow */}
+      <span className="inline-flex items-center gap-2 transition-colors duration-300 group-hover:text-white">
+        {x}
 
-          {/* NEWSLETTER - medium */}
+        {/* Arrow icon */}
+        <span className="relative w-4 h-4 overflow-hidden">
+          <span
+            className="
+              absolute inset-0
+              flex items-center justify-center
+              translate-x-[-6px] opacity-0
+              group-hover:translate-x-0 group-hover:opacity-100
+              transition-all duration-300 ease-out
+            "
+          >
+            <ArrowRight className="w-4 h-4" />
+          </span>
+        </span>
+      </span>
+
+      {/* Underline animation */}
+      <span
+        className="
+          absolute left-0 -bottom-0.5
+          h-[1px] w-full
+          origin-left scale-x-0
+          bg-gradient-to-r from-primary to-purple-400
+          transition-transform duration-300 ease-out
+          group-hover:scale-x-100
+        "
+      />
+    </li>
+  ))}
+</ul>
+
+
+          </div>
+
+          {/* CONTACT */}
+          <div className="w-full md:basis-1/6">
+            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
+              Contact
+            </h3>
+
+            <ul className="space-y-2 text-white/65">
+              <li className="hover:text-white transition cursor-pointer">
+                +91 7738443636
+              </li>
+              <li className="hover:text-white transition cursor-pointer">
+                Jaycrea36@gmail.com
+              </li>
+              <li className="hover:text-white transition cursor-pointer">
+                Portfolio-jcrea.com
+              </li>
+            </ul>
+          </div>
+
+          {/* NEWSLETTER */}
           <div className="w-full md:basis-1/4">
-            <h3 className="text-lg font-semibold mb-4 text-primary">
+            <h3 className="text-lg font-semibold mb-4 text-white/90">
               Get the latest information
             </h3>
 
-            {/* Responsive email input: full width on small screens, fixed wider on md+ */}
-            <div className="relative flex items-center bg-white rounded-xl overflow-hidden max-w-full md:max-w-[340px]">
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="pl-3 pr-12 py-3 text-black outline-none"
-              />
-              <button
-                aria-label="subscribe"
-                className="absolute right-0 bg-orange-500 px-2 flex items-center justify-center text-white h-full cursor-pointer"
-              >
-                <IoSend size={20} />
-              </button>
+            <div className="relative max-w-full md:max-w-[340px]">
+              <div className="flex items-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden shadow-lg">
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  className="w-full bg-transparent pl-4 pr-14 py-3 text-white placeholder:text-white/40 outline-none"
+                />
+
+                <button
+                  aria-label="subscribe"
+                  className="absolute right-1 top-1 bottom-1 rounded-xl px-3 flex items-center justify-center text-white cursor-pointer
+                  bg-gradient-to-r from-primary to-purple-500 hover:opacity-90 transition"
+                >
+                  <IoSend size={18} />
+                </button>
+              </div>
+
+              <p className="mt-3 text-xs text-white/45">
+                No spam — only product updates.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Bottom Divider */}
-      <div className="border-t border-gray-600 my-6"></div>
+      <div className="my-6 border-t border-white/10" />
 
       {/* Footer Bottom */}
-      <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm text-center sm:text-start gap-3">
+      <div className="flex flex-col md:flex-row justify-between items-center text-white/45 text-sm text-center sm:text-start gap-3">
         <p>Copyright© 2023 Jayesh. All Rights Reserved.</p>
-        <p>User Terms & Conditions | Privacy Policy</p>
+        <p className="hover:text-white/70 transition cursor-pointer">
+          User Terms & Conditions | Privacy Policy
+        </p>
       </div>
     </footer>
   );
