@@ -26,17 +26,18 @@ export default function ArrowSwapButton({
   href,
   className = "",
   direction = "auto",
+  style,
 }: {
   label?: string;
   href?: string;
   className?: string;
-  direction?: DirectionMode; // ✅ NEW
+  direction?: DirectionMode;
+  style?: React.CSSProperties; // ✅ FIX
 }) {
   const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const [dir, setDir] = useState<Dir>("up-right");
 
   useEffect(() => {
-    // ✅ if direction is forced, don’t auto-calc
     if (direction !== "auto") {
       setDir(direction);
       return;
@@ -61,7 +62,6 @@ export default function ArrowSwapButton({
 
   const v = useMemo(() => dirToVector(dir, 14), [dir]);
 
-  // Smooth / not too fast
   const spring: Transition = useMemo(
     () => ({
       type: "spring",
@@ -85,13 +85,16 @@ export default function ArrowSwapButton({
       whileHover="hover"
       className={[
         "group inline-flex items-center gap-3 rounded-full",
-        "bg-primary text-white",
+        
         "px-6 py-3 font-medium",
         "shadow-[0_10px_40px_rgba(0,0,0,0.35)]",
         "overflow-hidden select-none",
         className,
       ].join(" ")}
-      style={{ WebkitTapHighlightColor: "transparent" }}
+      style={{
+        WebkitTapHighlightColor: "transparent",
+        ...style,
+      }}
     >
       <span>{label}</span>
 

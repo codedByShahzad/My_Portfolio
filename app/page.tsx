@@ -1,5 +1,6 @@
 import HeroSection from "@/sections/HeroSection"
 import GradientShell from '../components/GradientShell';
+import ProjectSection from '../sections/ProjectSection';
 
 const HomePage = () => {
   return (
@@ -7,6 +8,9 @@ const HomePage = () => {
       {/* <GradientShell> */}
       <HeroSection />
     {/* </GradientShell> */}
+    {/* <ProjectSection  /> */}
+    <ProjectSection limit={3} showSeeAllButton />
+
     </div>
   )
 }
