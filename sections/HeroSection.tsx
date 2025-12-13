@@ -27,14 +27,14 @@ export default function HeroSection() {
             Full Stack Web Developer
           </p>
           <div className="text-center flex justify-center items-center">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-white text-center break-words">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-white text-center wrap-break-word">
   I help founders turn ideas
   <br className="hidden lg:block" />
 
   {/* allow wrap on small screens, keep in 1 line only on lg+ */}
   <span className="inline-block lg:whitespace-nowrap">
     {" "}into{" "}
-    <span className="bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
+    <span className="bg-linear-to-r from-primary to-purple-400 bg-clip-text text-transparent">
       seamless digital <br className="md:hidden" /> experiences
     </span>
   </span>
@@ -83,8 +83,8 @@ export default function HeroSection() {
           </div>
 
           {/* Phone overlay */}
-          <div className="relative -ml-10 sm:-ml-16 mb-2 w-[10px] sm:w-[180px] hidden md:block">
-            <div className="rounded-xl md:rounded-3xl border border-white/15 bg-gradient-to-b from-white/10 to-white/5  p-0.5 md:p-1 shadow-2xl">
+          <div className="relative -ml-10 sm:-ml-16 mb-2 w-2.5 sm:w-[180px] hidden md:block">
+            <div className="rounded-xl md:rounded-3xl border border-white/15 bg-linear-to-b from-white/10 to-white/5  p-0.5 md:p-1 shadow-2xl">
               <div className="relative aspect-12/22 w-full overflow-hidden rounded-lg md:rounded-2xl border border-white/10 bg-black">
                 <Image
                   src={p2}
