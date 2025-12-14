@@ -11,32 +11,11 @@ import {
 } from "framer-motion";
 import type { Variants } from "framer-motion";
 
+import { projects, type Project, type Accent, type TechKey } from "@/data/projects";
+
 // ✅ YOUR button component (must accept `style?: React.CSSProperties`)
 import ArrowSwapButton from "../components/ui/ArrowButton";
 
-// ✅ Replace these with your real images
-import p1a from "../public/images/redefine1.png";
-import p1b from "../public/images/redefine2.png";
-import p2a from "../public/images/portfolio1.png";
-import p2b from "../public/images/portfolio2.png";
-import p3a from "../public/images/ha1.png";
-import p3b from "../public/images/ha2.png";
-import p4a from "../public/images/brain1.png";
-import p4b from "../public/images/brain2.png";
-import p5a from "../public/images/nivy1.png";
-import p5b from "../public/images/nivy2.png";
-import p6a from "../public/images/Crypto1.png";
-import p6b from "../public/images/Crypto2.png";
-
-type Accent =
-  | "pink"
-  | "purple"
-  | "green"
-  | "orange"
-  | "blue"
-  | "sandy"
-  | "parrot"
-  | "red";
 
 const ACCENT: Record<
   Accent,
@@ -93,7 +72,7 @@ function HoverStackPreview({
   alt: string;
 }) {
   return (
-    <div className="group relative h-[260px] sm:h-[360px] md:h-[420px] w-full overflow-hidden rounded-2xl bg-black/25">
+    <div className="group relative h-65 sm:h-90 md:h-105 w-full overflow-hidden rounded-2xl bg-black/25">
       <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-black/10" />
 
       {/* PRIMARY */}
@@ -135,15 +114,6 @@ function HoverStackPreview({
   );
 }
 
-type TechKey =
-  | "next"
-  | "react"
-  | "ts"
-  | "tailwind"
-  | "framer"
-  | "motion"
-  | "shadcn"
-  | "sanity";
 
 const TECH: Record<
   TechKey,
@@ -246,130 +216,6 @@ function TechChip({ item }: { item: TechKey }) {
   );
 }
 
-type Project = {
-  accent: Accent;
-  title: string;
-  subtitle: string;
-  bullets: string[];
-  tech: TechKey[];
-  /** ✅ MUST go to project-details page */
-  detailHref: string;
-  leftText: string;
-  images: { primary: StaticImageData; hover: StaticImageData };
-};
-
-const projects: Project[] = [
-  
-  {
-    accent: "parrot",
-    title: "Portfolio Pro",
-    subtitle:
-      "A modern portfolio crafted for a client to showcase case studies.\nCrisp typography, smooth interactions, and a premium layout hierarchy.\nBuilt lightweight so it feels fast while still looking high-end.",
-    bullets: [
-      "Sticky-scroll storytelling for stronger case study flow.",
-      "Reusable page sections for quick content updates.",
-      "Optimized fonts/images for better Lighthouse score.",
-      "Motion-enhanced UI without sacrificing readability.",
-      "Scalable structure to expand pages later.",
-    ],
-    tech: ["next", "react", "ts", "tailwind", "motion"],
-    detailHref: "/project-details/portfolio-pro",
-    leftText:
-      "A clean premium portfolio for client projects with structured case studies and smooth interactions.",
-    images: { primary: p2a, hover: p2b },
-  },
-  {
-    accent: "green",
-    title: "Hā Wellness",
-    subtitle:
-      "A wellness platform built for a client with a calm, modern identity.\nPolished onboarding + plan discovery designed for conversion.\nCarefully balanced motion to keep the experience soothing.",
-    bullets: [
-      "Conversion-focused landing structure with clear sections.",
-      "Component-driven UI to scale features quickly.",
-      "Mobile-first layout tuned for real users.",
-      "Smooth animation layer to add delight (not noise).",
-      "Maintainable patterns for long-term growth.",
-    ],
-    tech: ["next", "react", "ts", "tailwind", "framer"],
-    detailHref: "/project-details/ha-wellness",
-    leftText:
-      "A personalized wellness platform for a client — modern UI, onboarding flow, and clean motion.",
-    images: { primary: p3a, hover: p3b },
-  },
-  {
-    accent: "pink",
-    title: "BrainBox Landing",
-    subtitle:
-      "A tech-forward landing built for a client product launch.\nBold visuals, clean sections, and polished motion for credibility.\nEngineered to convert with clarity, speed, and structure.",
-    bullets: [
-      "High-contrast layout that stays readable in dark themes.",
-      "Consistent spacing + section rhythm for premium feel.",
-      "Reusable components for rapid iteration.",
-      "Optimized media handling for performance.",
-      "Future-ready structure for product expansion.",
-    ],
-    tech: ["next", "react", "ts", "tailwind", "motion"],
-    detailHref: "/project-details/brainbox",
-    leftText:
-      "A bold tech landing for a client product — modern structure, crisp visuals, and smooth motion.",
-    images: { primary: p4a, hover: p4b },
-  },
-  {
-    accent: "orange",
-    title: "ArcadeVerse",
-    subtitle:
-      "A high-impact animated gaming website built for a client launch.\nCinematic transitions, interactive sections, and smooth scroll storytelling.\nOptimized for speed so motion stays buttery across devices.",
-    bullets: [
-      "Scroll-driven animations and premium micro-interactions.",
-      "Responsive layout tuned for mobile + large displays.",
-      "Reusable components with a consistent design system.",
-      "SEO-first pages with performance optimization.",
-      "Clean handoff-ready codebase for client delivery.",
-    ],
-    tech: ["next", "react", "ts", "tailwind", "framer", "shadcn"],
-    detailHref: "/project-details/arcadeverse",
-    leftText:
-      "An animated gaming experience with cinematic motion, smooth scrolling, and premium UI transitions — built for a client.",
-    images: { primary: p1a, hover: p1b },
-  },
-  {
-    accent: "blue",
-    title: "Nivy Studio",
-    subtitle:
-      "A sleek brand website built for a client with modern interactions.\nModular UI blocks and consistent design language across sections.\nFocused on premium presentation with fast loading.",
-    bullets: [
-      "Modular section system to keep scaling easy.",
-      "Optimized images for crisp visuals and fast loads.",
-      "Animations used only where they add value.",
-      "Design tokens for spacing + typography consistency.",
-      "Client-ready delivery with clean maintainable code.",
-    ],
-    tech: ["next", "react", "ts", "tailwind", "shadcn"],
-    detailHref: "/project-details/nivy-studio",
-    leftText:
-      "A premium product/brand website for a client with clean UI blocks and modern interaction design.",
-    images: { primary: p5a, hover: p5b },
-  },
-  {
-    accent: "purple",
-    title: "CryptoPlays",
-    subtitle:
-      "A crypto platform built for a client to track markets and plays.\nDesigned for fast scanning: tokens, trends, and key metrics at a glance.\nDashboard-like UI with a polished daily-use experience.",
-    bullets: [
-      "Dashboard layout optimized for information hierarchy.",
-      "Reusable components for coins, widgets, and sections.",
-      "Performance-first navigation for fast switching.",
-      "Motion used to enhance clarity and focus.",
-      "Scalable base to expand features over time.",
-    ],
-    tech: ["next", "react", "ts", "tailwind", "framer"],
-    detailHref: "/project-details/cryptoplays",
-    leftText:
-      "CryptoPlays — a client dashboard where crypto tracking, trends, and plays are presented in a clean UI.",
-    images: { primary: p6a, hover: p6b },
-  },
-];
-
 const waveContainer: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
@@ -420,7 +266,7 @@ export default function ProjectSection({
     [activeIndex, visibleProjects]
   );
 
-  const goToDetails = (p: Project) => router.push(p.detailHref);
+    const goToDetails = (p: Project) => router.push(`/projects/${p.slug}`);
 
   return (
     <section className="relative mx-2 lg:mx-10 xl:mx-20 mt-20 pb-24 text-white">
@@ -555,7 +401,7 @@ export default function ProjectSection({
                   className="flex items-center gap-3"
                 >
                   <span
-                    className={`h-[3px] w-10 rounded-full ${
+                    className={`h-0.75 w-10 rounded-full ${
                       ACCENT[active.accent].line
                     }`}
                   />
@@ -602,7 +448,7 @@ export default function ProjectSection({
                 <motion.div variants={waveItem} className="mt-8">
                   <ArrowSwapButton
                     label="Project Details"
-                    href={active.detailHref}
+                    href={`/projects/${active.slug}`}
                     direction="up-right"
                     className={
                       active.accent === "parrot" ? "text-black" : "text-white"
