@@ -4,6 +4,8 @@ import { Poppins, Inter } from "next/font/google"
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { BackgroundBeams } from "@/components/ui/background-beams";
+import { ShootingStars } from "@/components/ui/shooting-stars";
+import { StarsBackground } from "@/components/ui/stars-background";
 
 const poppins = Poppins({
   variable: "--font-heading",
@@ -32,6 +34,8 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${inter.variable} antialiased bg-background`}
       >
+              <StarsBackground />
+              
        <BackgroundBeams className="absolute inset-0 z-0 pointer-events-none" />
         <Navbar />
         {children}

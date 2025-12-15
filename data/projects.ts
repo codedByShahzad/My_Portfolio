@@ -1,4 +1,14 @@
 import { StaticImageData } from "next/image";
+import {
+  Activity,
+  HeartPulse,
+  GraduationCap,
+  ShoppingBag,
+  Video,
+  MapPin,
+  Shield,
+  Radio,
+} from "lucide-react";
 
 /* =======================
    IMAGES
@@ -60,6 +70,24 @@ export type Project = {
 ======================= */
 
 export const projects: Project[] = [
+   {
+    slug: "cryptoplays",
+    detailHref: "/project-details/cryptoplays",
+    accent: "purple",
+    title: "CryptoPlays",
+    subtitle:
+      "A crypto tracking dashboard.\nDesigned for speed, clarity, and daily use.",
+    bullets: [
+      "Clear data hierarchy",
+      "Reusable dashboard widgets",
+      "Fast navigation",
+      "Motion to guide focus",
+      "Scalable foundation",
+    ],
+    tech: ["next", "react", "ts", "tailwind", "framer"],
+    leftText: "A market dashboard focused on usability.",
+    images: { primary: p6a, hover: p6b },
+  },
   {
     slug: "portfolio-pro",
     detailHref: "/project-details/portfolio-pro",
@@ -155,22 +183,28 @@ export const projects: Project[] = [
     images: { primary: p5a, hover: p5b },
   },
 
+ 
+];
+
+
+export const industries = [
   {
-    slug: "cryptoplays",
-    detailHref: "/project-details/cryptoplays",
-    accent: "purple",
-    title: "CryptoPlays",
-    subtitle:
-      "A crypto tracking dashboard.\nDesigned for speed, clarity, and daily use.",
-    bullets: [
-      "Clear data hierarchy",
-      "Reusable dashboard widgets",
-      "Fast navigation",
-      "Motion to guide focus",
-      "Scalable foundation",
-    ],
-    tech: ["next", "react", "ts", "tailwind", "framer"],
-    leftText: "A market dashboard focused on usability.",
-    images: { primary: p6a, hover: p6b },
+    title: "HealthTech",
+    desc: "Patient journeys, appointment flows, and AI-assisted experiences with privacy-first UX.",
+    icon: HeartPulse,
+    tags: ["Mobile", "AI", "Compliance UX"],
   },
+  {
+    title: "Sports & Fan Engagement",
+    desc: "Team apps, live experiences, and interactive fan features built for performance.",
+    icon: GraduationCap,
+    tags: ["Live", "Events", "Engagement"],
+  },
+  {
+    title: "E-commerce",
+    desc: "Fast browsing, clean product UX, and scalable frontend architecture for conversion.",
+    icon: ShoppingBag,
+    tags: ["Catalog", "Search", "Conversion"],
+  },
+ 
 ];

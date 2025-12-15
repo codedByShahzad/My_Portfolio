@@ -11,40 +11,44 @@ export default function HeroSection() {
     <section className="relative min-h-screen px-2 overflow-hidden">
       {/* Centered layout */}
       <div className="relative flex flex-col items-center text-center">
+        <div className="flex  justify-center items-center gap-2">
+
         {/* Badge */}
         <HoverBorderGradient
-          containerClassName="rounded-full inline-flex"
+          containerClassName="rounded-full "
           className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
         >
-          <span className="px-4 py-2 text-sm md:text-base font-semibold">
-            Hi there, I am Shahzad
+          <div className="flex justify-center items-center gap-2">
+            <span className=" text-sm md:text-base font-semibold">
+            Hi there, I am Shahzad 
           </span>
+          <div className="w-3 h-3 bg-linear-to-r from-primary to-purple-600 rounded-full"/>
+          <span className=" text-sm md:text-base font-semibold">
+            Full Stack Developer
+          </span>
+          </div>
+          
         </HoverBorderGradient>
-
+</div>
         {/* Title + subtitle */}
-        <div className="mt-6 space-y-4 max-w-3xl">
-          <p className="text-sm md:text-base text-white/70">
-            Full Stack Web Developer
-          </p>
+        <div className="my-6 md:my-10 space-y-4 max-w-3xl">
           <div className="text-center flex justify-center items-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-white text-center wrap-break-word">
-  I help founders turn ideas
-  <br className="hidden lg:block" />
-
-  {/* allow wrap on small screens, keep in 1 line only on lg+ */}
-  <span className="inline-block lg:whitespace-nowrap">
-    {" "}into{" "}
-    <span className="bg-linear-to-r from-primary to-purple-400 bg-clip-text text-transparent">
-      seamless digital <br className="md:hidden" /> experiences
-    </span>
-  </span>
-</h1>
-
+              Helping founders turn ideas
+              <br className="hidden lg:block" />
+              {/* allow wrap on small screens, keep in 1 line only on lg+ */}
+              <span className="inline-block lg:whitespace-nowrap">
+                {" "}
+                into{" "}
+                <span className="bg-linear-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                  seamless digital <br className="md:hidden" /> experiences
+                </span>
+              </span>
+            </h1>
           </div>
 
           <p className="text-white/70 max-w-2xl mx-auto">
-            Fast, modern websites & apps with clean UI, scalable code, and
-            smooth animations — built for real users and real business goals.
+            Fast, modern websites and apps with clean UI, scalable code, and smooth animations built for real users and real business impact.
           </p>
         </div>
 
