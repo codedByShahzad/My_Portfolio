@@ -22,27 +22,22 @@ const AboutMeSection = () => {
             <h1 className="mt-4 text-4xl font-semibold leading-[1.15] md:text-5xl">
               Full-Stack Developer and <br />
               a little bit of{" "}
-              <span className="bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
+              <span className="bg-linear-to-r from-indigo-500 via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
                 everything
               </span>
             </h1>
 
             <div className="mt-10 flex flex-col gap-8 text-white/60 leading-7">
               <p>
-                I'm Aayush Bharti, a proactive full-stack developer passionate
-                about creating dynamic web experiences. From frontend to backend,
-                I thrive on solving complex problems with clean, efficient code.
-                My expertise spans React, Next.js, and Node.js, and I'm always
-                eager to learn more.
+                I’m Shahzad Sohail, a full-stack developer with hands-on experience building real-world web applications. I work across both frontend and backend, focusing on creating interfaces that are responsive, accessible, and performance-driven while ensuring the logic behind them is reliable and scalable.
               </p>
 
               <p>
-                When I'm not immersed in work, I'm exploring new ideas and staying
-                curious. Life's about balance, and I love embracing every part of it.
+                My experience includes working with React, Next.js, Node.js, and modern UI systems, where I’ve built complete projects ranging from landing pages to dynamic, data-driven applications. I focus on clean architecture, reusable components, and user-friendly design.
               </p>
 
               <p className="text-white/70">
-                I believe in waking up each day eager to make a difference!
+                Outside of coding, I enjoy improving workflows, learning new technologies, and refining existing systems. I value consistency, curiosity, and problem-solving, and I bring that mindset to every project I work on.
               </p>
             </div>
 
@@ -88,11 +83,11 @@ const AboutMeSection = () => {
                 <div className="absolute -inset-10 rounded-[36px] bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.35),transparent_55%),radial-gradient(circle_at_70%_80%,rgba(236,72,153,0.25),transparent_55%)] blur-2xl" />
 
                 {/* outer frame */}
-                <div className="relative rounded-[6px] bg-gradient-to-br from-indigo-500/60 via-blue-500/30 to-white/10 p-[3px] shadow-[0_20px_80px_rgba(0,0,0,0.75)]">
+                <div className="relative rounded-[6px] bg-linear-to-br from-indigo-500/60 via-blue-500/30 to-white/10 p-[3px] shadow-[0_20px_80px_rgba(0,0,0,0.75)]">
                   {/* icon body */}
-                  <div className="relative h-[400px] w-[400px] rounded-[6px] bg-gradient-to-br from-[#0b1020] via-[#070a12] to-[#02030a] overflow-hidden">
+                  <div className="relative h-[400px] w-[400px] rounded-[6px] bg-linear-to-br from-[#0b1020] via-[#070a12] to-[#02030a] overflow-hidden">
                     {/* grid overlay */}
-                    <div className="absolute inset-0 opacity-[0.18] [background-image:linear-gradient(to_right,rgba(255,255,255,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.18)_1px,transparent_1px)] [background-size:44px_44px]" />
+                    <div className="absolute inset-0 opacity-[0.18] bg-[linear-gradient(to_right,rgba(255,255,255,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.18)_1px,transparent_1px)] bg-size-[44px_44px]" />
                     {/* subtle vignette */}
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,transparent_35%,rgba(0,0,0,0.8)_78%)]" />
 
