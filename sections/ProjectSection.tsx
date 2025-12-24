@@ -11,11 +11,16 @@ import {
 } from "framer-motion";
 import type { Variants } from "framer-motion";
 
-import { projects, type Project, type Accent, type TechKey } from "@/data/projects";
+import {
+  projects,
+  type Project,
+  type Accent,
+  type TechKey,
+} from "@/data/projects";
 
 // ✅ YOUR button component (must accept `style?: React.CSSProperties`)
 import ArrowSwapButton from "../components/ui/ArrowButton";
-
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 const ACCENT: Record<
   Accent,
@@ -89,7 +94,12 @@ function HoverStackPreview({
       >
         <div className="absolute inset-0 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.55)]" />
         <div className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10">
-          <Image src={primary} alt={`${alt} primary`} fill className="object-cover" />
+          <Image
+            src={primary}
+            alt={`${alt} primary`}
+            fill
+            className="object-cover"
+          />
         </div>
       </div>
 
@@ -107,13 +117,17 @@ function HoverStackPreview({
       >
         <div className="absolute inset-0 rounded-2xl shadow-[0_30px_80px_rgba(0,0,0,0.6)]" />
         <div className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10">
-          <Image src={secondary} alt={`${alt} secondary`} fill className="object-cover" />
+          <Image
+            src={secondary}
+            alt={`${alt} secondary`}
+            fill
+            className="object-cover"
+          />
         </div>
       </div>
     </div>
   );
 }
-
 
 const TECH: Record<
   TechKey,
@@ -173,7 +187,10 @@ const TECH: Record<
     label: "Framer Motion",
     Icon: (props) => (
       <svg viewBox="0 0 24 24" {...props}>
-        <path fill="currentColor" d="M8 3h8v6H8V3zm0 6h8l-8 6V9zm0 6h8v6H8v-6z" />
+        <path
+          fill="currentColor"
+          d="M8 3h8v6H8V3zm0 6h8l-8 6V9zm0 6h8v6H8v-6z"
+        />
       </svg>
     ),
   },
@@ -181,7 +198,10 @@ const TECH: Record<
     label: "Motion",
     Icon: (props) => (
       <svg viewBox="0 0 24 24" {...props}>
-        <path fill="currentColor" d="M4 18V6h4l4 6 4-6h4v12h-4V12l-4 6-4-6v6H4z" />
+        <path
+          fill="currentColor"
+          d="M4 18V6h4l4 6 4-6h4v12h-4V12l-4 6-4-6v6H4z"
+        />
       </svg>
     ),
   },
@@ -189,7 +209,10 @@ const TECH: Record<
     label: "shadcn/ui",
     Icon: (props) => (
       <svg viewBox="0 0 24 24" {...props}>
-        <path fill="currentColor" d="M4 12h16v2H4v-2zm2-6h12v2H6V6zm0 12h12v2H6v-2z" />
+        <path
+          fill="currentColor"
+          d="M4 12h16v2H4v-2zm2-6h12v2H6V6zm0 12h12v2H6v-2z"
+        />
       </svg>
     ),
   },
@@ -266,15 +289,20 @@ export default function ProjectSection({
     [activeIndex, visibleProjects]
   );
 
-    const goToDetails = (p: Project) => router.push(`/projects/${p.slug}`);
+  const goToDetails = (p: Project) => router.push(`/projects/${p.slug}`);
 
   return (
     <section className="relative mx-2 lg:mx-10 xl:mx-20 mt-20 pb-24 text-white">
       {/* Header */}
-      <div className="text-center">
+      <div className="text-center flex flex-col justify-center items-center gap-4">
+        <HoverBorderGradient
+          containerClassName="rounded-full"
+          className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+        >
         <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
           Featured Case Studies
         </p>
+        </HoverBorderGradient>
         <h2 className="mt-2 text-4xl sm:text-5xl md:text-6xl font-semibold text-white/90">
           Curated work
         </h2>
@@ -456,7 +484,6 @@ export default function ProjectSection({
                     style={{ backgroundColor: ACCENT[active.accent].hex }}
                   />
                 </motion.div>
-
               </motion.div>
             </motion.div>
           </AnimatePresence>

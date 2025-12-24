@@ -5,6 +5,7 @@ import ArrowSwapButton from "@/components/ui/ArrowButton";
 import profile from "../public/images/Profile Image.png"; // Make sure the file path is correct
 import { CometCard } from "@/components/ui/comet-card";
 import { Boxes } from "@/components/ui/background-boxes"; // Import Boxes component
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 const AboutMeSection = () => {
   return (
@@ -15,13 +16,17 @@ const AboutMeSection = () => {
         <div className="flex flex-col-reverse gap-12 md:flex-row md:items-center md:justify-between">
           {/* LEFT */}
           <div className="md:w-1/2">
-            <p className="text-xs tracking-[0.25em] text-white/60">
-              KNOW ABOUT ME
-            </p>
+            <HoverBorderGradient
+              containerClassName="rounded-full"
+              className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+            >
+              <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
+                Know who am I
+              </p>
+            </HoverBorderGradient>
 
             <h1 className="mt-4 text-4xl font-semibold leading-[1.15] md:text-5xl">
-              Full-Stack Developer and <br />
-              a little bit of{" "}
+              Full-Stack Developer and <br />a little bit of{" "}
               <span className="bg-linear-to-r from-indigo-500 via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
                 everything
               </span>
@@ -29,15 +34,26 @@ const AboutMeSection = () => {
 
             <div className="mt-10 flex flex-col gap-8 text-white/60 leading-7">
               <p>
-                I’m Shahzad Sohail, a full-stack developer with hands-on experience building real-world web applications. I work across both frontend and backend, focusing on creating interfaces that are responsive, accessible, and performance-driven while ensuring the logic behind them is reliable and scalable.
+                I’m Shahzad Sohail, a full-stack developer with hands-on
+                experience building real-world web applications. I work across
+                both frontend and backend, focusing on creating interfaces that
+                are responsive, accessible, and performance-driven while
+                ensuring the logic behind them is reliable and scalable.
               </p>
 
               <p>
-                My experience includes working with React, Next.js, Node.js, and modern UI systems, where I’ve built complete projects ranging from landing pages to dynamic, data-driven applications. I focus on clean architecture, reusable components, and user-friendly design.
+                My experience includes working with React, Next.js, Node.js, and
+                modern UI systems, where I’ve built complete projects ranging
+                from landing pages to dynamic, data-driven applications. I focus
+                on clean architecture, reusable components, and user-friendly
+                design.
               </p>
 
               <p className="text-white/70">
-                Outside of coding, I enjoy improving workflows, learning new technologies, and refining existing systems. I value consistency, curiosity, and problem-solving, and I bring that mindset to every project I work on.
+                Outside of coding, I enjoy improving workflows, learning new
+                technologies, and refining existing systems. I value
+                consistency, curiosity, and problem-solving, and I bring that
+                mindset to every project I work on.
               </p>
             </div>
 

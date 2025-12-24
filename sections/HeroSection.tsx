@@ -102,7 +102,7 @@ export default function HeroSection() {
           </div>
 
           {/* floating pills (same size, just premium effects + dot) */}
-          <div className="pill-float pill-1 absolute -top-7 right-6 hidden md:block rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white/85 backdrop-blur-md">
+          <div className="pill-float pill-1 absolute top-15 right-6 hidden md:block rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white/85 backdrop-blur-md">
             <span className="inline-flex items-center gap-2">
               <span className="pill-dot pill-dot--green" />
               Clean UI • Smooth Animations
@@ -117,23 +117,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Stats at bottom (optional) */}
-        <div className="mt-10 grid grid-cols-3 gap-3 w-full max-w-md">
-          {[
-            { label: "Projects", value: "20+" },
-            { label: "Stack", value: "Next / Node" },
-            { label: "Focus", value: "UI + Perf" },
-          ].map((x) => (
-            <div
-              key={x.label}
-              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-3"
-            >
-              <p className="text-white font-semibold">{x.value}</p>
-              <p className="text-xs text-white/60">{x.label}</p>
-            </div>
-          ))}
-        </div>
-
+        
         {/* anchor */}
         <div id="work" className="h-12" />
       </div>
