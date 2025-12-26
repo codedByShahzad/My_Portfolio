@@ -63,6 +63,7 @@ export type Project = {
     primary: StaticImageData;
     hover: StaticImageData;
   };
+  overview: string;
 };
 
 /* =======================
@@ -70,7 +71,7 @@ export type Project = {
 ======================= */
 
 export const projects: Project[] = [
-   {
+  {
     slug: "cryptoplays",
     detailHref: "/project-details/cryptoplays",
     accent: "purple",
@@ -87,6 +88,7 @@ export const projects: Project[] = [
     tech: ["next", "react", "ts", "tailwind", "framer"],
     leftText: "A market dashboard focused on usability.",
     images: { primary: p6a, hover: p6b },
+    overview: "CryptoPlays is a crypto tracking dashboard designed to make complex market data easy to understand at a glance. The project focuses on clarity, speed, and daily usability by organizing information into a clean hierarchy with reusable widgets. Smooth motion and thoughtful interactions help guide user attention while maintaining performance, making it suitable for frequent, real-time use.",
   },
   {
     slug: "portfolio-pro",
@@ -105,6 +107,8 @@ export const projects: Project[] = [
     tech: ["next", "react", "ts", "tailwind", "motion"],
     leftText: "A premium portfolio with refined interactions.",
     images: { primary: p2a, hover: p2b },
+    overview: "Portfolio Pro is a modern, client-focused portfolio website built to present work through structured case studies and refined visual storytelling. The design emphasizes clean typography, smooth animations, and reusable layout sections to ensure consistency and scalability. Performance and maintainability were key priorities, resulting in a polished and professional digital presence.",
+
   },
 
   {
@@ -124,6 +128,8 @@ export const projects: Project[] = [
     tech: ["next", "react", "ts", "tailwind", "framer"],
     leftText: "A soothing wellness experience.",
     images: { primary: p3a, hover: p3b },
+    overview: "Hā Wellness is a calm and approachable wellness platform designed to promote comfort, clarity, and user trust. The project follows a mobile-first approach with gentle motion and a conversion-focused layout to guide users naturally through the experience. A component-driven structure ensures scalability while maintaining a soothing and minimal visual style."
+
   },
 
   {
@@ -143,6 +149,8 @@ export const projects: Project[] = [
     tech: ["next", "react", "ts", "tailwind", "motion"],
     leftText: "A tech-forward product launch experience.",
     images: { primary: p4a, hover: p4b },
+    overview: "BrainBox is a bold product landing page designed with a strong visual identity and clear content hierarchy. The interface leverages high contrast, dark-theme styling, and purposeful motion to highlight key product features. The project prioritizes fast load times and reusable components, making it both visually striking and technically efficient."
+
   },
 
   {
@@ -162,6 +170,8 @@ export const projects: Project[] = [
     tech: ["next", "react", "ts", "tailwind", "framer", "shadcn"],
     leftText: "An immersive gaming experience built with motion.",
     images: { primary: p1a, hover: p1b },
+    overview: "ArcadeVerse is a cinematic gaming website built to deliver an immersive, scroll-driven experience. The project combines responsive layouts with performance-optimized media and motion-based interactions to create visual impact without sacrificing usability. Consistent UI patterns and SEO-friendly structure ensure the site scales effectively across devices and platforms."
+
   },
 
   {
@@ -181,11 +191,10 @@ export const projects: Project[] = [
     tech: ["next", "react", "ts", "tailwind", "shadcn"],
     leftText: "A sleek brand presence with refined visuals.",
     images: { primary: p5a, hover: p5b },
+    overview: "Nivy Studio is a premium brand website focused on minimalism, visual consistency, and modular design. The project showcases a refined design system with optimized image handling and subtle micro-interactions to enhance user experience. Built with a client-ready structure, it balances aesthetics with maintainable and scalable frontend architecture."
+
   },
-
- 
 ];
-
 
 export const industries = [
   {
@@ -206,5 +215,4 @@ export const industries = [
     icon: ShoppingBag,
     tags: ["Catalog", "Search", "Conversion"],
   },
- 
 ];
