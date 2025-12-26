@@ -57,49 +57,50 @@ const Services = () => {
     <section className="px-4 lg:px-10 xl:px-20 py-20">
       {/* Badge */}
       <div className="">
-       <HoverBorderGradient
-                  containerClassName="rounded-full"
-                  className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-                >
-                  <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">Want to Work With Us</p>
-                </HoverBorderGradient>
+        <HoverBorderGradient
+          containerClassName="rounded-full"
+          className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+        >
+          <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
+            Want to Work With Us
+          </p>
+        </HoverBorderGradient>
       </div>
- <h1 className="mt-4 text-4xl font-semibold leading-[1.15] md:text-5xl">
-              Services
-              <span className="bg-linear-to-r from-indigo-500 via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
-                We Provide
-              </span>
-            </h1>
+      <h1 className="mt-4 text-4xl font-semibold font-serif leading-[1.15] md:text-5xl">
+        Services
+        <span className="bg-linear-to-r from-indigo-500 via-fuchsia-500 to-pink-500 bg-clip-text italic text-transparent">
+          We Provide
+        </span>
+      </h1>
       {/* Services Grid */}
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mt-8 md:mt-16">
         {services.map((service, index) => (
-         <CardSpotlight
-  key={index}
-  className="h-full w-full rounded-2xl border border-white/10  p-7"
->
-  <div className="relative z-20">
-    {/* Icon */}
-    <div className="mb-6 flex items-center justify-center w-14 h-14 rounded-xl bg-white/10">
-      <Image
-        src={service.icon}
-        alt={service.title}
-        className="w-8 h-8 object-contain"
-      />
-    </div>
+          <CardSpotlight
+            key={index}
+            className="h-full w-full rounded-2xl border border-white/10  p-7"
+          >
+            <div className="relative z-20">
+              {/* Icon */}
+              <div className="mb-6 flex items-center justify-center w-14 h-14 rounded-xl bg-white/10">
+                <Image
+                  src={service.icon}
+                  alt={service.title}
+                  className="w-8 h-8 object-contain"
+                />
+              </div>
 
-    {/* Title */}
-    <h3 className="text-xl font-semibold text-white mb-3">
-      {service.title}
-    </h3>
+              {/* Title */}
+              <h3 className="text-xl font-semibold text-white mb-3">
+                {service.title}
+              </h3>
 
-    {/* Description */}
-    <p className="text-white/60 leading-relaxed">
-      {service.description}
-    </p>
-  </div>
-</CardSpotlight>
-
+              {/* Description */}
+              <p className="text-white/60 leading-relaxed">
+                {service.description}
+              </p>
+            </div>
+          </CardSpotlight>
         ))}
       </div>
     </section>
