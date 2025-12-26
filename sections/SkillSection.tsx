@@ -1,18 +1,15 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import {
   Code2,
-  Braces,
   Server,
   GitBranch,
-  Boxes,
-  Terminal,
   ShieldCheck,
   Zap,
 } from "lucide-react";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
-import { motion } from "framer-motion";
 import {
   SiHtml5,
   SiCss3,
@@ -36,6 +33,7 @@ import {
   SiEslint,
   SiPrettier,
   SiGraphql,
+  SiSlack,
 } from "react-icons/si";
 
 type Skill = {
@@ -101,7 +99,6 @@ const groups: SkillGroup[] = [
       { name: "SQL / PostgreSQL", icon: <SiPostgresql className="h-5 w-5" />, level: "Intermediate" },
       { name: "Auth / JWT", icon: <ShieldCheck className="h-5 w-5" />, level: "Intermediate" },
       { name: "REST APIs", icon: <GitBranch className="h-5 w-5" />, level: "Advanced" },
-      { name: "GraphQL", icon: <SiGraphql className="h-5 w-5" />, level: "Intermediate" },
       { name: "Firebase", icon: <SiFirebase className="h-5 w-5" />, level: "Intermediate" },
       { name: "Vite", icon: <SiVite className="h-5 w-5" />, level: "Intermediate" },
     ],
@@ -112,14 +109,11 @@ const groups: SkillGroup[] = [
     icon: <Zap className="h-5 w-5" />,
     skills: [
       { name: "Git / GitHub", icon: <GitBranch className="h-5 w-5" />, level: "Advanced" },
-      { name: "Docker", icon: <SiDocker className="h-5 w-5" />, level: "Intermediate" },
-      { name: "CI/CD", icon: <Terminal className="h-5 w-5" />, level: "Intermediate" },
-      { name: "ESLint", icon: <SiEslint className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Prettier", icon: <SiPrettier className="h-5 w-5" />, level: "Intermediate" },
+      { name: "Slack", icon: <SiSlack className="h-5 w-5" />, level: "Intermediate" },
+      { name: "Postman", icon: <SiPostman className="h-5 w-5" />, level: "Intermediate" },
       { name: "Testing / Jest", icon: <SiJest className="h-5 w-5" />, level: "Intermediate" },
       { name: "Figma / Design Tools", icon: <SiFigma className="h-5 w-5" />, level: "Intermediate" },
-      { name: "VS Code", icon: <Code2 className="h-5 w-5" />, level: "Advanced" },
-      { name: "Terminal", icon: <Terminal className="h-5 w-5" />, level: "Advanced" },
+      { name: "ESLint / Prettier", icon: <SiEslint className="h-5 w-5" />, level: "Advanced" },
     ],
   },
   {
@@ -130,12 +124,9 @@ const groups: SkillGroup[] = [
       { name: "Vercel", icon: <SiVercel className="h-5 w-5" />, level: "Intermediate" },
       { name: "Firebase", icon: <SiFirebase className="h-5 w-5" />, level: "Intermediate" },
       { name: "Webflow", icon: <SiWebflow className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Cloud Deploy", icon: <Server className="h-5 w-5" />, level: "Intermediate" },
       { name: "Vite", icon: <SiVite className="h-5 w-5" />, level: "Intermediate" },
+      { name: "VS Code", icon: <Code2 className="h-5 w-5" />, level: "Advanced" },
       { name: "Netlify", icon: <SiVercel className="h-5 w-5" />, level: "Intermediate" },
-      { name: "CI/CD", icon: <Terminal className="h-5 w-5" />, level: "Intermediate" },
-      { name: "GitHub Pages", icon: <GitBranch className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Docker Deploy", icon: <SiDocker className="h-5 w-5" />, level: "Intermediate" },
     ],
   },
 ];
