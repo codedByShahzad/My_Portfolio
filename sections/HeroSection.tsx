@@ -8,50 +8,46 @@ import p2 from "../public/images/projectMobile.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen px-2 overflow-hidden">
+    <section className="relative min-h-screen px-3 lg:px-10 xl:px-20 overflow-hidden">
       {/* Centered layout */}
       <div className="relative flex flex-col items-center text-center">
-        <div className="flex  justify-center items-center gap-2">
-
-        {/* Badge */}
-        <HoverBorderGradient
-          containerClassName="rounded-full "
-          className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-        >
-          <div className="flex justify-center items-center gap-2">
-            <span className=" text-sm md:text-base font-semibold">
-            Hi there, I am Shahzad 
-          </span>
-          <div className="w-3 h-3 bg-linear-to-r from-primary to-purple-600 rounded-full"/>
-          <span className=" text-sm md:text-base font-semibold">
-            Full Stack Developer
-          </span>
-          </div>
-          
-        </HoverBorderGradient>
-</div>
-        {/* Title + subtitle */}
-        <div className="my-6 md:my-10 space-y-4 max-w-3xl">
-          <div className="text-center flex justify-center items-center">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-white text-center wrap-break-word">
-              Helping founders turn ideas
-              <br className="hidden lg:block" />
-              {/* allow wrap on small screens, keep in 1 line only on lg+ */}
-              <span className="inline-block lg:whitespace-nowrap">
-                {" "}
-                into{" "}
-                <span className="bg-linear-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                  seamless digital <br className="md:hidden" /> experiences
-                </span>
+        <div className="flex  justify-center items-center gap-2 mt-5">
+          {/* Badge */}
+          <HoverBorderGradient
+            containerClassName="rounded-full "
+            className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+          >
+            <div className="flex justify-center items-center gap-2">
+              <span className=" text-xs md:text-base font-semibold">
+                <span className="hidden md:inline-block">Hi there,</span> I am
+                Shahzad
               </span>
-            </h1>
-          </div>
+              <div className="w-2 h-2 md:w-3 md:h-3 bg-linear-to-r from-primary to-purple-600 rounded-full" />
+              <span className=" text-xs md:text-base font-semibold">
+                Full Stack Developer
+              </span>
+            </div>
+          </HoverBorderGradient>
+        </div>
+        {/* Title + subtitle */}
+        {/* Heading */}
+        <div className="mt-8 max-w-6xl space-y-4">
+          <h1 className="text-balance text-2xl font-bold text-white  md:text-4xl lg:text-5xl leading-tight">
+            Helping founders turn ideas
+            <br className="hidden lg:block" />
+            <span className="block">
+              into{" "}
+              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                seamless digital experiences
+              </span>
+            </span>
+          </h1>
 
-          <p className="text-white/70 max-w-2xl mx-auto">
-            Fast, modern websites and apps with clean UI, scalable code, and smooth animations built for real users and real business impact.
+          <p className="mx-auto max-w-2xl text-sm sm:text-base md:text-lg text-white/70">
+            Fast, modern websites and apps with clean UI, scalable code, and
+            smooth animations built for real users and real business impact.
           </p>
         </div>
-
         {/* Buttons */}
         <div className="mt-7 flex flex-col sm:flex-row gap-3 sm:items-center">
           <ArrowSwapButton
@@ -87,7 +83,7 @@ export default function HeroSection() {
           </div>
 
           {/* Phone overlay */}
-          <div className="relative -ml-10 sm:-ml-16 mb-2 w-2.5 sm:w-[180px] hidden md:block">
+          <div className="relative -ml-10 sm:-ml-16 mb-2 w-2.5 sm:w-[180px] hidden lg:block">
             <div className="rounded-xl md:rounded-3xl border border-white/15 bg-linear-to-b from-white/10 to-white/5  p-0.5 md:p-1 shadow-2xl">
               <div className="relative aspect-12/22 w-full overflow-hidden rounded-lg md:rounded-2xl border border-white/10 bg-black">
                 <Image
@@ -105,19 +101,18 @@ export default function HeroSection() {
           <div className="pill-float pill-1 absolute top-15 right-6 hidden md:block rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white/85 backdrop-blur-md">
             <span className="inline-flex items-center gap-2">
               <span className="pill-dot pill-dot--green" />
-              Clean UI • Smooth Animations
+              Pixel Perfect UI • Smooth UX
             </span>
           </div>
 
           <div className="pill-float pill-2 absolute bottom-8 left-6 hidden md:block rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white/85 backdrop-blur-md">
             <span className="inline-flex items-center gap-2">
               <span className="pill-dot pill-dot--red" />
-              Responsive • Production Ready
+              Scalable Code • Real Products
             </span>
           </div>
         </div>
 
-        
         {/* anchor */}
         <div id="work" className="h-12" />
       </div>

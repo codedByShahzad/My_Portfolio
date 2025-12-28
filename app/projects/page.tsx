@@ -1,14 +1,13 @@
-import { ShootingStars } from '@/components/ui/shooting-stars'
-import { StarsBackground } from '@/components/ui/stars-background'
+
 import IndustriesSection from '@/sections/IndustriesSection'
-import ProjectSection from '@/sections/ProjectSection'
-import React from 'react'
+import ProjectsSection from '@/sections/ProjectSection'
 
 const page = () => {
   return (
     <div>
       
-      <ProjectSection />
+      <ProjectsSection showCTA={false} />
+
 
       <IndustriesSection />
     </div>

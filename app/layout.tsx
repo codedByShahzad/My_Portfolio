@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} ${inter.variable} antialiased bg-background`}
+        className={`${poppins.variable} ${inter.variable} antialiased bg-background overflow-x-hidden`}
       >
               <StarsBackground />
               
