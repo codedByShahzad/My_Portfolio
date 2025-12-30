@@ -62,9 +62,9 @@ const ProjectCard = ({ project }: { project: Project }) => {
       variants={cardVariants}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
-      className="group relative rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md overflow-hidden"
+      className="group relative rounded-2xl border border-white/10 bg-white/4 backdrop-blur-md overflow-hidden"
     >
-      <Link href={project.slug} className="block h-full">
+      <Link href={`/projects/${project.slug}`} className="block h-full">
         <div className="flex flex-col h-full p-5">
           <h3 className="text-xl font-semibold text-white mb-3">
             {project.title}
@@ -104,7 +104,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           </div>
         </div>
 
-        <span className="pointer-events-none absolute inset-x-4 bottom-3 h-px bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <span className="pointer-events-none absolute inset-x-4 bottom-3 h-px bg-linear-to-r from-transparent via-fuchsia-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       </Link>
     </motion.article>
   );
