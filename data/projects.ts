@@ -1,13 +1,8 @@
 import { StaticImageData } from "next/image";
 import {
-  Activity,
   HeartPulse,
   GraduationCap,
   ShoppingBag,
-  Video,
-  MapPin,
-  Shield,
-  Radio,
 } from "lucide-react";
 
 /* =======================
