@@ -8,7 +8,9 @@ import ProjectsSection from "../sections/ProjectSection";
 
 const HomePage = () => {
   return (
+    
     <div className='mt-2 sm:mt-10 '>
+
       <HeroSection />
     <ProjectsSection limit={4} showCTA />
 

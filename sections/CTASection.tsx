@@ -5,11 +5,14 @@ import ArrowSwapButton from "@/components/ui/ArrowButton";
 import logo from "../public/images/SS.png"
 import Image from "next/image";
 import { StarsBackground } from "@/components/ui/stars-background";
+import { ShootingStars } from "@/components/ui/shooting-stars";
 
 export default function CTASection() {
   return (
     <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden bg-black text-white">
 <StarsBackground />
+
+      <ShootingStars  />
       {/* ================= CUSTOM BACKGROUND ================= */}
       <div className="absolute inset-0">
         {/* Custom Image */}

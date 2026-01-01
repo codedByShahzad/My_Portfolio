@@ -211,3 +211,219 @@ export const industries = [
     tags: ["Catalog", "Search", "Conversion"],
   },
 ];
+
+
+
+// // types/project.ts
+// export interface Project {
+//   slug: string;
+//   detailHref: string;
+//   accent: string;
+
+//   title: string;
+//   subtitle: string;
+//   overview: string;
+
+//   landingImages: string[];   // right side (hero / landing)
+//   galleryImages: string[];   // below images section
+
+//   workDetails: {
+//     role: string;
+//     responsibilities: string[];
+//   };
+
+//   meta: {
+//     techStack: string[];
+//     timeline: string;
+//   };
+// }
+
+
+
+// // data/projects.ts
+// import { Project } from "@/types/project";
+// import {
+//   p1a, p1b,
+//   p2a, p2b,
+//   p3a, p3b,
+//   p4a, p4b,
+//   p5a, p5b,
+//   p6a, p6b,
+// } from "@/assets/images";
+
+// export const projects: Project[] = [
+//   {
+//     slug: "cryptoplays",
+//     detailHref: "/project-details/cryptoplays",
+//     accent: "purple",
+
+//     title: "CryptoPlays",
+//     subtitle: "A crypto tracking dashboard designed for daily use.",
+//     overview:
+//       "CryptoPlays is a crypto tracking dashboard focused on speed, clarity, and usability. The project simplifies complex market data using reusable widgets, clean hierarchy, and motion that guides user focus without sacrificing performance.",
+
+//     landingImages: [p6a],
+//     galleryImages: [p6a, p6b],
+
+//     workDetails: {
+//       role: "Frontend Developer",
+//       responsibilities: [
+//         "Designed reusable dashboard widgets",
+//         "Implemented responsive layouts using Tailwind CSS",
+//         "Integrated Framer Motion for UI feedback",
+//         "Optimized performance for fast navigation",
+//       ],
+//     },
+
+//     meta: {
+//       techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+//       timeline: "3 Weeks",
+//     },
+//   },
+
+//   {
+//     slug: "portfolio-pro",
+//     detailHref: "/project-details/portfolio-pro",
+//     accent: "parrot",
+
+//     title: "Portfolio Pro",
+//     subtitle: "A modern client portfolio with structured case studies.",
+//     overview:
+//       "Portfolio Pro is a client-focused portfolio website designed to present projects through clean typography, smooth motion, and structured storytelling. The focus was scalability, performance, and reusable layout sections.",
+
+//     landingImages: [p2a],
+//     galleryImages: [p2a, p2b],
+
+//     workDetails: {
+//       role: "Frontend Developer",
+//       responsibilities: [
+//         "Built reusable portfolio sections",
+//         "Implemented sticky-scroll storytelling",
+//         "Ensured performance optimization",
+//         "Created scalable layout architecture",
+//       ],
+//     },
+
+//     meta: {
+//       techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion"],
+//       timeline: "2 Weeks",
+//     },
+//   },
+
+//   {
+//     slug: "ha-wellness",
+//     detailHref: "/project-details/ha-wellness",
+//     accent: "green",
+
+//     title: "Hā Wellness",
+//     subtitle: "A calm wellness platform focused on conversion.",
+//     overview:
+//       "Hā Wellness is a wellness platform designed to feel calm, trustworthy, and accessible. The interface uses gentle motion, a mobile-first approach, and a conversion-focused layout to guide users naturally.",
+
+//     landingImages: [p3a],
+//     galleryImages: [p3a, p3b],
+
+//     workDetails: {
+//       role: "Frontend Developer",
+//       responsibilities: [
+//         "Designed mobile-first layouts",
+//         "Implemented gentle UI animations",
+//         "Built component-driven UI structure",
+//         "Focused on conversion-oriented UX",
+//       ],
+//     },
+
+//     meta: {
+//       techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+//       timeline: "2.5 Weeks",
+//     },
+//   },
+
+//   {
+//     slug: "brainbox",
+//     detailHref: "/project-details/brainbox",
+//     accent: "pink",
+
+//     title: "BrainBox",
+//     subtitle: "A bold product landing page with strong visuals.",
+//     overview:
+//       "BrainBox is a dark-themed product landing page built with high contrast visuals and a clean content hierarchy. The focus was fast loading, reusable components, and strong visual rhythm.",
+
+//     landingImages: [p4a],
+//     galleryImages: [p4a, p4b],
+
+//     workDetails: {
+//       role: "Frontend Developer",
+//       responsibilities: [
+//         "Built dark-theme optimized UI",
+//         "Created reusable landing components",
+//         "Maintained strong visual hierarchy",
+//         "Optimized page load performance",
+//       ],
+//     },
+
+//     meta: {
+//       techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion"],
+//       timeline: "1.5 Weeks",
+//     },
+//   },
+
+//   {
+//     slug: "arcadeverse",
+//     detailHref: "/project-details/arcadeverse",
+//     accent: "orange",
+
+//     title: "ArcadeVerse",
+//     subtitle: "A cinematic gaming website with immersive motion.",
+//     overview:
+//       "ArcadeVerse delivers an immersive, scroll-driven gaming experience using cinematic animations and performance-first media handling. The project balances visual impact with usability and SEO.",
+
+//     landingImages: [p1a],
+//     galleryImages: [p1a, p1b],
+
+//     workDetails: {
+//       role: "Frontend Developer",
+//       responsibilities: [
+//         "Implemented scroll-based animations",
+//         "Built responsive grid systems",
+//         "Optimized media for performance",
+//         "Maintained SEO-friendly structure",
+//       ],
+//     },
+
+//     meta: {
+//       techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Shadcn UI"],
+//       timeline: "3 Weeks",
+//     },
+//   },
+
+//   {
+//     slug: "nivy-studio",
+//     detailHref: "/project-details/nivy-studio",
+//     accent: "blue",
+
+//     title: "Nivy Studio",
+//     subtitle: "A premium brand website with modular design.",
+//     overview:
+//       "Nivy Studio is a premium brand website built with a minimal and modular approach. The project emphasizes consistency, refined visuals, optimized images, and client-ready structure.",
+
+//     landingImages: [p5a],
+//     galleryImages: [p5a, p5b],
+
+//     workDetails: {
+//       role: "Frontend Developer",
+//       responsibilities: [
+//         "Built modular UI sections",
+//         "Implemented optimized image handling",
+//         "Added subtle micro-interactions",
+//         "Maintained consistent design system",
+//       ],
+//     },
+
+//     meta: {
+//       techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Shadcn UI"],
+//       timeline: "2 Weeks",
+//     },
+//   },
+// ];
+
