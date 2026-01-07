@@ -171,7 +171,7 @@ const SkillSection = () => {
             <motion.div
               key={group.title}
               variants={itemVariants}
-              className={`relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-md ${glow}`}
+              className={`relative overflow-hidden rounded-2xl border border-white/10 bg-white/3 p-6 backdrop-blur-md ${glow}`}
             >
               {/* Group header */}
               <div className="flex items-start justify-between gap-4">
@@ -189,7 +189,7 @@ const SkillSection = () => {
                   variants={floatVariants}
                   initial="initial"
                   animate="animate"
-                  className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-fuchsia-500/15 to-cyan-500/15 border border-white/10"
+                  className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-fuchsia-500/15 to-cyan-500/15 border border-white/10"
                 >
                   <SparkleIcon />
                 </motion.div>
@@ -202,7 +202,7 @@ const SkillSection = () => {
                     key={skill.name}
                     whileHover={{ y: -4, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="group relative rounded-xl border border-white/10 bg-white/[0.02] p-3 transition-colors hover:bg-white/[0.05]"
+                    className="group relative rounded-xl border border-white/10 bg-white/2 p-3 transition-colors hover:bg-white/5"
                   >
                     <div className="flex items-center gap-2">
                       <motion.div
@@ -224,7 +224,7 @@ const SkillSection = () => {
                     </div>
 
                     {/* hover underline */}
-                    <span className="pointer-events-none absolute inset-x-3 bottom-2 h-px bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="pointer-events-none absolute inset-x-3 bottom-2 h-px bg-linear-to-r from-transparent via-fuchsia-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </motion.div>
                 ))}
               </div>
