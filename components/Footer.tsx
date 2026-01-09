@@ -17,7 +17,7 @@ const Footer = () => {
 
         <ArrowSwapButton
           label="Hire Me"
-          href="/projects"
+          href="/contact"
           className="bg-primary text-white"
           direction="up-right"
         />
@@ -40,9 +40,11 @@ const Footer = () => {
           </div>
 
           <p className="text-white/65 text-center md:text-left leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
-            interdum ligula a dignissim. Sed lobortis orci elementum egestas
-            lobortis.
+            I’m Shahzad Sohail, a full-stack developer with hands-on experience
+            building real-world web applications. I work across both frontend
+            and backend, focusing on creating interfaces that are responsive,
+            accessible, and performance-driven while ensuring the logic behind
+            them is reliable and scalable.
           </p>
         </div>
 
@@ -93,7 +95,7 @@ const Footer = () => {
                   href="tel:+917738443636"
                   className="hover:text-white transition"
                 >
-                  +91 7738443636
+                  +92 341 5278601
                 </a>
               </li>
               <li>
@@ -101,10 +103,10 @@ const Footer = () => {
                   href="mailto:Jaycrea36@gmail.com"
                   className="hover:text-white transition"
                 >
-                  Jaycrea36@gmail.com
+                  mr.shahzad.developer@gmail.com
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="https://portfolio-jcrea.com"
                   target="_blank"
@@ -112,7 +114,7 @@ const Footer = () => {
                 >
                   Portfolio-jcrea.com
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 

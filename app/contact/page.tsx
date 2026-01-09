@@ -83,7 +83,7 @@ const Page = () => {
         </div>
 
         {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
           <div>
             <label className="block mb-2 text-sm">Your Name</label>
             <input
@@ -116,14 +116,14 @@ const Page = () => {
               required
               value={formData.message}
               onChange={handleChange}
-              className="w-full bg-transparent border-b border-gray-700 py-2 focus:outline-none"
+              className="w-full h-40 resize-none bg-transparent border-b border-gray-700 py-2 focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={status === "sending"}
-            className="bg-primary text-black px-6 py-3 font-semibold hover:bg-white transition"
+            className="bg-primary text-white cursor-pointer hover:bg-[#603df9] px-6 py-3 font-semibold "
           >
             {status === "sending" ? "Sending..." : "Send Message"}
           </button>

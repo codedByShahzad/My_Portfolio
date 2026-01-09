@@ -1,6 +1,5 @@
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 import { Timeline } from '@/components/ui/timeline';
-import React from 'react'
 
 const ExperienceSection = () => {
 const data = [
@@ -9,16 +8,16 @@ const data = [
     content: (
       <div>
         <p className="mb-4 text-xs font-normal text-white md:text-sm dark:text-neutral-200">
-          <strong>Client Project – NIVY App</strong> <br />
+          <strong className='text-2xl'>Client Project – NIVY App</strong> <br />
           Remote | Dec 16, 2024 – Apr 03, 2025
         </p>
-        <p className="mb-8 text-xs font-normal text-white md:text-sm dark:text-neutral-200">
+        <p className="mb-8 text-lg font-normal text-white dark:text-neutral-200">
           Collaborated with the NIVY development team to build a match scheduling
           platform enabling colleges to efficiently organize and manage
           inter-institutional sports matches.
         </p>
 
-        <ul className="mb-8 list-disc pl-4 text-xs text-white md:text-sm dark:text-neutral-300">
+        <ul className="mb-8 list-disc pl-4 text-white dark:text-neutral-300">
           <li>Designed and developed the Matches Management page</li>
           <li>Implemented full CRUD functionality for match scheduling</li>
           <li>Built intuitive UI/UX for creating, editing, and deleting matches</li>
@@ -40,16 +39,16 @@ const data = [
     content: (
       <div>
         <p className="mb-4 text-xs font-normal text-white md:text-sm dark:text-neutral-200">
-          <strong>Front-End Developer – Hā Health</strong> <br />
+          <strong className='text-2xl'>Front-End Developer – Hā Health</strong> <br />
           Remote | Jun 16, 2025 – Sep 21, 2025
         </p>
 
-        <p className="mb-8 text-xs font-normal text-white md:text-sm dark:text-neutral-200">
+        <p className="mb-8 text-lg font-normal text-white dark:text-neutral-200">
           Worked on an AI-powered wellness platform focused on personalized meal
           planning, fitness tracking, and mindfulness tools.
         </p>
 
-        <ul className="mb-8 list-disc pl-4 text-xs text-white md:text-sm dark:text-neutral-300">
+        <ul className="mb-8 list-disc pl-4 text-white dark:text-neutral-300">
           <li>Built responsive UI using React, Next.js, and Tailwind CSS</li>
           <li>Integrated AI-driven recommendations into the frontend</li>
           <li>Ensured seamless performance across devices</li>
@@ -71,10 +70,10 @@ const data = [
     content: (
       <div>
         <p className="mb-4 text-xs font-normal text-white md:text-sm dark:text-neutral-200">
-          <strong>Selected Projects & Ongoing Work</strong>
+          <strong className='text-2xl'>Selected Projects & Ongoing Work</strong>
         </p>
 
-        <ul className="mb-8 list-disc pl-4 text-xs text-white md:text-sm dark:text-neutral-300">
+        <ul className="mb-8 list-disc pl-4 text-white dark:text-neutral-300">
           <li>
             <strong>Crypto Place</strong> – Real-time cryptocurrency tracker using
             React, Tailwind CSS, and CoinGecko API
