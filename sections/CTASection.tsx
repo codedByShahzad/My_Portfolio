@@ -49,7 +49,7 @@ export default function CTASection() {
           </h2>
 
           {/* ================= ROTATING BADGE (Desktop only) ================= */}
-          <div className="absolute right-[-35px]  hidden -translate-y-1/2 lg:block">
+          <div className="absolute right-[-37px]  hidden -translate-y-1/2 lg:block">
             <div className="relative h-28 w-28">
 
               <div className="absolute inset-0 rounded-full ring-2 ring-primary" />
@@ -97,7 +97,7 @@ export default function CTASection() {
         <div className="mt-14 flex justify-center">
           <ArrowSwapButton
             label="Let’s Connect"
-            href="/projects"
+            href="/contact"
             className="bg-primary text-white"
           />
         </div>

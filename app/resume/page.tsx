@@ -5,7 +5,7 @@ export default function Page() {
     <main className="min-h-screen text-neutral-200 flex justify-center px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-10 sm:py-12">
       <div className="w-full max-w-7xl">
         {/* Header */}
-        <section className="flex flex-col gap-8 border-b border-neutral-800 pb-10 text-center md:text-left">
+        <section className="relative z-10 flex flex-col gap-8 border-b border-neutral-800 pb-10 text-center md:text-left">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white">
@@ -16,14 +16,18 @@ export default function Page() {
               </p>
 
               <div className="flex justify-center md:justify-start gap-5 mt-4">
-                <GithubIcon
-                  className="cursor-pointer hover:text-white"
-                  size={22}
-                />
-                <LinkedinIcon
-                  className="cursor-pointer hover:text-white"
-                  size={22}
-                />
+                <a href="https://github.com/codedByShahzad" target="_blank">
+                  <GithubIcon
+                    className="cursor-pointer hover:text-white"
+                    size={22}
+                  />
+                </a>
+                <a href="">
+                  <LinkedinIcon
+                    className="cursor-pointer hover:text-white"
+                    size={22}
+                  />
+                </a>
               </div>
             </div>
 

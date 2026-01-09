@@ -91,7 +91,7 @@
 
 /* Orange/Purple pill for active tab */
 .active-pill {
-  background: #502FEB;
+  background: rgb(90, 56, 242);
   color: white !important;
   padding: 8px 22px;
   border-radius: 999px;
