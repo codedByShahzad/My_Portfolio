@@ -16,18 +16,32 @@ const AboutMeSection = () => {
         <div className="flex flex-col-reverse gap-12 md:flex-row md:items-center md:justify-between">
           {/* LEFT */}
           <div className="md:w-1/2">
-            <HoverBorderGradient
-              containerClassName="rounded-full"
-              className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-            >
-              <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
-                Know who am I
-              </p>
-            </HoverBorderGradient>
+            <div className="flex gap-2 mt-5">
+              {/* Badge */}
+              <HoverBorderGradient
+                containerClassName="rounded-full "
+                className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+              >
+                <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
+                  Know about me
+                </p>
+              </HoverBorderGradient>
+            </div>
+            <div className="flex gap-2 mt-5">
+              {/* Badge */}
+              <HoverBorderGradient
+                containerClassName="rounded-full "
+                className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+              >
+                <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
+                  Know about me
+                </p>
+              </HoverBorderGradient>
+            </div>
 
             <h1 className="mt-4 text-4xl font-semibold leading-[1.15] md:text-5xl">
               Full-Stack Developer and <br />a little bit of{" "}
-              <span className="bg-linear-to-r from-indigo-500 via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
+              <span className="bg-linear-to-r from-primary via-indigo-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
                 everything
               </span>
             </h1>

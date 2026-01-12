@@ -138,7 +138,10 @@ const ProjectsSection = ({
           containerClassName="rounded-full"
           className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
         >
+          
+          <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
           Featured Case Studies
+        </p>
         </HoverBorderGradient>
 
         <h2 className="mt-4 text-4xl sm:text-5xl md:text-6xl font-semibold text-white">

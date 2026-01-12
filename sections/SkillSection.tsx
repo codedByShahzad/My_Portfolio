@@ -1,14 +1,8 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import {
-  Code2,
-  Server,
-  GitBranch,
-  ShieldCheck,
-  Zap,
-} from "lucide-react";
+import { motion, type Variants } from "framer-motion";
+import { Code2, Server, GitBranch, ShieldCheck, Zap } from "lucide-react";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import {
   SiHtml5,
@@ -24,7 +18,6 @@ import {
   SiPostgresql,
   SiFirebase,
   SiWebflow,
-  SiDocker,
   SiPostman,
   SiJest,
   SiVercel,
@@ -32,7 +25,6 @@ import {
   SiFigma,
   SiEslint,
   SiPrettier,
-  SiGraphql,
   SiSlack,
 } from "react-icons/si";
 
@@ -49,25 +41,30 @@ type SkillGroup = {
   skills: Skill[];
 };
 
+/**
+ * ✅ TS FIX:
+ * Explicitly type variants as `Variants` (or `satisfies Variants`)
+ * so `initial="hidden"` / `whileInView="show"` keys are recognized.
+ */
 const floatVariants = {
   initial: { y: 0 },
   animate: {
     y: [0, -6, 0],
     transition: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
   },
-};
+} as const satisfies Variants;
 
 const containerVariants = {
   hidden: {},
   show: {
     transition: { staggerChildren: 0.08, delayChildren: 0.1 },
   },
-};
+} as const satisfies Variants;
 
 const itemVariants = {
   hidden: { opacity: 0, y: 14, scale: 0.98 },
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4 } },
-};
+} as const satisfies Variants;
 
 const glow =
   "before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-fuchsia-500/15 before:via-transparent before:to-cyan-500/15 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500";
@@ -80,11 +77,27 @@ const groups: SkillGroup[] = [
     skills: [
       { name: "HTML5", icon: <SiHtml5 className="h-5 w-5" />, level: "Advanced" },
       { name: "CSS3", icon: <SiCss3 className="h-5 w-5" />, level: "Advanced" },
-      { name: "JavaScript", icon: <SiJavascript className="h-5 w-5" />, level: "Advanced" },
-      { name: "Tailwind CSS", icon: <SiTailwindcss className="h-5 w-5" />, level: "Advanced" },
-      { name: "React / React Native", icon: <SiReact className="h-5 w-5" />, level: "Advanced" },
+      {
+        name: "JavaScript",
+        icon: <SiJavascript className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "Tailwind CSS",
+        icon: <SiTailwindcss className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "React / React Native",
+        icon: <SiReact className="h-5 w-5" />,
+        level: "Advanced",
+      },
       { name: "Next.js", icon: <SiNextdotjs className="h-5 w-5" />, level: "Advanced" },
-      { name: "TypeScript", icon: <SiTypescript className="h-5 w-5" />, level: "Advanced" },
+      {
+        name: "TypeScript",
+        icon: <SiTypescript className="h-5 w-5" />,
+        level: "Advanced",
+      },
       { name: "Webflow", icon: <SiWebflow className="h-5 w-5" />, level: "Intermediate" },
     ],
   },
@@ -96,7 +109,11 @@ const groups: SkillGroup[] = [
       { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" />, level: "Advanced" },
       { name: "Express", icon: <SiExpress className="h-5 w-5" />, level: "Advanced" },
       { name: "MongoDB", icon: <SiMongodb className="h-5 w-5" />, level: "Advanced" },
-      { name: "SQL / PostgreSQL", icon: <SiPostgresql className="h-5 w-5" />, level: "Intermediate" },
+      {
+        name: "SQL / PostgreSQL",
+        icon: <SiPostgresql className="h-5 w-5" />,
+        level: "Intermediate",
+      },
       { name: "Auth / JWT", icon: <ShieldCheck className="h-5 w-5" />, level: "Intermediate" },
       { name: "REST APIs", icon: <GitBranch className="h-5 w-5" />, level: "Advanced" },
       { name: "Firebase", icon: <SiFirebase className="h-5 w-5" />, level: "Intermediate" },
@@ -112,7 +129,11 @@ const groups: SkillGroup[] = [
       { name: "Slack", icon: <SiSlack className="h-5 w-5" />, level: "Intermediate" },
       { name: "Postman", icon: <SiPostman className="h-5 w-5" />, level: "Intermediate" },
       { name: "Testing / Jest", icon: <SiJest className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Figma / Design Tools", icon: <SiFigma className="h-5 w-5" />, level: "Intermediate" },
+      {
+        name: "Figma / Design Tools",
+        icon: <SiFigma className="h-5 w-5" />,
+        level: "Intermediate",
+      },
       { name: "ESLint / Prettier", icon: <SiEslint className="h-5 w-5" />, level: "Advanced" },
     ],
   },
@@ -133,11 +154,11 @@ const groups: SkillGroup[] = [
 
 const SkillSection = () => {
   return (
-    <section className="relative w-full x-4 lg:px-10 xl:px-20 py-20">
+    <section className="relative w-full px-4 lg:px-10 xl:px-20 py-20">
       <div className="mx-auto">
         <div className="flex flex-col justify-center items-center">
           {/* Top label */}
-          <div className="flex items-center ">
+          <div className="flex items-center">
             <HoverBorderGradient
               containerClassName="rounded-full"
               className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
@@ -154,8 +175,8 @@ const SkillSection = () => {
           </h2>
 
           <p className="mt-3 max-w-2xl text-white/60 text-center leading-relaxed">
-            A modern stack for building fast, scalable web apps — from UI to APIs,
-            databases, and essential developer tools.
+            A modern stack for building fast, scalable web apps — from UI to APIs, databases,
+            and essential developer tools.
           </p>
         </div>
 
@@ -214,9 +235,7 @@ const SkillSection = () => {
                       </motion.div>
 
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-white truncate">
-                          {skill.name}
-                        </p>
+                        <p className="text-sm font-medium text-white truncate">{skill.name}</p>
                         <p className="text-[11px] text-white/50 truncate">
                           {skill.level ?? "—"}
                         </p>

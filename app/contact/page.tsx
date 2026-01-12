@@ -1,5 +1,6 @@
 "use client";
 
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import React, { useState } from "react";
 import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
@@ -28,7 +29,7 @@ const Page = () => {
 
     try {
       const response = await fetch(
-        "https://formsubmit.co/ajax/{your-email-here}.com",
+        "https://formsubmit.co/ajax/mr.shahzad.developer@gmail.com",
         {
           method: "POST",
           headers: {
@@ -57,10 +58,27 @@ const Page = () => {
     <section className="bg-black text-white px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-10 sm:py-12 my-10">
       {/* Heading */}
       <div className="mb-16">
-        <p className="text-sm text-gray-400 mb-2">Get In Touch</p>
-        <h1 className="text-4xl md:text-6xl font-bold">
-          Contact <span className="text-primary">Me</span>
-        </h1>
+        <div className="flex   gap-2 mt-5">
+                {/* Badge */}
+                <HoverBorderGradient
+                  containerClassName="rounded-full "
+                  className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+                >
+                  <div className="flex justify-center items-center gap-2">
+                    <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
+                      Contact me
+                    </p>
+                  </div>
+                </HoverBorderGradient>
+              </div>
+        
+              {/* Heading */}
+              <h1 className="mt-4 text-4xl font-semibold font-serif md:text-5xl text-white">
+                Let's get{" "}
+                <span className="bg-linear-to-r from-primary via-indigo-500 to-pink-500 bg-clip-text italic text-transparent">
+                  in touch
+                </span>
+              </h1>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16">

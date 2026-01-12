@@ -37,7 +37,7 @@ export default function HeroSection() {
             <br className="hidden lg:block" />
             <span className="block">
               into{" "}
-              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                 seamless digital experiences
               </span>
             </span>

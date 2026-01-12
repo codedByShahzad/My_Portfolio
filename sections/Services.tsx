@@ -4,11 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
-import {
-  SiReact,
-  SiFigma,
-  SiShopify,
-} from "react-icons/si";
+import { SiReact, SiFigma, SiShopify } from "react-icons/si";
 import { Smartphone, Database, CloudLightning } from "lucide-react";
 
 type Service = {
@@ -70,19 +66,24 @@ const Services = () => {
   return (
     <section className="px-4 lg:px-10 xl:px-20 py-20">
       {/* Badge */}
-      <HoverBorderGradient
-        containerClassName="rounded-full"
-        className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-      >
-        <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
-          Want to Work With Us
-        </p>
-      </HoverBorderGradient>
+      <div className="flex   gap-2 mt-5">
+        {/* Badge */}
+        <HoverBorderGradient
+          containerClassName="rounded-full "
+          className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+        >
+          <div className="flex justify-center items-center gap-2">
+            <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
+              Want to Work With Us
+            </p>
+          </div>
+        </HoverBorderGradient>
+      </div>
 
       {/* Heading */}
       <h1 className="mt-4 text-4xl font-semibold font-serif md:text-5xl text-white">
         Services{" "}
-        <span className="bg-linear-to-r from-indigo-500 via-fuchsia-500 to-pink-500 bg-clip-text italic text-transparent">
+        <span className="bg-linear-to-r from-primary via-indigo-500 to-pink-500 bg-clip-text italic text-transparent">
           We Provide
         </span>
       </h1>
@@ -101,7 +102,7 @@ const Services = () => {
                 - Spotlight stays behind content
                 - No scale transform
             */}
-            <CardSpotlight className="relative h-full rounded-2xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-md overflow-hidden">
+            <CardSpotlight className="relative h-full rounded-2xl border border-white/10 bg-white/3 p-7 backdrop-blur-md overflow-hidden">
               {/* Content Layer (always above spotlight) */}
               <div className="relative z-20">
                 {/* Icon */}
@@ -121,7 +122,7 @@ const Services = () => {
               </div>
 
               {/* Subtle hover glow line (same as skills) */}
-              <span className="pointer-events-none absolute inset-x-6 bottom-4 h-px bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <span className="pointer-events-none absolute inset-x-6 bottom-4 h-px bg-linear-to-r from-transparent via-fuchsia-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </CardSpotlight>
           </motion.div>
         ))}
