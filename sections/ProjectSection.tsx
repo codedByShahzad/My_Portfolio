@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { projects, Project, TechKey } from "@/data/projects";
 import { motion, Variants } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 
 /* =======================
    ICONS
@@ -19,7 +18,7 @@ import {
   SiSanity,
 } from "react-icons/si";
 import { TbArrowsShuffle } from "react-icons/tb";
-import { SquareStack } from "lucide-react";
+import { SquareStack, ArrowUpRight } from "lucide-react";
 
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import ArrowSwapButton from "@/components/ui/ArrowButton";
@@ -39,143 +38,240 @@ const techIcons: Record<TechKey, React.ReactNode> = {
 };
 
 /* =======================
-   ANIMATION
+   ACCENT → GRADIENT MAP
 ======================= */
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
+const accentGradient: Record<Project["accent"], string> = {
+  pink: "bg-gradient-to-b from-fuchsia-500/95 to-pink-600/95",
+  purple: "bg-gradient-to-b from-violet-600/90 to-fuchsia-700/95",
+  green: "bg-gradient-to-b from-emerald-500/90 to-emerald-700/95",
+  orange: "bg-gradient-to-b from-amber-500/90 to-orange-600/95",
+  blue: "bg-gradient-to-b from-blue-600/90 to-indigo-700/95",
+
+  // ✅ UPDATED PARROT (neon lime)
+ parrot: "bg-gradient-to-b from-lime-400 via-green-400 to-emerald-500",
+
+
+
+  sandy: "bg-gradient-to-b from-yellow-500/85 to-amber-700/90",
+  red: "bg-gradient-to-b from-rose-600/90 to-red-700/95",
 };
 
+
+const accentDot: Record<Project["accent"], string> = {
+  pink: "bg-fuchsia-400",
+  purple: "bg-violet-400",
+  green: "bg-emerald-400",
+  orange: "bg-amber-400",
+  blue: "bg-blue-400",
+
+  // ✅ UPDATED PARROT
+  parrot: "bg-lime-500",
+
+
+  sandy: "bg-amber-300",
+  red: "bg-rose-400",
+};
+
+
 /* =======================
-   PROJECT CARD
+   ANIMATION
 ======================= */
-const ProjectCard = ({ project }: { project: Project }) => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+const sectionVariants: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+const rowVariants: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: "easeOut", delay: i * 0.06 },
+  }),
+};
+
+interface ProjectsSectionProps {
+  limit?: number;
+  showCTA?: boolean;
+}
+
+function ProjectRow({ project, index }: { project: Project; index: number }) {
+  // optional if you add later
+  const duration = (project as any)?.duration as string | undefined;
 
   return (
-    <motion.article
-      ref={ref}
-      variants={cardVariants}
+    <motion.div
+      custom={index}
+      variants={rowVariants}
       initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      className="group relative rounded-2xl border border-white/10 bg-white/4 backdrop-blur-md overflow-hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.25 }}
+      className="grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-8 lg:gap-12 items-start"
     >
-      <Link href={`/projects/${project.slug}`} className="block h-full">
-        <div className="flex flex-col h-full p-5">
-          <h3 className="text-xl font-semibold text-white mb-3">
-            {project.title}
-          </h3>
+      {/* LEFT: Image Card */}
+      <Link
+        href={`/projects/${project.slug}`}
+        className="group relative block overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03]"
+      >
+        {/* accent backdrop */}
+        <div className={`absolute inset-0 ${accentGradient[project.accent]}`} />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_circle_at_12%_10%,rgba(255,255,255,0.18),transparent_55%)]" />
 
-          <div className="relative w-full h-[60vh] rounded-xl overflow-hidden">
+        {/* top subtitle + arrow (like reference) */}
+        <div className="relative z-[2] flex items-start justify-between gap-6 p-6 sm:p-7">
+          <div className="rounded-2xl bg-black/40 backdrop-blur-md px-5 py-3">
+  <p className="text-white font-medium">
+    {project.subtitle}
+  </p>
+</div>
+
+
+
+          <span className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-white/10 text-white/80 backdrop-blur-md transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+            <ArrowUpRight className="h-5 w-5" />
+          </span>
+        </div>
+
+        {/* image swap on hover */}
+        <div className="relative z-[2] px-6 pb-6 sm:px-7 sm:pb-7">
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[22px] border border-white/10 bg-black/25">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent z-[3]" />
+
             <Image
               src={project.images.primary}
               alt={project.title}
               fill
-              className="object-fit object-top transition-opacity duration-500 group-hover:opacity-0"
+              priority={index === 0}
+              className="object-cover object-top transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-0"
             />
             <Image
               src={project.images.hover}
               alt={`${project.title} hover`}
               fill
-              className="object-fit object-top opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              className="object-cover object-top opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:scale-[1.03]"
             />
-          </div>
 
-          <p className="mt-4 text-sm text-white/60 leading-relaxed flex-1 whitespace-pre-line">
-            {project.subtitle}
-          </p>
-
-          <div className="mt-5 flex flex-wrap gap-2">
-            {project.tech.map((tech) => (
-              <div
-                key={tech}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-white/80 backdrop-blur-md"
-              >
-                {techIcons[tech]}
-                <span className="text-[11px] uppercase tracking-wide">
-                  {tech}
-                </span>
-              </div>
-            ))}
+            <div className="absolute left-5 bottom-5 z-[4] flex items-center gap-2 rounded-full border border-white/12 bg-black/35 px-3 py-1.5 text-xs text-white/75 backdrop-blur-md">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/70" />
+              View details
+            </div>
           </div>
         </div>
-
-        <span className="pointer-events-none absolute inset-x-4 bottom-3 h-px bg-linear-to-r from-transparent via-fuchsia-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       </Link>
-    </motion.article>
-  );
-};
 
-/* =======================
-   PROPS TYPE
-======================= */
-interface ProjectsSectionProps {
-  limit?: number;          // how many projects to show
-  showCTA?: boolean;       // show "All Projects" button or not
+      {/* RIGHT: Details */}
+      <div className="rounded-[28px] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 sm:p-7">
+        <div className="flex items-center gap-3">
+          <span className={`h-[2px] w-7 rounded-full ${accentDot[project.accent]}`} />
+          <span className="text-xs tracking-[0.25em] uppercase text-white/55">
+            {project.leftText ?? "Case Study"}
+          </span>
+        </div>
+
+        <h3 className="mt-4 text-3xl font-semibold text-white tracking-tight">
+          {project.title}
+        </h3>
+
+        <p className="mt-3 text-sm sm:text-base text-white/60 leading-relaxed">
+          {project.overview}
+        </p>
+
+        {/* duration (optional) */}
+        <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70">
+          <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
+          Duration: <span className="text-white/85">{duration ?? "—"}</span>
+        </div>
+
+        {/* bullets */}
+        <div className="mt-6 space-y-3">
+          {project.bullets.slice(0, 6).map((t, i) => (
+            <div key={i} className="flex gap-3">
+              <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${accentDot[project.accent]}`} />
+              <p className="text-sm text-white/65 leading-relaxed">{t}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* tech chips */}
+        <div className="mt-6 flex flex-wrap gap-2">
+          {project.tech.map((tech) => (
+            <div
+              key={tech}
+              className="flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-white/75"
+            >
+              {techIcons[tech]}
+              {tech}
+            </div>
+          ))}
+        </div>
+
+        {/* button */}
+        {/* button */}
+<div className="mt-7">
+  <ArrowSwapButton
+    label="View Case Study"
+    href={`/projects/${project.slug}`}
+    className={`${accentGradient[project.accent]} text-white`}
+  />
+</div>
+
+      </div>
+    </motion.div>
+  );
 }
 
-/* =======================
-   PROJECTS SECTION
-======================= */
-const ProjectsSection = ({
-  limit,
-  showCTA = true,
-}: ProjectsSectionProps) => {
-  const visibleProjects = limit ? projects.slice(0, limit) : projects;
-
-  const left = visibleProjects.filter((_, i) => i % 2 === 0);
-  const right = visibleProjects.filter((_, i) => i % 2 === 1);
+export default function ProjectsSection({ limit, showCTA = true }: ProjectsSectionProps) {
+  const visibleProjects = useMemo(
+    () => (limit ? projects.slice(0, limit) : projects),
+    [limit]
+  );
 
   return (
-    <section className="px-4 md:px-12 lg:px-20 xl:px-32 py-20 bg-[#020202]">
+    <section className="relative px-4 md:px-12 lg:px-20 xl:px-32 py-20 bg-[#020202]">
       {/* Header */}
-      <div className="flex flex-col items-center mb-20 text-center">
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.4 }}
+        className="relative flex flex-col items-center mb-14 md:mb-18 text-center"
+      >
         <HoverBorderGradient
           containerClassName="rounded-full"
-          className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+          className="bg-white/5 text-white border border-white/10 backdrop-blur-md"
         >
-          
-          <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
-          Featured Case Studies
-        </p>
+          <p className="text-xs sm:text-sm tracking-[0.25em] text-white/65 uppercase">
+            Featured Case Studies
+          </p>
         </HoverBorderGradient>
 
-        <h2 className="mt-4 text-4xl sm:text-5xl md:text-6xl font-semibold text-white">
+        <h2 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-semibold text-white tracking-tight">
           Curated Work
         </h2>
-      </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-        <div className="flex flex-col gap-10">
-          {left.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </div>
+        <p className="mt-4 max-w-2xl text-sm sm:text-base text-white/55 leading-relaxed">
+          A selection of high-impact builds — crafted with clean UI systems,
+          strong performance, and production-ready architecture.
+        </p>
+      </motion.div>
 
-        <div className="flex flex-col gap-10 md:mt-24">
-          {right.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </div>
+      {/* Rows */}
+      <div className="relative flex flex-col gap-12 lg:gap-16">
+        {visibleProjects.map((project, idx) => (
+          <ProjectRow key={project.slug} project={project} index={idx} />
+        ))}
       </div>
 
       {/* CTA */}
       {showCTA && (
-        <div className="mt-24 flex justify-center">
-          <ArrowSwapButton
-            label="All Projects"
-            href="/projects"
-            className="bg-primary text-white"
-          />
+        <div className="relative mt-16 md:mt-20 flex justify-center">
+            <ArrowSwapButton
+              label="All Projects"
+              href="/projects"
+              className="bg-primary text-white"
+            />
         </div>
       )}
     </section>
   );
-};
-
-export default ProjectsSection;
+}
