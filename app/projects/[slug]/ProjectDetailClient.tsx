@@ -1,20 +1,27 @@
 "use client";
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Project } from "@/data/projects";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Clock3,
+  Sparkles,
+  ChevronDown,
+  Dot,
+  Layers3,
+  ShieldCheck,
+  Zap,
+  LayoutGrid,
+} from "lucide-react";
 
-type Accent =
-  | "pink"
-  | "purple"
-  | "green"
-  | "orange"
-  | "blue"
-  | "sandy"
-  | "parrot"
-  | "red";
+import type { Project, Accent, TechKey } from "@/data/projects";
+
+/* =======================
+   THEME MAPS
+======================= */
 
 const accentLine: Record<Accent, string> = {
   pink: "bg-fuchsia-400",
@@ -27,506 +34,599 @@ const accentLine: Record<Accent, string> = {
   red: "bg-rose-400",
 };
 
-const accentGlow: Record<Accent, string> = {
-  pink: "from-fuchsia-500/22 via-transparent to-pink-500/18",
-  purple: "from-violet-500/22 via-transparent to-fuchsia-500/18",
-  green: "from-emerald-500/22 via-transparent to-emerald-500/18",
-  orange: "from-amber-500/22 via-transparent to-orange-500/18",
-  blue: "from-blue-500/22 via-transparent to-indigo-500/18",
-  sandy: "from-amber-400/18 via-transparent to-yellow-500/18",
-  parrot: "from-lime-400/22 via-transparent to-green-500/18",
-  red: "from-rose-500/22 via-transparent to-red-500/18",
+const accentSolid: Record<Accent, string> = {
+  pink: "text-fuchsia-300",
+  purple: "text-violet-300",
+  green: "text-emerald-300",
+  orange: "text-amber-300",
+  blue: "text-blue-300",
+  sandy: "text-amber-200",
+  parrot: "text-lime-300",
+  red: "text-rose-300",
 };
 
-const techLabel: Record<string, string> = {
+const accentRing: Record<Accent, string> = {
+  pink: "ring-fuchsia-400/25",
+  purple: "ring-violet-400/25",
+  green: "ring-emerald-400/25",
+  orange: "ring-amber-400/25",
+  blue: "ring-blue-400/25",
+  sandy: "ring-amber-300/25",
+  parrot: "ring-lime-400/25",
+  red: "ring-rose-400/25",
+};
+
+const accentGlow: Record<Accent, string> = {
+  pink: "from-fuchsia-500/20 via-transparent to-pink-500/15",
+  purple: "from-violet-500/22 via-transparent to-fuchsia-500/16",
+  green: "from-emerald-500/22 via-transparent to-cyan-500/14",
+  orange: "from-amber-500/22 via-transparent to-orange-500/14",
+  blue: "from-blue-500/22 via-transparent to-cyan-500/14",
+  sandy: "from-amber-400/18 via-transparent to-yellow-500/12",
+  parrot: "from-lime-500/22 via-transparent to-emerald-500/14",
+  red: "from-rose-500/22 via-transparent to-red-500/14",
+};
+
+const techLabel: Record<TechKey, string> = {
   next: "Next.js",
   react: "React",
   ts: "TypeScript",
-  tailwind: "Tailwind CSS",
+  tailwind: "Tailwind",
   framer: "Framer Motion",
-  motion: "Motion.dev",
+  motion: "Motion",
   shadcn: "shadcn/ui",
-  sanity: "Sanity CMS",
+  sanity: "Sanity",
 };
 
-function useActiveSection(ids: string[]) {
-  const [activeId, setActiveId] = useState(ids[0] ?? "");
+type SectionKey = "overview" | "highlights" | "stack" | "gallery";
+
+const sections: { key: SectionKey; label: string }[] = [
+  { key: "overview", label: "Overview" },
+  { key: "highlights", label: "Highlights" },
+  { key: "stack", label: "Tech" },
+  { key: "gallery", label: "Gallery" },
+];
+
+function cn(...classes: Array<string | false | null | undefined>) {
+  return classes.filter(Boolean).join(" ");
+}
+
+export default function ProjectDetailClient({ project }: { project: Project }) {
+  const line = accentLine[project.accent];
+  const glow = accentGlow[project.accent];
+  const ring = accentRing[project.accent];
+  const accentText = accentSolid[project.accent];
+
+  // ✅ TOC highlight by intersection (kept)
+  const [activeSection, setActiveSection] = useState<SectionKey>("overview");
+  const refs = useMemo(() => {
+  return sections.reduce((acc, s) => {
+    acc[s.key] = React.createRef<HTMLElement>();
+    return acc;
+  }, {} as Record<SectionKey, React.RefObject<HTMLElement | null>>);
+}, []);
+
 
   useEffect(() => {
-    const els = ids
-      .map((id) => document.getElementById(id))
+    const els = sections
+      .map((s) => refs[s.key].current)
       .filter(Boolean) as HTMLElement[];
 
     if (!els.length) return;
 
-    const observer = new IntersectionObserver(
+    const obs = new IntersectionObserver(
       (entries) => {
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));
+          .sort(
+            (a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0)
+          )[0];
 
-        if (visible[0]?.target?.id) setActiveId(visible[0].target.id);
+        if (!visible?.target) return;
+
+        const id = visible.target.getAttribute("data-section") as
+          | SectionKey
+          | null;
+
+        if (id) setActiveSection(id);
       },
       {
-        root: null,
-        threshold: [0.12, 0.2, 0.35, 0.5, 0.65],
-        rootMargin: "-18% 0px -64% 0px",
+        threshold: [0.15, 0.25, 0.35, 0.5, 0.65],
+        rootMargin: "-10% 0px -65% 0px",
       }
     );
 
-    els.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [ids]);
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [refs]);
 
-  return activeId;
-}
+  const scrollTo = (key: SectionKey) => {
+    refs[key].current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
-function KeyFeaturesAccordion({
-  items,
-  accentClass,
-}: {
-  items: string[];
-  accentClass: string;
-}) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  // ✅ Single-open accordion
+  const [openIndex, setOpenIndex] = useState<number>(0);
+
+  // Small “case study” facts
+  const stats = [
+    { icon: Clock3, label: "Timeline", value: project.duration },
+    { icon: LayoutGrid, label: "Approach", value: "Component-driven" },
+    { icon: Zap, label: "Focus", value: "Performance + Clarity" },
+  ] as const;
 
   return (
-    <div className="mt-4 space-y-3">
-      {items.map((title, i) => {
-        const isOpen = openIndex === i;
-
-        return (
-          <div
-            key={`${title}-${i}`}
-            className="rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden"
+    <main className="min-h-screen px-3 lg:px-10 xl:px-20">
+      <div className="relative mx-auto w-full">
+        {/* =======================
+            HERO SECTION
+        ======================= */}
+        <section className="mt-8">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="relative overflow-hidden rounded-[28px] bg-white/[0.06] ring-1 ring-white/10 backdrop-blur shadow-[0_20px_80px_rgba(0,0,0,0.55)]"
           >
-            <button
-              type="button"
-              onClick={() => setOpenIndex(isOpen ? null : i)}
-              className="w-full px-4 py-4 text-left flex items-center justify-between gap-4 hover:bg-white/[0.05] transition-colors"
-            >
-              <span className="flex items-center gap-3 min-w-0">
-                <span className={`h-2 w-2 shrink-0 rounded-full ${accentClass}`} />
-                <span className="text-sm text-white/85 truncate">{title}</span>
-              </span>
-
-              <motion.span
-                animate={{ rotate: isOpen ? 45 : 0 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-                className="text-white/55 text-lg leading-none"
-              >
-                +
-              </motion.span>
-            </button>
-
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  key="content"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <div className="px-4 pb-4 -mt-1">
-                    <p className="text-sm text-white/60 leading-relaxed">
-                      A clean, scalable feature built with performance-first UI patterns.
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-function StatPill({
-  label,
-  value,
-}: {
-  label: string;
-  value?: string | null;
-}) {
-  if (!value) return null;
-  return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2">
-      <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">
-        {label}
-      </p>
-      <p className="mt-1 text-sm text-white/85">{value}</p>
-    </div>
-  );
-}
-
-export default function ProjectDetailClient({ project }: { project: Project }) {
-  const accent = project.accent as Accent;
-
-  const toc = useMemo(
-    () => [
-      { id: "about", label: "About" },
-      { id: "features", label: "Key Features" },
-      { id: "stack", label: "Tech Stack" },
-      { id: "process", label: "Process" },
-      { id: "results", label: "Results" },
-    ],
-    []
-  );
-
-  const activeId = useActiveSection(toc.map((t) => t.id));
-
-  return (
-    <main className="min-h-screen bg-[#050505] text-white">
-      {/* Background */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(1200px_circle_at_18%_12%,rgba(255,255,255,0.06),transparent_55%),radial-gradient(900px_circle_at_84%_30%,rgba(255,255,255,0.05),transparent_55%)]" />
-        
-        <div className="absolute inset-0 opacity-[0.06] [background-image:radial-gradient(rgba(255,255,255,0.35)_1px,transparent_1px)] [background-size:22px_22px]" />
-      </div>
-
-      {/* Full width */}
-      <div className="w-full px-4 sm:px-8 lg:px-14 2xl:px-20 py-12 md:py-16">
-        {/* HERO */}
-        <section className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-10 items-start">
-          {/* Left */}
-          <div className="min-w-0">
-            <div className="flex items-start gap-4">
-              <span className={`mt-3 h-[2px] w-10 rounded-full ${accentLine[accent]}`} />
-
-              <div className="min-w-0">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-white/70">
-                  <span className={`h-1.5 w-1.5 rounded-full ${accentLine[accent]}`} />
-                  Project
-                </div>
-
-                <h1 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight">
-                  {project.title}
-                </h1>
-
-                <p className="mt-4 text-sm sm:text-base text-white/60 leading-relaxed whitespace-pre-line max-w-2xl">
-                  {project.overview}
-                </p>
-
-                {/* Pills */}
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
-                  <StatPill label="Role" value={project.leftText ?? "Frontend Developer"} />
-                  <StatPill label="Duration" value={project.duration ?? "—"} />
-                  <StatPill
-                    label="Focus"
-                    value="Performance • UX • Clean UI"
-                  />
-                </div>
-
-                {/* Stack chips */}
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="inline-flex items-center rounded-full border border-white/10 bg-black/40 px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-white/70"
-                    >
-                      {techLabel[t] ?? t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Actions */}
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <Link
-                    href={project.detailHref}
-                    className="group inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/85 hover:bg-white/10 transition-colors"
-                  >
-                    Live Preview
-                    <span className="ml-2 transition-transform group-hover:translate-x-0.5">
-                      →
-                    </span>
-                  </Link>
-
-                  <Link
-                    href="/projects"
-                    className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white/70 hover:bg-white/5 transition-colors"
-                  >
-                    Back
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Image */}
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]">
-            <div className="relative h-[260px] sm:h-[360px] lg:h-[460px]">
+            <div className="relative h-[420px] md:h-[720px]">
               <Image
                 src={project.images.primary}
-                alt={`${project.title} preview`}
+                alt={`${project.title} hero`}
                 fill
                 priority
                 className="object-cover"
-                sizes="(min-width: 1024px) 45vw, 100vw"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            </div>
 
-            <div className="absolute left-4 bottom-4 right-4">
-              <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur px-4 py-3">
-                <p className="text-xs uppercase tracking-[0.18em] text-white/55">
-                  Snapshot
+              <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-0 bg-black/15" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 h-[55%] bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 h-[45%] backdrop-blur-[2px]" />
+              </div>
+
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+                <h1
+                  className="mt-3 text-2xl md:text-4xl font-semibold tracking-tight text-white"
+                  style={{ textShadow: "0 2px 18px rgba(0,0,0,0.6)" }}
+                >
+                  {project.title}
+                </h1>
+
+                <p
+                  className="mt-2 max-w-3xl text-white/85 leading-relaxed"
+                  style={{ textShadow: "0 2px 14px rgba(0,0,0,0.45)" }}
+                >
+                  {project.subtitle}
                 </p>
-                <p className="mt-1 text-sm text-white/80">
-                  Responsive layout • Motion micro-interactions • Clean typography
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* BODY + SIDEBAR */}
-        <section className="mt-10 md:mt-14 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 items-start">
-          {/* Content */}
-          <div className="min-w-0">
-            <div id="about" className="scroll-mt-24">
-              <h2 className="text-xl font-semibold tracking-tight">About</h2>
-              <p className="mt-3 text-sm sm:text-base text-white/65 leading-relaxed">
-                {project.overview}
-              </p>
-            </div>
-
-            <div className="mt-7">
-              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]">
-                <div className="relative h-[220px] sm:h-[280px] lg:h-[340px]">
-                  <Image
-                    src={project.images.hover}
-                    alt={`${project.title} secondary`}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 60vw, 100vw"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
-                </div>
-              </div>
-            </div>
-
-            <div id="features" className="mt-10 scroll-mt-24">
-              <h2 className="text-xl font-semibold tracking-tight">Key Features</h2>
-              <KeyFeaturesAccordion
-                items={project.bullets}
-                accentClass={accentLine[accent]}
-              />
-            </div>
-
-            <div id="stack" className="mt-10 scroll-mt-24">
-              <h2 className="text-xl font-semibold tracking-tight">Tech Stack</h2>
-
-              <div className="mt-4 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
-                <ul className="space-y-3 text-sm text-white/65">
-                  {project.tech.map((t) => (
-                    <li key={t} className="flex items-start gap-3">
-                      <span className={`mt-2 h-2 w-2 shrink-0 rounded-full ${accentLine[accent]}`} />
-                      <span>
-                        <span className="text-white/85 font-medium">
-                          {techLabel[t] ?? t}
-                        </span>
-                        <span className="text-white/55">
-                          {" "}
-                          — used for scalable UI, fast rendering, and consistent styling.
-                        </span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div id="process" className="mt-10 scroll-mt-24">
-              <h2 className="text-xl font-semibold tracking-tight">Process</h2>
-
-              <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-                {[
-                  {
-                    title: "Plan",
-                    desc: "Define goals, pages, components, and visual system.",
-                  },
-                  {
-                    title: "Build",
-                    desc: "Implement responsive UI + reusable components.",
-                  },
-                  {
-                    title: "Polish",
-                    desc: "Add motion, optimize performance, refine details.",
-                  },
-                ].map((x) => (
-                  <div
-                    key={x.title}
-                    className="rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  <button
+                    onClick={() => scrollTo("overview")}
+                    className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-black transition hover:opacity-90"
                   >
-                    <p className="text-xs uppercase tracking-[0.18em] text-white/55">
-                      {x.title}
-                    </p>
-                    <p className="mt-2 text-sm text-white/75 leading-relaxed">
-                      {x.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+                    View Project Details
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
 
-            <div id="results" className="mt-10 scroll-mt-24">
-              <h2 className="text-xl font-semibold tracking-tight">Results</h2>
-              <p className="mt-3 text-sm sm:text-base text-white/65 leading-relaxed">
-                A clean, portfolio-ready project page that highlights the work clearly:
-                strong hierarchy, smooth interactions, and a layout that scales from
-                mobile to large screens.
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href={project.detailHref}
-                  className="group inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/85 hover:bg-white/10 transition-colors"
-                >
-                  Open Live
-                  <span className="ml-2 transition-transform group-hover:translate-x-0.5">
-                    →
-                  </span>
-                </Link>
-
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/35 px-4 py-2 text-sm text-white/70 hover:bg-white/5 transition-colors"
-                >
-                  All Projects
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Sidebar */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24 space-y-4">
-              {/* Quick info */}
-              <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-4">
-                <p className="text-xs uppercase tracking-[0.25em] text-white/55">
-                  Quick info
-                </p>
-
-                <div className="mt-4 space-y-3">
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="text-xs text-white/55">Role</span>
-                    <span className="text-xs text-white/80 text-right">
-                      {project.leftText ?? "Frontend Developer"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="text-xs text-white/55">Duration</span>
-                    <span className="text-xs text-white/80 text-right">
-                      {project.duration ?? "—"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="text-xs text-white/55">Stack</span>
-                    <span className="text-xs text-white/80 text-right">
-                      {project.tech
-                        .map((t) => techLabel[t] ?? t)
-                        .slice(0, 3)
-                        .join(", ")}
-                      {project.tech.length > 3 ? " +" : ""}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mt-4 flex flex-col gap-2">
                   <Link
                     href={project.detailHref}
-                    className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/85 hover:bg-white/10 transition-colors"
+                    className="inline-flex items-center gap-2 rounded-2xl bg-white/[0.08] px-4 py-2 text-sm text-white/90 ring-1 ring-white/12 backdrop-blur transition hover:bg-white/[0.12]"
                   >
-                    Live Preview →
+                    Open Route
+                    <ExternalLink className="h-4 w-4" />
                   </Link>
-                  <Link
-                    href="/projects"
-                    className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white/70 hover:bg-white/5 transition-colors"
-                  >
-                    Back
-                  </Link>
-                </div>
-              </div>
-
-              {/* TOC */}
-              <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-4">
-                <p className="text-xs uppercase tracking-[0.25em] text-white/55">
-                  On this page
-                </p>
-
-                <div className="mt-3 space-y-1">
-                  {toc.map((item) => {
-                    const isActive = activeId === item.id;
-
-                    return (
-                      <a
-                        key={item.id}
-                        href={`#${item.id}`}
-                        className={[
-                          "block rounded-xl px-3 py-2 text-sm transition-colors",
-                          isActive
-                            ? "bg-white/10 text-white"
-                            : "text-white/65 hover:text-white hover:bg-white/5",
-                        ].join(" ")}
-                      >
-                        <span className="flex items-center gap-2">
-                          <span
-                            className={[
-                              "h-1.5 w-1.5 rounded-full transition-opacity",
-                              accentLine[accent],
-                              isActive ? "opacity-100" : "opacity-0",
-                            ].join(" ")}
-                          />
-                          {item.label}
-                        </span>
-                      </a>
-                    );
-                  })}
-                </div>
-
-                <div className="mt-4 rounded-2xl border border-white/10 bg-black/35 p-3">
-                  <p className="text-xs text-white/60 leading-relaxed">
-                    Tip: Keep each section short, scannable, and focused — that’s what
-                    makes portfolio pages feel “standard & premium”.
-                  </p>
                 </div>
               </div>
             </div>
-          </aside>
+          </motion.div>
+        </section>
 
-          {/* Mobile: show TOC at bottom */}
-          <div className="lg:hidden">
-            <div className="mt-2 rounded-3xl border border-white/10 bg-white/[0.03] p-4">
-              <p className="text-xs uppercase tracking-[0.25em] text-white/55">
-                On this page
+        {/* BODY */}
+        <section className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12">
+          {/* Left (Content) */}
+          <div className="lg:col-span-8 space-y-8">
+            {/* Overview */}
+            <motion.section
+              ref={refs.overview as any}
+              data-section="overview"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
+            >
+              <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
+              <div className="flex items-center gap-3">
+                <div className={cn("h-2 w-10 rounded-full", line)} />
+                <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
+                  Overview
+                </h2>
+              </div>
+
+              <p className="mt-4 text-white/75 leading-relaxed">
+                {project.overview}
               </p>
 
-              <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {toc.map((item) => {
-                  const isActive = activeId === item.id;
+              {/* ✅ Secondary image FIXED (next/image needs fill or width/height) */}
+              <div className="mt-7 overflow-hidden rounded-[24px] bg-black/30 ring-1 ring-white/10">
+                <div className="p-3 md:p-4">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl">
+                    <Image
+                      src={project.images.hover}
+                      alt={`${project.title} secondary`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Assurance row */}
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl bg-black/30 p-4 ring-1 ring-white/10">
+                  <div className="flex items-center gap-2 text-sm text-white/70">
+                    <ShieldCheck className="h-4 w-4" />
+                    Structure
+                  </div>
+                  <div className="mt-1 text-sm text-white/70">
+                    Clean hierarchy + reusable sections
+                  </div>
+                </div>
+                <div className="rounded-2xl bg-black/30 p-4 ring-1 ring-white/10">
+                  <div className="flex items-center gap-2 text-sm text-white/70">
+                    <Zap className="h-4 w-4" />
+                    Performance
+                  </div>
+                  <div className="mt-1 text-sm text-white/70">
+                    Motion that doesn’t slow UX
+                  </div>
+                </div>
+                <div className="rounded-2xl bg-black/30 p-4 ring-1 ring-white/10">
+                  <div className="flex items-center gap-2 text-sm text-white/70">
+                    <Layers3 className="h-4 w-4" />
+                    Scalability
+                  </div>
+                  <div className="mt-1 text-sm text-white/70">
+                    Built to extend for future pages
+                  </div>
+                </div>
+              </div>
+            </motion.section>
+
+            {/* Highlights */}
+            <motion.section
+              ref={refs.highlights as any}
+              data-section="highlights"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
+            >
+              <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
+              <div className="flex items-center gap-3">
+                <div className={cn("h-2 w-10 rounded-full", line)} />
+                <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
+                  Key Highlights
+                </h2>
+              </div>
+
+              <div className="mt-6 space-y-3">
+                {project.bullets.map((b, idx) => {
+                  const isOpen = openIndex === idx;
                   return (
-                    <a
-                      key={item.id}
-                      href={`#${item.id}`}
-                      className={[
-                        "rounded-xl px-3 py-2 text-sm transition-colors border border-white/10",
-                        isActive
-                          ? "bg-white/10 text-white"
-                          : "bg-black/35 text-white/70 hover:bg-white/5 hover:text-white",
-                      ].join(" ")}
+                    <div
+                      key={b}
+                      className={cn(
+                        "relative overflow-hidden rounded-[22px] ring-1 transition",
+                        isOpen
+                          ? cn("bg-white/10 ring-white/15", ring)
+                          : "bg-black/30 ring-white/10 hover:bg-white/8"
+                      )}
                     >
-                      {item.label}
-                    </a>
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-transparent opacity-60" />
+
+                      <button
+                        onClick={() => setOpenIndex(idx)}
+                        className="relative flex w-full items-center justify-between gap-4 px-4 py-4 text-left md:px-5"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span
+                            className={cn(
+                              "inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/40 text-xs ring-1 ring-white/10",
+                              accentText
+                            )}
+                          >
+                            {String(idx + 1).padStart(2, "0")}
+                          </span>
+                          <span className="font-medium text-white/90">{b}</span>
+                        </div>
+
+                        <motion.span
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="text-white/75"
+                        >
+                          <ChevronDown className="h-5 w-5" />
+                        </motion.span>
+                      </button>
+
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{
+                              duration: 0.32,
+                              ease: [0.22, 1, 0.36, 1],
+                            }}
+                            className="relative px-5 pb-5"
+                          >
+                            <div className="rounded-2xl bg-black/35 p-4 ring-1 ring-white/10">
+                              <p className="text-sm leading-relaxed text-white/70">
+                                This highlight supports the case-study goal:{" "}
+                                <span className="font-semibold text-white/85">
+                                  clarity + smooth interaction
+                                </span>
+                                . Add 1–2 lines of specifics here (what you
+                                improved, why it matters, and the UX impact).
+                              </p>
+
+                              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-white/60">
+                                <span className="inline-flex items-center rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
+                                  <Dot className="h-4 w-4" />
+                                  UX hierarchy
+                                </span>
+                                <span className="inline-flex items-center rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
+                                  <Dot className="h-4 w-4" />
+                                  Micro-interactions
+                                </span>
+                                <span className="inline-flex items-center rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
+                                  <Dot className="h-4 w-4" />
+                                  Scalable layout
+                                </span>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   );
                 })}
               </div>
+            </motion.section>
+
+            {/* Tech Stack */}
+            <motion.section
+              ref={refs.stack as any}
+              data-section="stack"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
+            >
+              <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
+              <div className="flex items-center gap-3">
+                <div className={cn("h-2 w-10 rounded-full", line)} />
+                <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
+                  Tech Stack
+                </h2>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className={cn(
+                      "inline-flex items-center rounded-full bg-black/30 px-3 py-1 text-xs text-white/70 ring-1 ring-white/10",
+                      "shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset]"
+                    )}
+                  >
+                    {techLabel[t]}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-6 rounded-2xl bg-black/35 p-4 ring-1 ring-white/10">
+                <div className="flex items-center gap-2 text-sm text-white/70">
+                  <Sparkles className="h-4 w-4" />
+                  Implementation style
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">
+                  Modular UI sections + clean hierarchy + motion for focus —
+                  designed to stay readable while feeling premium.
+                </p>
+              </div>
+            </motion.section>
+
+            {/* Gallery */}
+            <motion.section
+              ref={refs.gallery as any}
+              data-section="gallery"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
+            >
+              <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
+              <div className="flex items-center gap-3">
+                <div className={cn("h-2 w-10 rounded-full", line)} />
+                <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
+                  Gallery
+                </h2>
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+                {[project.images.primary, project.images.hover].map((img, i) => (
+                  <div
+                    key={i}
+                    className="group relative overflow-hidden rounded-[24px] bg-black/30 ring-1 ring-white/10"
+                  >
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent opacity-70" />
+                    <div className="p-3 md:p-4">
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 160,
+                          damping: 16,
+                        }}
+                        className="relative overflow-hidden rounded-2xl"
+                      >
+                        {/* ✅ Gallery image FIXED */}
+                        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl">
+                          <Image
+                            src={img}
+                            alt={`${project.title} gallery ${i + 1}`}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+
+                        <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
+                          <div className="absolute inset-0 bg-black/25" />
+                          <div
+                            className={cn(
+                              "absolute left-0 top-0 h-1 w-full",
+                              line
+                            )}
+                          />
+                        </div>
+                      </motion.div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/#projects"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-black transition hover:opacity-90"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  More Projects
+                </Link>
+                <Link
+                  href={project.detailHref}
+                  className="inline-flex items-center gap-2 rounded-2xl bg-white/[0.06] px-4 py-2 text-sm text-white/80 ring-1 ring-white/10 backdrop-blur transition hover:bg-white/[0.10] hover:text-white"
+                >
+                  Open route
+                  <ExternalLink className="h-4 w-4" />
+                </Link>
+              </div>
+            </motion.section>
+          </div>
+
+          {/* Right column */}
+          <div className="lg:col-span-4">
+            <div className="sticky top-24 space-y-6">
+              <div className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur">
+                <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
+
+                <div className="flex items-center gap-2 text-xs font-semibold tracking-wide text-white/70">
+                  <LayoutGrid className="h-4 w-4" />
+                  PROJECT SNAPSHOT
+                </div>
+
+                <div className="mt-5 space-y-3">
+                  {stats.map((s) => (
+                    <div
+                      key={s.label}
+                      className="rounded-2xl bg-black/35 p-4 ring-1 ring-white/10"
+                    >
+                      <div className="flex items-center gap-2 text-sm text-white/70">
+                        <s.icon className="h-4 w-4" />
+                        {s.label}
+                      </div>
+                      <div className="mt-1 font-semibold text-white/90">
+                        {s.value}
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="rounded-2xl bg-black/35 p-4 ring-1 ring-white/10">
+                    <div className="text-sm text-white/65">What it is</div>
+                    <div className="mt-1 text-sm text-white/75 leading-relaxed">
+                      {project.leftText}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 rounded-2xl bg-black/35 p-4 ring-1 ring-white/10">
+                  <div className="flex items-center gap-2 text-sm text-white/70">
+                    <Layers3 className="h-4 w-4" />
+                    UX principles used
+                  </div>
+                  <ul className="mt-2 space-y-1 text-sm text-white/70">
+                    <li className="flex items-center gap-2">
+                      <Dot className="h-5 w-5 opacity-70" />
+                      Clear hierarchy
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Dot className="h-5 w-5 opacity-70" />
+                      Guided motion
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Dot className="h-5 w-5 opacity-70" />
+                      Reusable components
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* ✅ ACTIVE SECTION HIGHLIGHT + QUICK ACTIONS */}
+              <div className="rounded-[28px] bg-white/[0.06] p-5 ring-1 ring-white/10 backdrop-blur">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs font-semibold tracking-wide text-white/70">
+                    <Sparkles className="h-4 w-4" />
+                    QUICK ACTIONS
+                  </div>
+                  <span
+                    className={cn(
+                      "text-xs font-semibold",
+                      accentText,
+                      "opacity-90"
+                    )}
+                  >
+                    {sections.find((s) => s.key === activeSection)?.label}
+                  </span>
+                </div>
+
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  {sections.map((s) => {
+                    const isActive = s.key === activeSection;
+                    return (
+                      <button
+                        key={s.key}
+                        onClick={() => scrollTo(s.key)}
+                        className={cn(
+                          "rounded-2xl px-3 py-2 text-left text-sm ring-1 transition",
+                          isActive
+                            ? cn("bg-white/12 text-white ring-white/20", ring)
+                            : "bg-black/35 text-white/75 ring-white/10 hover:bg-white/10 hover:text-white"
+                        )}
+                      >
+                        {s.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </section>
+
+        {/* Subtle glow (optional) */}
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute -top-24 left-1/2 h-[320px] w-[320px] -translate-x-1/2 rounded-full blur-3xl opacity-25",
+            "bg-gradient-to-br",
+            glow
+          )}
+        />
       </div>
     </main>
   );
