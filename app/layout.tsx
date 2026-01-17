@@ -37,7 +37,7 @@ export default function RootLayout({
       >
               <StarsBackground />
               
-       <BackgroundBeams className="absolute inset-0 z-0 pointer-events-none" />
+       {/* <BackgroundBeams className="absolute inset-0 z-0 pointer-events-none" /> */}
         <Navbar />
         {children}
         <CTASection />

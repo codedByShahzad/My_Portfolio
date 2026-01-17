@@ -4,7 +4,7 @@ import { Github, Linkedin, Instagram } from "lucide-react";
 import ArrowSwapButton from "@/components/ui/ArrowButton";
 import profile from "../public/images/Profile Image.png"; // Make sure the file path is correct
 import { CometCard } from "@/components/ui/comet-card";
-import { Boxes } from "@/components/ui/background-boxes"; // Import Boxes component
+// import { Boxes } from "@/components/ui/background-boxes"; // Import Boxes component
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 const AboutMeSection = () => {
@@ -16,8 +16,8 @@ const AboutMeSection = () => {
         <div className="flex flex-col-reverse gap-12 md:flex-row md:items-center md:justify-between">
           {/* LEFT */}
           <div className="md:w-1/2">
-            <div className="flex gap-2 mt-5">
-              {/* Badge */}
+            {/* <div className="flex gap-2 mt-5">
+              Badge
               <HoverBorderGradient
                 containerClassName="rounded-full "
                 className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
@@ -26,7 +26,7 @@ const AboutMeSection = () => {
                   Know about me
                 </p>
               </HoverBorderGradient>
-            </div>
+            </div> */}
             <div className="flex gap-2 mt-5">
               {/* Badge */}
               <HoverBorderGradient

@@ -32,7 +32,7 @@ export default function Page() {
             </div>
 
             <a
-              href="/resume.pdf"
+              href="/Shahzad Resume.pdf"
               download
               className="flex items-center justify-center gap-2 border border-neutral-700 px-6 py-3 rounded-full hover:bg-neutral-800 transition text-sm sm:text-base"
             >
@@ -301,7 +301,7 @@ export default function Page() {
 
           <div className="flex justify-center mt-12">
             <a
-              href="/resume.pdf"
+              href="/Shahzad Resume.pdf"
               download
               className="flex items-center justify-center gap-2 border border-neutral-700 px-6 py-3 rounded-full hover:bg-neutral-800 transition text-sm sm:text-base"
             >

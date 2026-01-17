@@ -48,14 +48,11 @@ const accentGradient: Record<Project["accent"], string> = {
   blue: "bg-gradient-to-b from-blue-600/90 to-indigo-700/95",
 
   // ✅ UPDATED PARROT (neon lime)
- parrot: "bg-gradient-to-b from-lime-400 via-green-400 to-emerald-500",
-
-
+  parrot: "bg-gradient-to-b from-lime-400 via-green-400 to-emerald-500",
 
   sandy: "bg-gradient-to-b from-yellow-500/85 to-amber-700/90",
   red: "bg-gradient-to-b from-rose-600/90 to-red-700/95",
 };
-
 
 const accentDot: Record<Project["accent"], string> = {
   pink: "bg-fuchsia-400",
@@ -67,11 +64,9 @@ const accentDot: Record<Project["accent"], string> = {
   // ✅ UPDATED PARROT
   parrot: "bg-lime-500",
 
-
   sandy: "bg-amber-300",
   red: "bg-rose-400",
 };
-
 
 /* =======================
    ANIMATION
@@ -120,12 +115,8 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
         {/* top subtitle + arrow (like reference) */}
         <div className="relative z-[2] flex items-start justify-between gap-6 p-6 sm:p-7">
           <div className="rounded-2xl bg-black/40 backdrop-blur-md px-5 py-3">
-  <p className="text-white font-medium">
-    {project.subtitle}
-  </p>
-</div>
-
-
+            <p className="text-white font-medium">{project.subtitle}</p>
+          </div>
 
           <span className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-white/10 text-white/80 backdrop-blur-md transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
             <ArrowUpRight className="h-5 w-5" />
@@ -162,7 +153,9 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
       {/* RIGHT: Details */}
       <div className="rounded-[28px] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 sm:p-7">
         <div className="flex items-center gap-3">
-          <span className={`h-[2px] w-7 rounded-full ${accentDot[project.accent]}`} />
+          <span
+            className={`h-[2px] w-7 rounded-full ${accentDot[project.accent]}`}
+          />
           <span className="text-xs tracking-[0.25em] uppercase text-white/55">
             {project.leftText ?? "Case Study"}
           </span>
@@ -186,7 +179,9 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
         <div className="mt-6 space-y-3">
           {project.bullets.slice(0, 6).map((t, i) => (
             <div key={i} className="flex gap-3">
-              <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${accentDot[project.accent]}`} />
+              <span
+                className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${accentDot[project.accent]}`}
+              />
               <p className="text-sm text-white/65 leading-relaxed">{t}</p>
             </div>
           ))}
@@ -207,27 +202,29 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
 
         {/* button */}
         {/* button */}
-<div className="mt-7">
-  <ArrowSwapButton
-    label="View Case Study"
-    href={`/projects/${project.slug}`}
-    className={`${accentGradient[project.accent]} text-white`}
-  />
-</div>
-
+        <div className="mt-7">
+          <ArrowSwapButton
+            label="View Case Study"
+            href={`/projects/${project.slug}`}
+            className={`${accentGradient[project.accent]} text-white`}
+          />
+        </div>
       </div>
     </motion.div>
   );
 }
 
-export default function ProjectsSection({ limit, showCTA = true }: ProjectsSectionProps) {
+export default function ProjectsSection({
+  limit,
+  showCTA = true,
+}: ProjectsSectionProps) {
   const visibleProjects = useMemo(
     () => (limit ? projects.slice(0, limit) : projects),
-    [limit]
+    [limit],
   );
 
   return (
-    <section className="relative px-4 md:px-12 lg:px-20 xl:px-32 py-20 bg-[#020202]">
+    <section className="relative px-4 md:px-12 lg:px-20 xl:px-32 py-20 ">
       {/* Header */}
       <motion.div
         variants={sectionVariants}
@@ -265,11 +262,11 @@ export default function ProjectsSection({ limit, showCTA = true }: ProjectsSecti
       {/* CTA */}
       {showCTA && (
         <div className="relative mt-16 md:mt-20 flex justify-center">
-            <ArrowSwapButton
-              label="All Projects"
-              href="/projects"
-              className="bg-primary text-white"
-            />
+          <ArrowSwapButton
+            label="All Projects"
+            href="/projects"
+            className="bg-primary text-white"
+          />
         </div>
       )}
     </section>
