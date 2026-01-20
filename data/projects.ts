@@ -1,4 +1,4 @@
-import { StaticImageData } from "next/image";
+import type { StaticImageData } from "next/image";
 import { HeartPulse, GraduationCap, ShoppingBag } from "lucide-react";
 
 /* =======================
@@ -41,6 +41,11 @@ export type TechKey =
   | "shadcn"
   | "sanity";
 
+/**
+ * Updated for the new Project Details page:
+ * - images.gallery: supports 1..N images
+ * - overview is now structured (headline + summary + details)
+ */
 export type Project = {
   slug: string;
   detailHref: string;
@@ -50,13 +55,26 @@ export type Project = {
   bullets: string[];
   tech: TechKey[];
   leftText: string;
-  images: {
-    primary: StaticImageData;
-    hover: StaticImageData;
-  };
-  overview: string;
 
-  // ✅ NEW: duration per project
+  images: {
+    /** Used in hero + overview main image */
+    primary: StaticImageData;
+    /** Optional (still supported if you use it somewhere else) */
+    hover?: StaticImageData;
+    /** Used by the Gallery section (map all images + lightbox) */
+    gallery: StaticImageData[];
+  };
+
+  /**
+   * For the Overview section (so you can show headings first,
+   * then main image, then "more details", then tech stack)
+   */
+  overview: {
+    heading: string; // e.g. "Overview"
+    summary: string; // short paragraph (above the main image)
+    details: string[]; // more detail paragraphs (after the image)
+  };
+
   duration: string;
 };
 
@@ -71,7 +89,7 @@ export const projects: Project[] = [
     accent: "purple",
     title: "CryptoPlays",
     subtitle:
-      "A crypto tracking dashboard.\nDesigned for speed, clarzity, and daily use.",
+      "A crypto tracking dashboard.\nDesigned for speed, clarity, and daily use.",
     bullets: [
       "Clear data hierarchy",
       "Reusable dashboard widgets",
@@ -81,9 +99,21 @@ export const projects: Project[] = [
     ],
     tech: ["next", "react", "ts", "tailwind", "framer"],
     leftText: "A market dashboard focused on usability.",
-    images: { primary: p6a, hover: p6b },
-    overview:
-      "CryptoPlays is a crypto tracking dashboard designed to make complex market data easy to understand at a glance. The project focuses on clarity, speed, and daily usability by organizing information into a clean hierarchy with reusable widgets. Smooth motion and thoughtful interactions help guide user attention while maintaining performance, making it suitable for frequent, real-time use.",
+    images: {
+      primary: p6a,
+      hover: p6b,
+      gallery: [p6a, p6b], // ✅ default gallery (change anytime)
+    },
+    overview: {
+      heading: "Overview",
+      summary:
+        "CryptoPlays is a crypto tracking dashboard built to make market data understandable in seconds. It focuses on clarity, speed, and daily usability by organizing content into a clean hierarchy with reusable widgets.",
+      details: [
+        "The layout is designed to reduce cognitive load: key metrics are surfaced first, secondary insights are grouped logically, and visual rhythm stays consistent across sections.",
+        "Micro-interactions and motion are used only where they improve scanning and navigation — keeping the interface premium while still fast in real-world usage.",
+        "The foundation is built to scale: new coins, charts, watchlists, and modules can be added without breaking the UI patterns.",
+      ],
+    },
     duration: "3 Weeks",
   },
 
@@ -103,11 +133,24 @@ export const projects: Project[] = [
     ],
     tech: ["next", "react", "ts", "tailwind", "framer"],
     leftText: "A soothing wellness experience.",
-    images: { primary: p3a, hover: p3b },
-    overview:
-      "Hā Wellness is a calm and approachable wellness platform designed to promote comfort, clarity, and user trust. The project follows a mobile-first approach with gentle motion and a conversion-focused layout to guide users naturally through the experience. A component-driven structure ensures scalability while maintaining a soothing and minimal visual style.",
+    images: {
+      primary: p3a,
+      hover: p3b,
+      gallery: [p3a, p3b],
+    },
+    overview: {
+      heading: "Overview",
+      summary:
+        "Hā Wellness is a calm and approachable wellness platform designed to promote trust, comfort, and clarity. The experience is intentionally quiet: readable typography, soft spacing, and guided sections that feel natural to scroll.",
+      details: [
+        "The UI follows a mobile-first approach where every component is optimized for small screens first — ensuring smooth conversion flows without overwhelming the user.",
+        "Motion stays gentle and supportive (not distracting), enhancing focus on key actions while maintaining performance.",
+        "A component-driven structure makes it easy to add new service pages, testimonials, pricing sections, or booking flows later.",
+      ],
+    },
     duration: "2.5 Weeks",
   },
+
   {
     slug: "brainbox",
     detailHref: "/project-details/brainbox",
@@ -124,12 +167,25 @@ export const projects: Project[] = [
     ],
     tech: ["next", "react", "ts", "tailwind", "motion"],
     leftText: "A tech-forward product launch experience.",
-    images: { primary: p4a, hover: p4b },
-    overview:
-      "BrainBox is a bold product landing page designed with a strong visual identity and clear content hierarchy. The interface leverages high contrast, dark-theme styling, and purposeful motion to highlight key product features. The project prioritizes fast load times and reusable components, making it both visually striking and technically efficient.",
+    images: {
+      primary: p4a,
+      hover: p4b,
+      gallery: [p4a, p4b,p3a, p3b,p2a, p2b, p5a, p5b],
+    },
+    overview: {
+      heading: "Overview",
+      summary:
+        "BrainBox is a bold product landing page built around high contrast visuals and a clear, feature-first story. The goal is to feel modern and confident while staying extremely readable.",
+      details: [
+        "The page uses strong rhythm: sections are structured to highlight product value quickly, with bold headings, tight content grouping, and clear CTAs.",
+        "Motion is purposeful — used to guide attention to feature blocks and transitions without introducing heavy effects that slow rendering.",
+        "The layout is future-ready: you can scale it into a full marketing site by adding pricing, docs, FAQs, and case studies without redesigning the foundation.",
+      ],
+    },
     duration: "10 Days",
   },
-    {
+
+  {
     slug: "portfolio-pro",
     detailHref: "/project-details/portfolio-pro",
     accent: "parrot",
@@ -145,11 +201,24 @@ export const projects: Project[] = [
     ],
     tech: ["next", "react", "ts", "tailwind", "motion"],
     leftText: "A premium portfolio with refined interactions.",
-    images: { primary: p2a, hover: p2b },
-    overview:
-      "Portfolio Pro is a modern, client-focused portfolio website built to present work through structured case studies and refined visual storytelling. The design emphasizes clean typography, smooth animations, and reusable layout sections to ensure consistency and scalability. Performance and maintainability were key priorities, resulting in a polished and professional digital presence.",
+    images: {
+      primary: p2a,
+      hover: p2b,
+      gallery: [p2a, p2b],
+    },
+    overview: {
+      heading: "Overview",
+      summary:
+        "Portfolio Pro is a premium client portfolio that presents work using structured case studies and clean storytelling. The design emphasizes readability first, then motion for polish.",
+      details: [
+        "Sticky-scroll sections create a guided narrative so users understand the project context before seeing the final visuals.",
+        "Typography, spacing, and consistent components keep the experience calm and high-end, even with a lot of content.",
+        "The architecture is designed to scale: adding new case studies, galleries, or a blog can be done without touching core layout rules.",
+      ],
+    },
     duration: "2 Weeks",
   },
+
   {
     slug: "arcadeverse",
     detailHref: "/project-details/arcadeverse",
@@ -166,11 +235,24 @@ export const projects: Project[] = [
     ],
     tech: ["next", "react", "ts", "tailwind", "framer", "shadcn"],
     leftText: "An immersive gaming experience built with motion.",
-    images: { primary: p1a, hover: p1b },
-    overview:
-      "ArcadeVerse is a cinematic gaming website built to deliver an immersive, scroll-driven experience. The project combines responsive layouts with performance-optimized media and motion-based interactions to create visual impact without sacrificing usability. Consistent UI patterns and SEO-friendly structure ensure the site scales effectively across devices and platforms.",
+    images: {
+      primary: p1a,
+      hover: p1b,
+      gallery: [p1a, p1b],
+    },
+    overview: {
+      heading: "Overview",
+      summary:
+        "ArcadeVerse is a cinematic gaming website designed to feel immersive while staying responsive and fast. The experience is scroll-driven: motion supports storytelling without sacrificing usability.",
+      details: [
+        "The layout uses a grid system that adapts well across devices, keeping content readable even when visuals are intense.",
+        "Media is treated performance-first: images are optimized and motion is controlled to avoid jank during scroll.",
+        "The structure is SEO-friendly and scalable, so expanding into a full game studio site (news, releases, team, community) is straightforward.",
+      ],
+    },
     duration: "3 Weeks",
   },
+
   {
     slug: "nivy-studio",
     detailHref: "/project-details/nivy-studio",
@@ -187,9 +269,21 @@ export const projects: Project[] = [
     ],
     tech: ["next", "react", "ts", "tailwind", "shadcn"],
     leftText: "A sleek brand presence with refined visuals.",
-    images: { primary: p5a, hover: p5b },
-    overview:
-      "Nivy Studio is a premium brand website focused on minimalism, visual consistency, and modular design. The project showcases a refined design system with optimized image handling and subtle micro-interactions to enhance user experience. Built with a client-ready structure, it balances aesthetics with maintainable and scalable frontend architecture.",
+    images: {
+      primary: p5a,
+      hover: p5b,
+      gallery: [p5a, p5b],
+    },
+    overview: {
+      heading: "Overview",
+      summary:
+        "Nivy Studio is a premium brand website focused on minimalism and strong visual consistency. The goal is to feel clean and confident, with a modular system that stays client-friendly.",
+      details: [
+        "The design system keeps spacing, typography, and components consistent across the site — making the experience feel polished without being heavy.",
+        "Images are handled carefully for sharp presentation and fast load times, with subtle UI effects that add quality without distraction.",
+        "It’s structured to scale for real client needs: service pages, portfolios, testimonials, and contact flows can be added without redesigning the base.",
+      ],
+    },
     duration: "2 Weeks",
   },
 ];

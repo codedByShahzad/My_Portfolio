@@ -23,8 +23,8 @@ export default function CTASection() {
 
 
         {/* Accent Blobs */}
-        <div className="absolute -left-40 top-1/4 h-[520px] w-[760px] rotate-12 rounded-full bg-white/5 blur-3xl" />
-        <div className="absolute -right-40 top-1/3 h-[520px] w-[760px] -rotate-12 rounded-full bg-white/5 blur-3xl" />
+        <div className="absolute -left-140 top-1/4 h-[520px] w-[760px] rotate-12 rounded-full bg-white/5 blur-3xl" />
+        <div className="absolute -right-140 top-1/3 h-[520px] w-[760px] -rotate-12 rounded-full bg-white/5 blur-3xl" />
       </div>
 
       {/* ================= CONTENT ================= */}

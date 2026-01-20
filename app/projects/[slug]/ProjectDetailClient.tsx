@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -15,6 +15,9 @@ import {
   ShieldCheck,
   Zap,
   LayoutGrid,
+  X,
+  ArrowLeft as ArrowLeftIcon,
+  ArrowRight as ArrowRightIcon,
 } from "lucide-react";
 
 import type { Project, Accent, TechKey } from "@/data/projects";
@@ -78,17 +81,327 @@ const techLabel: Record<TechKey, string> = {
   sanity: "Sanity",
 };
 
-type SectionKey = "overview" | "highlights" | "stack" | "gallery";
+function cn(...classes: Array<string | false | null | undefined>) {
+  return classes.filter(Boolean).join(" ");
+}
+
+/* =======================
+   TECH ICONS (inline SVG)
+======================= */
+
+function SvgWrap({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <span
+      className={[
+        "inline-flex h-7 w-7 items-center justify-center rounded-xl bg-black/35 ring-1 ring-white/10",
+        className ?? "",
+      ].join(" ")}
+      aria-hidden
+    >
+      {children}
+    </span>
+  );
+}
+
+const TechIcon: Record<TechKey, React.FC<{ className?: string }>> = {
+  next: ({ className }) => (
+    <SvgWrap className={className}>
+      <svg viewBox="0 0 128 128" width="18" height="18" fill="none">
+        <path
+          d="M64 3C30.4 3 3 30.4 3 64s27.4 61 61 61 61-27.4 61-61S97.6 3 64 3Z"
+          stroke="currentColor"
+          strokeOpacity="0.45"
+          strokeWidth="6"
+        />
+        <path
+          d="M86.5 92.8 56 49v29.1"
+          stroke="currentColor"
+          strokeWidth="7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M72 79c-7.6 6.4-18.7 5.8-25.5-1.5-6.8-7.2-6.8-18.4 0-25.6C53.3 44.7 64.4 44 72 50.4"
+          stroke="currentColor"
+          strokeOpacity="0.8"
+          strokeWidth="7"
+          strokeLinecap="round"
+        />
+      </svg>
+    </SvgWrap>
+  ),
+  react: ({ className }) => (
+    <SvgWrap className={className}>
+      <svg viewBox="0 0 128 128" width="20" height="20" fill="none">
+        <circle cx="64" cy="64" r="8" fill="currentColor" />
+        <ellipse cx="64" cy="64" rx="48" ry="18" stroke="currentColor" strokeWidth="6" />
+        <ellipse
+          cx="64"
+          cy="64"
+          rx="48"
+          ry="18"
+          stroke="currentColor"
+          strokeWidth="6"
+          transform="rotate(60 64 64)"
+          opacity="0.9"
+        />
+        <ellipse
+          cx="64"
+          cy="64"
+          rx="48"
+          ry="18"
+          stroke="currentColor"
+          strokeWidth="6"
+          transform="rotate(120 64 64)"
+          opacity="0.8"
+        />
+      </svg>
+    </SvgWrap>
+  ),
+  ts: ({ className }) => (
+    <SvgWrap className={className}>
+      <svg viewBox="0 0 128 128" width="20" height="20" fill="none">
+        <rect x="18" y="18" width="92" height="92" rx="18" stroke="currentColor" strokeWidth="6" opacity="0.7" />
+        <path d="M40 56h48M64 56v40" stroke="currentColor" strokeWidth="7" strokeLinecap="round" />
+        <path
+          d="M84 96c8 0 14-4 14-12 0-7-4-10-11-12l-6-2c-3-1-5-2-5-5 0-3 3-5 7-5 4 0 7 1 10 4"
+          stroke="currentColor"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.85"
+        />
+      </svg>
+    </SvgWrap>
+  ),
+  tailwind: ({ className }) => (
+    <SvgWrap className={className}>
+      <svg viewBox="0 0 128 128" width="22" height="22" fill="none">
+        <path
+          d="M28 66c6-24 18-36 36-36 18 0 21 12 30 20 6 6 14 9 24 8-6 24-18 36-36 36-18 0-21-12-30-20-6-6-14-9-24-8Z"
+          stroke="currentColor"
+          strokeWidth="7"
+          strokeLinejoin="round"
+          opacity="0.9"
+        />
+      </svg>
+    </SvgWrap>
+  ),
+  framer: ({ className }) => (
+    <SvgWrap className={className}>
+      <svg viewBox="0 0 128 128" width="18" height="18" fill="none">
+        <path d="M34 26h60v24H58v16h36v36H34V78h36V62H34V26Z" fill="currentColor" opacity="0.9" />
+      </svg>
+    </SvgWrap>
+  ),
+  motion: ({ className }) => (
+    <SvgWrap className={className}>
+      <svg viewBox="0 0 128 128" width="18" height="18" fill="none">
+        <path
+          d="M26 80c10-24 22-36 38-36 18 0 20 16 38 16 10 0 18-4 26-12-10 32-28 54-52 54-20 0-24-22-44-22-2 0-4 0-6 0Z"
+          stroke="currentColor"
+          strokeWidth="7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.9"
+        />
+      </svg>
+    </SvgWrap>
+  ),
+  shadcn: ({ className }) => (
+    <SvgWrap className={className}>
+      <svg viewBox="0 0 128 128" width="18" height="18" fill="none">
+        <path d="M32 96 96 32" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
+        <path d="M44 32h52" stroke="currentColor" strokeOpacity="0.7" strokeWidth="6" strokeLinecap="round" />
+        <path d="M32 84v-8" stroke="currentColor" strokeOpacity="0.7" strokeWidth="6" strokeLinecap="round" />
+      </svg>
+    </SvgWrap>
+  ),
+  sanity: ({ className }) => (
+    <SvgWrap className={className}>
+      <svg viewBox="0 0 128 128" width="18" height="18" fill="none">
+        <path
+          d="M32 84c8 10 18 15 32 15 20 0 32-8 32-22 0-12-10-16-24-18l-10-2c-8-2-12-4-12-9 0-6 6-10 16-10 10 0 18 3 24 9"
+          stroke="currentColor"
+          strokeWidth="7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.9"
+        />
+      </svg>
+    </SvgWrap>
+  ),
+};
+
+/* =======================
+   SECTION SETUP
+======================= */
+
+type SectionKey = "overview" | "highlights" | "gallery";
 
 const sections: { key: SectionKey; label: string }[] = [
   { key: "overview", label: "Overview" },
   { key: "highlights", label: "Highlights" },
-  { key: "stack", label: "Tech" },
   { key: "gallery", label: "Gallery" },
 ];
 
-function cn(...classes: Array<string | false | null | undefined>) {
-  return classes.filter(Boolean).join(" ");
+/* =======================
+   GALLERY (StaticImageData[])
+======================= */
+function getGalleryImages(project: Project): StaticImageData[] {
+  const gallery = project.images?.gallery ?? [];
+  const primary = project.images?.primary ? [project.images.primary] : [];
+  const hover = project.images?.hover ? [project.images.hover] : [];
+  const merged = [...gallery, ...primary, ...hover];
+
+  // De-dupe by src
+  const seen = new Set<string>();
+  const unique: StaticImageData[] = [];
+  for (const img of merged) {
+    const key = (img as any)?.src ?? String(img);
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(img);
+    }
+  }
+
+  return unique;
+}
+
+/* =======================
+   LIGHTBOX (StaticImageData[])
+======================= */
+function Lightbox({
+  open,
+  images,
+  index,
+  onClose,
+  onPrev,
+  onNext,
+  accentLineClass,
+  title,
+}: {
+  open: boolean;
+  images: StaticImageData[];
+  index: number;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+  accentLineClass: string;
+  title: string;
+}) {
+  const img = images[index];
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "ArrowRight") onNext();
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose, onPrev, onNext]);
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <button
+            aria-label="Close preview"
+            onClick={onClose}
+            className="absolute inset-0 cursor-pointer bg-black/70"
+          />
+
+          <motion.div
+            initial={{ y: 16, scale: 0.98, opacity: 0 }}
+            animate={{ y: 0, scale: 1, opacity: 1 }}
+            exit={{ y: 12, scale: 0.98, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full max-w-5xl overflow-hidden rounded-[28px] bg-white/[0.06] ring-1 ring-white/12 backdrop-blur shadow-[0_30px_120px_rgba(0,0,0,0.75)]"
+          >
+            <div className={cn("absolute left-0 top-0 h-1 w-full", accentLineClass)} />
+
+            <div className="flex items-center justify-between gap-3 px-4 py-3 md:px-5">
+              <div className="text-sm font-semibold text-white/85">
+                {title}{" "}
+                <span className="text-white/55">
+                  ({index + 1}/{images.length})
+                </span>
+              </div>
+
+              <button
+                onClick={onClose}
+                className="inline-flex items-center gap-2 rounded-2xl bg-black/35 px-3 py-2 text-sm text-white/80 ring-1 ring-white/10 hover:bg-white/10 hover:text-white"
+              >
+                <X className="h-4 w-4" />
+                Close
+              </button>
+            </div>
+
+            <div className="relative">
+              <div className="relative mx-auto aspect-[16/9] w-full overflow-hidden bg-black/35">
+                {img ? (
+                  <Image
+                    src={img}
+                    alt={`${title} preview ${index + 1}`}
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                ) : null}
+              </div>
+
+              {images.length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onPrev();
+                    }}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 rounded-2xl bg-black/45 p-3 text-white/85 ring-1 ring-white/12 backdrop-blur hover:bg-white/10 hover:text-white"
+                    aria-label="Previous image"
+                  >
+                    <ArrowLeftIcon className="h-5 w-5" />
+                  </button>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onNext();
+                    }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-2xl bg-black/45 p-3 text-white/85 ring-1 ring-white/12 backdrop-blur hover:bg-white/10 hover:text-white"
+                    aria-label="Next image"
+                  >
+                    <ArrowRightIcon className="h-5 w-5" />
+                  </button>
+                </>
+              )}
+            </div>
+
+            <div className="px-4 pb-4 pt-3 md:px-5 md:pb-5">
+              <div className="text-xs text-white/55">
+                Tip: Use ← / → keys to navigate, Esc to close.
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }
 
 export default function ProjectDetailClient({ project }: { project: Project }) {
@@ -97,15 +410,15 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
   const ring = accentRing[project.accent];
   const accentText = accentSolid[project.accent];
 
-  // ✅ TOC highlight by intersection (kept)
+  // ✅ TOC highlight by intersection
   const [activeSection, setActiveSection] = useState<SectionKey>("overview");
-  const refs = useMemo(() => {
-  return sections.reduce((acc, s) => {
-    acc[s.key] = React.createRef<HTMLElement>();
-    return acc;
-  }, {} as Record<SectionKey, React.RefObject<HTMLElement | null>>);
-}, []);
 
+  const refs = useMemo(() => {
+    return sections.reduce((acc, s) => {
+      acc[s.key] = React.createRef<HTMLElement>();
+      return acc;
+    }, {} as Record<SectionKey, React.RefObject<HTMLElement | null>>);
+  }, []);
 
   useEffect(() => {
     const els = sections
@@ -144,8 +457,33 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
     refs[key].current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  // ✅ Single-open accordion
+  // ✅ Single-open accordion (smooth)
   const [openIndex, setOpenIndex] = useState<number>(0);
+
+  // ✅ Gallery
+  const galleryImages = useMemo(() => getGalleryImages(project), [project]);
+  const heroImage = project.images.primary ?? galleryImages[0];
+
+  // ✅ Lightbox
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const openLightbox = (i: number) => {
+    setLightboxIndex(i);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => setLightboxOpen(false);
+
+  const nextImage = () => {
+    if (!galleryImages.length) return;
+    setLightboxIndex((i) => (i + 1) % galleryImages.length);
+  };
+
+  const prevImage = () => {
+    if (!galleryImages.length) return;
+    setLightboxIndex((i) => (i - 1 + galleryImages.length) % galleryImages.length);
+  };
 
   // Small “case study” facts
   const stats = [
@@ -154,11 +492,18 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
     { icon: Zap, label: "Focus", value: "Performance + Clarity" },
   ] as const;
 
+  const galleryGridCols =
+    galleryImages.length <= 1
+      ? "grid-cols-1"
+      : galleryImages.length === 2
+      ? "grid-cols-1 md:grid-cols-2"
+      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+
   return (
     <main className="min-h-screen px-3 lg:px-10 xl:px-20">
       <div className="relative mx-auto w-full">
         {/* =======================
-            HERO SECTION
+            HERO
         ======================= */}
         <section className="mt-8">
           <motion.div
@@ -169,7 +514,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
           >
             <div className="relative h-[420px] md:h-[720px]">
               <Image
-                src={project.images.primary}
+                src={heroImage}
                 alt={`${project.title} hero`}
                 fill
                 priority
@@ -192,7 +537,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 </h1>
 
                 <p
-                  className="mt-2 max-w-3xl text-white/85 leading-relaxed"
+                  className="mt-2 max-w-3xl text-white/85 leading-relaxed whitespace-pre-line"
                   style={{ textShadow: "0 2px 14px rgba(0,0,0,0.45)" }}
                 >
                   {project.subtitle}
@@ -222,7 +567,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
         {/* BODY */}
         <section className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* Left (Content) */}
+          {/* Left */}
           <div className="lg:col-span-8 space-y-8">
             {/* Overview */}
             <motion.section
@@ -235,28 +580,46 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
             >
               <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
+
               <div className="flex items-center gap-3">
                 <div className={cn("h-2 w-10 rounded-full", line)} />
                 <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
-                  Overview
+                  {project.overview.heading}
                 </h2>
               </div>
 
               <p className="mt-4 text-white/75 leading-relaxed">
-                {project.overview}
+                {project.overview.summary}
               </p>
 
-              {/* ✅ Secondary image FIXED (next/image needs fill or width/height) */}
+              {/* Main image */}
               <div className="mt-7 overflow-hidden rounded-[24px] bg-black/30 ring-1 ring-white/10">
                 <div className="p-3 md:p-4">
                   <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl">
                     <Image
-                      src={project.images.hover}
-                      alt={`${project.title} secondary`}
+                      src={heroImage}
+                      alt={`${project.title} main`}
                       fill
                       className="object-cover"
+                      priority
                     />
                   </div>
+                </div>
+              </div>
+
+              {/* Details paragraphs (from data) */}
+              <div className="mt-6 rounded-[24px] bg-black/35 p-5 ring-1 ring-white/10">
+                <div className="flex items-center gap-2 text-sm font-semibold text-white/80">
+                  <Sparkles className="h-4 w-4" />
+                  More Details
+                </div>
+
+                <div className="mt-2 space-y-3">
+                  {project.overview.details.map((para, i) => (
+                    <p key={i} className="text-sm leading-relaxed text-white/70">
+                      {para}
+                    </p>
+                  ))}
                 </div>
               </div>
 
@@ -290,6 +653,32 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                   </div>
                 </div>
               </div>
+
+              {/* Tech stack (icons) */}
+              <div className="mt-7 rounded-[24px] bg-black/35 p-5 ring-1 ring-white/10">
+                <div className="flex items-center gap-2 text-sm font-semibold text-white/80">
+                  <LayoutGrid className="h-4 w-4" />
+                  Tech Stack
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {project.tech.map((t) => {
+                    const Icon = TechIcon[t];
+                    return (
+                      <span
+                        key={t}
+                        className={cn(
+                          "inline-flex items-center gap-2 rounded-2xl bg-black/30 px-3 py-2 text-xs text-white/75 ring-1 ring-white/10",
+                          "shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset]"
+                        )}
+                      >
+                        <Icon className={accentText} />
+                        <span className="font-medium">{techLabel[t]}</span>
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
             </motion.section>
 
             {/* Highlights */}
@@ -303,6 +692,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
             >
               <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
+
               <div className="flex items-center gap-3">
                 <div className={cn("h-2 w-10 rounded-full", line)} />
                 <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
@@ -313,11 +703,16 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               <div className="mt-6 space-y-3">
                 {project.bullets.map((b, idx) => {
                   const isOpen = openIndex === idx;
+
                   return (
-                    <div
+                    <motion.div
                       key={b}
+                      layout
+                      transition={{
+                        layout: { duration: 0.32, ease: [0.22, 1, 0.36, 1] },
+                      }}
                       className={cn(
-                        "relative overflow-hidden rounded-[22px] ring-1 transition",
+                        "relative overflow-hidden rounded-[22px] ring-1",
                         isOpen
                           ? cn("bg-white/10 ring-white/15", ring)
                           : "bg-black/30 ring-white/10 hover:bg-white/8"
@@ -326,7 +721,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-transparent opacity-60" />
 
                       <button
-                        onClick={() => setOpenIndex(idx)}
+                        onClick={() =>
+                          setOpenIndex((prev) => (prev === idx ? -1 : idx))
+                        }
                         className="relative flex w-full items-center justify-between gap-4 px-4 py-4 text-left md:px-5"
                       >
                         <div className="flex items-center gap-3">
@@ -343,100 +740,63 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
                         <motion.span
                           animate={{ rotate: isOpen ? 180 : 0 }}
-                          transition={{ duration: 0.25 }}
+                          transition={{
+                            duration: 0.22,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
                           className="text-white/75"
                         >
                           <ChevronDown className="h-5 w-5" />
                         </motion.span>
                       </button>
 
-                      <AnimatePresence initial={false}>
+                      <AnimatePresence initial={false} mode="wait">
                         {isOpen && (
                           <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
+                            key="content"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
                             transition={{
-                              duration: 0.32,
+                              duration: 0.28,
                               ease: [0.22, 1, 0.36, 1],
                             }}
-                            className="relative px-5 pb-5"
+                            className="overflow-hidden"
                           >
-                            <div className="rounded-2xl bg-black/35 p-4 ring-1 ring-white/10">
-                              <p className="text-sm leading-relaxed text-white/70">
-                                This highlight supports the case-study goal:{" "}
-                                <span className="font-semibold text-white/85">
-                                  clarity + smooth interaction
-                                </span>
-                                . Add 1–2 lines of specifics here (what you
-                                improved, why it matters, and the UX impact).
-                              </p>
+                            <div className="relative px-5 pb-5">
+                              <div className="rounded-2xl bg-black/35 p-4 ring-1 ring-white/10">
+                                <p className="text-sm leading-relaxed text-white/70">
+                                  Replace this placeholder later with specific
+                                  outcomes, improvements, and measurable impact
+                                  for:{" "}
+                                  <span className="font-semibold text-white/85">
+                                    {b}
+                                  </span>
+                                  .
+                                </p>
 
-                              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-white/60">
-                                <span className="inline-flex items-center rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
-                                  <Dot className="h-4 w-4" />
-                                  UX hierarchy
-                                </span>
-                                <span className="inline-flex items-center rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
-                                  <Dot className="h-4 w-4" />
-                                  Micro-interactions
-                                </span>
-                                <span className="inline-flex items-center rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
-                                  <Dot className="h-4 w-4" />
-                                  Scalable layout
-                                </span>
+                                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-white/60">
+                                  <span className="inline-flex items-center rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
+                                    <Dot className="h-4 w-4" />
+                                    UX hierarchy
+                                  </span>
+                                  <span className="inline-flex items-center rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
+                                    <Dot className="h-4 w-4" />
+                                    Micro-interactions
+                                  </span>
+                                  <span className="inline-flex items-center rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
+                                    <Dot className="h-4 w-4" />
+                                    Scalable layout
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </motion.div>
                         )}
                       </AnimatePresence>
-                    </div>
+                    </motion.div>
                   );
                 })}
-              </div>
-            </motion.section>
-
-            {/* Tech Stack */}
-            <motion.section
-              ref={refs.stack as any}
-              data-section="stack"
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
-            >
-              <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
-              <div className="flex items-center gap-3">
-                <div className={cn("h-2 w-10 rounded-full", line)} />
-                <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
-                  Tech Stack
-                </h2>
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                  <span
-                    key={t}
-                    className={cn(
-                      "inline-flex items-center rounded-full bg-black/30 px-3 py-1 text-xs text-white/70 ring-1 ring-white/10",
-                      "shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset]"
-                    )}
-                  >
-                    {techLabel[t]}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-6 rounded-2xl bg-black/35 p-4 ring-1 ring-white/10">
-                <div className="flex items-center gap-2 text-sm text-white/70">
-                  <Sparkles className="h-4 w-4" />
-                  Implementation style
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-white/70">
-                  Modular UI sections + clean hierarchy + motion for focus —
-                  designed to stay readable while feeling premium.
-                </p>
               </div>
             </motion.section>
 
@@ -451,6 +811,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
             >
               <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
+
               <div className="flex items-center gap-3">
                 <div className={cn("h-2 w-10 rounded-full", line)} />
                 <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
@@ -458,47 +819,50 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 </h2>
               </div>
 
-              <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-                {[project.images.primary, project.images.hover].map((img, i) => (
-                  <div
-                    key={i}
-                    className="group relative overflow-hidden rounded-[24px] bg-black/30 ring-1 ring-white/10"
-                  >
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent opacity-70" />
-                    <div className="p-3 md:p-4">
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 160,
-                          damping: 16,
-                        }}
-                        className="relative overflow-hidden rounded-2xl"
-                      >
-                        {/* ✅ Gallery image FIXED */}
-                        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl">
-                          <Image
-                            src={img}
-                            alt={`${project.title} gallery ${i + 1}`}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
+              {galleryImages.length ? (
+                <div className={cn("mt-6 grid gap-4", galleryGridCols)}>
+                  {galleryImages.map((img, i) => (
+                    <button
+                      key={`${(img as any)?.src ?? i}`}
+                      type="button"
+                      onClick={() => openLightbox(i)}
+                      className="group relative overflow-hidden rounded-[24px] bg-black/30 ring-1 ring-white/10 text-left"
+                    >
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent opacity-70" />
 
-                        <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-                          <div className="absolute inset-0 bg-black/25" />
-                          <div
-                            className={cn(
-                              "absolute left-0 top-0 h-1 w-full",
-                              line
-                            )}
-                          />
-                        </div>
-                      </motion.div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                      <div className="p-3 md:p-4">
+                        <motion.div
+                          whileHover={{ scale: 1.02 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 170,
+                            damping: 18,
+                          }}
+                          className="relative overflow-hidden rounded-2xl"
+                        >
+                          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl">
+                            <Image
+                              src={img}
+                              alt={`${project.title} gallery ${i + 1}`}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+
+                          <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
+                            <div className="absolute inset-0 bg-black/25" />
+                            <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
+                          </div>
+                        </motion.div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-6 rounded-2xl bg-black/35 p-4 ring-1 ring-white/10 text-sm text-white/70">
+                  No gallery images found.
+                </div>
+              )}
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <Link
@@ -576,20 +940,14 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 </div>
               </div>
 
-              {/* ✅ ACTIVE SECTION HIGHLIGHT + QUICK ACTIONS */}
+              {/* QUICK ACTIONS */}
               <div className="rounded-[28px] bg-white/[0.06] p-5 ring-1 ring-white/10 backdrop-blur">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs font-semibold tracking-wide text-white/70">
                     <Sparkles className="h-4 w-4" />
                     QUICK ACTIONS
                   </div>
-                  <span
-                    className={cn(
-                      "text-xs font-semibold",
-                      accentText,
-                      "opacity-90"
-                    )}
-                  >
+                  <span className={cn("text-xs font-semibold", accentText, "opacity-90")}>
                     {sections.find((s) => s.key === activeSection)?.label}
                   </span>
                 </div>
@@ -618,7 +976,19 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
           </div>
         </section>
 
-        {/* Subtle glow (optional) */}
+        {/* Lightbox */}
+        <Lightbox
+          open={lightboxOpen}
+          images={galleryImages}
+          index={lightboxIndex}
+          onClose={closeLightbox}
+          onPrev={prevImage}
+          onNext={nextImage}
+          accentLineClass={line}
+          title={project.title}
+        />
+
+        {/* Subtle glow */}
         <div
           aria-hidden
           className={cn(

@@ -8,11 +8,12 @@ import { StarsBackground } from "@/components/ui/stars-background";
 
 const IndustriesSection = () => {
   return (
-    <section className="relative px-2 lg:px-10 xl:px-20 py-16 overflow-hidden">
+    <section className="relative px-2 lg:px-10 xl:px-20 py-16 overflow-hidden bg-black">
       {/* BACKGROUND LAYERS (behind everything) */}
       <StarsBackground className="absolute inset-0 z-0 pointer-events-none" />
       <ShootingStars className="absolute inset-0 z-10 pointer-events-none" />
 
+        <div className="absolute -bottom-50 -left-120 h-[750px] w-[380px] md:w-[580px] xl:w-[980px] rounded-full bg-primary/10 blur-3xl" />
       
       {/* CONTENT */}
       <div className="relative z-20">

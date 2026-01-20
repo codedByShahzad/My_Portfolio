@@ -3,12 +3,13 @@
 import React, { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { projects, Project, TechKey } from "@/data/projects";
-import { motion, Variants } from "framer-motion";
+import { projects, type Project, type TechKey } from "@/data/projects";
+import { motion, type Variants } from "framer-motion";
 
 /* =======================
    ICONS
 ======================= */
+
 import {
   SiNextdotjs,
   SiReact,
@@ -27,14 +28,14 @@ import ArrowSwapButton from "@/components/ui/ArrowButton";
    TECH ICON MAP
 ======================= */
 const techIcons: Record<TechKey, React.ReactNode> = {
-  next: <SiNextdotjs className="w-4 h-4" />,
-  react: <SiReact className="w-4 h-4 text-cyan-400" />,
-  ts: <SiTypescript className="w-4 h-4 text-blue-500" />,
-  tailwind: <SiTailwindcss className="w-4 h-4 text-sky-400" />,
-  framer: <SiFramer className="w-4 h-4 text-pink-400" />,
-  motion: <TbArrowsShuffle className="w-4 h-4 text-fuchsia-400" />,
-  shadcn: <SquareStack className="w-4 h-4 text-white/80" />,
-  sanity: <SiSanity className="w-4 h-4 text-red-500" />,
+  next: <SiNextdotjs className="h-4 w-4" />,
+  react: <SiReact className="h-4 w-4 text-cyan-400" />,
+  ts: <SiTypescript className="h-4 w-4 text-blue-500" />,
+  tailwind: <SiTailwindcss className="h-4 w-4 text-sky-400" />,
+  framer: <SiFramer className="h-4 w-4 text-pink-400" />,
+  motion: <TbArrowsShuffle className="h-4 w-4 text-fuchsia-400" />,
+  shadcn: <SquareStack className="h-4 w-4 text-white/80" />,
+  sanity: <SiSanity className="h-4 w-4 text-red-500" />,
 };
 
 /* =======================
@@ -46,10 +47,7 @@ const accentGradient: Record<Project["accent"], string> = {
   green: "bg-gradient-to-b from-emerald-500/90 to-emerald-700/95",
   orange: "bg-gradient-to-b from-amber-500/90 to-orange-600/95",
   blue: "bg-gradient-to-b from-blue-600/90 to-indigo-700/95",
-
-  // ✅ UPDATED PARROT (neon lime)
   parrot: "bg-gradient-to-b from-lime-400 via-green-400 to-emerald-500",
-
   sandy: "bg-gradient-to-b from-yellow-500/85 to-amber-700/90",
   red: "bg-gradient-to-b from-rose-600/90 to-red-700/95",
 };
@@ -60,10 +58,7 @@ const accentDot: Record<Project["accent"], string> = {
   green: "bg-emerald-400",
   orange: "bg-amber-400",
   blue: "bg-blue-400",
-
-  // ✅ UPDATED PARROT
   parrot: "bg-lime-500",
-
   sandy: "bg-amber-300",
   red: "bg-rose-400",
 };
@@ -90,9 +85,21 @@ interface ProjectsSectionProps {
   showCTA?: boolean;
 }
 
+/* =======================
+   HELPERS
+======================= */
+function getOverviewText(project: Project): string {
+  // ✅ New shape: overview object
+  if (project.overview && typeof project.overview === "object") {
+    return project.overview.summary;
+  }
+
+  // (fallback for old data if you ever keep it)
+  return String((project as any).overview ?? "");
+}
+
 function ProjectRow({ project, index }: { project: Project; index: number }) {
-  // optional if you add later
-  const duration = (project as any)?.duration as string | undefined;
+  const duration = project.duration;
 
   return (
     <motion.div
@@ -101,7 +108,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.25 }}
-      className="grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-8 lg:gap-12 items-start"
+      className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-12"
     >
       {/* LEFT: Image Card */}
       <Link
@@ -112,13 +119,15 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
         <div className={`absolute inset-0 ${accentGradient[project.accent]}`} />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_circle_at_12%_10%,rgba(255,255,255,0.18),transparent_55%)]" />
 
-        {/* top subtitle + arrow (like reference) */}
+        {/* top subtitle + arrow */}
         <div className="relative z-[2] flex items-start justify-between gap-6 p-6 sm:p-7">
-          <div className="rounded-2xl bg-black/40 backdrop-blur-md px-5 py-3">
-            <p className="text-white font-medium">{project.subtitle}</p>
+          <div className="rounded-2xl bg-black/40 px-5 py-3 backdrop-blur-md">
+            <p className="whitespace-pre-line font-medium text-white">
+              {project.subtitle}
+            </p>
           </div>
 
-          <span className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-white/10 text-white/80 backdrop-blur-md transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+          <span className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-white/10 text-white/80 backdrop-blur-md transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
             <ArrowUpRight className="h-5 w-5" />
           </span>
         </div>
@@ -126,7 +135,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
         {/* image swap on hover */}
         <div className="relative z-[2] px-6 pb-6 sm:px-7 sm:pb-7">
           <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[22px] border border-white/10 bg-black/25">
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent z-[3]" />
+            <div className="absolute inset-0 z-[3] bg-gradient-to-t from-black/55 via-black/15 to-transparent" />
 
             <Image
               src={project.images.primary}
@@ -135,14 +144,16 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
               priority={index === 0}
               className="object-cover object-top transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-0"
             />
-            <Image
-              src={project.images.hover}
-              alt={`${project.title} hover`}
-              fill
-              className="object-cover object-top opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:scale-[1.03]"
-            />
+            {project.images.hover && (
+              <Image
+                src={project.images.hover}
+                alt={`${project.title} hover`}
+                fill
+                className="object-cover object-top opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:scale-[1.03]"
+              />
+            )}
 
-            <div className="absolute left-5 bottom-5 z-[4] flex items-center gap-2 rounded-full border border-white/12 bg-black/35 px-3 py-1.5 text-xs text-white/75 backdrop-blur-md">
+            <div className="absolute bottom-5 left-5 z-[4] flex items-center gap-2 rounded-full border border-white/12 bg-black/35 px-3 py-1.5 text-xs text-white/75 backdrop-blur-md">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/70" />
               View details
             </div>
@@ -151,25 +162,24 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
       </Link>
 
       {/* RIGHT: Details */}
-      <div className="rounded-[28px] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 sm:p-7">
+      <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl sm:p-7">
         <div className="flex items-center gap-3">
-          <span
-            className={`h-[2px] w-7 rounded-full ${accentDot[project.accent]}`}
-          />
-          <span className="text-xs tracking-[0.25em] uppercase text-white/55">
+          <span className={`h-[2px] w-7 rounded-full ${accentDot[project.accent]}`} />
+          <span className="text-xs uppercase tracking-[0.25em] text-white/55">
             {project.leftText ?? "Case Study"}
           </span>
         </div>
 
-        <h3 className="mt-4 text-3xl font-semibold text-white tracking-tight">
+        <h3 className="mt-4 text-3xl font-semibold tracking-tight text-white">
           {project.title}
         </h3>
 
-        <p className="mt-3 text-sm sm:text-base text-white/60 leading-relaxed">
-          {project.overview}
+        {/* ✅ FIXED: overview is now an object */}
+        <p className="mt-3 text-sm leading-relaxed text-white/60 sm:text-base">
+          {getOverviewText(project)}
         </p>
 
-        {/* duration (optional) */}
+        {/* duration */}
         <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70">
           <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
           Duration: <span className="text-white/85">{duration ?? "—"}</span>
@@ -179,10 +189,8 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
         <div className="mt-6 space-y-3">
           {project.bullets.slice(0, 6).map((t, i) => (
             <div key={i} className="flex gap-3">
-              <span
-                className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${accentDot[project.accent]}`}
-              />
-              <p className="text-sm text-white/65 leading-relaxed">{t}</p>
+              <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${accentDot[project.accent]}`} />
+              <p className="text-sm leading-relaxed text-white/65">{t}</p>
             </div>
           ))}
         </div>
@@ -195,12 +203,11 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
               className="flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-white/75"
             >
               {techIcons[tech]}
-              {tech}
+              <span className="leading-none">{tech}</span>
             </div>
           ))}
         </div>
 
-        {/* button */}
         {/* button */}
         <div className="mt-7">
           <ArrowSwapButton
@@ -220,33 +227,33 @@ export default function ProjectsSection({
 }: ProjectsSectionProps) {
   const visibleProjects = useMemo(
     () => (limit ? projects.slice(0, limit) : projects),
-    [limit],
+    [limit]
   );
 
   return (
-    <section className="relative px-4 md:px-12 lg:px-20 xl:px-32 py-20 ">
+    <section className="relative px-4 py-20 md:px-12 lg:px-20 xl:px-32">
       {/* Header */}
       <motion.div
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.4 }}
-        className="relative flex flex-col items-center mb-14 md:mb-18 text-center"
+        className="relative mb-14 flex flex-col items-center text-center md:mb-18"
       >
         <HoverBorderGradient
           containerClassName="rounded-full"
-          className="bg-white/5 text-white border border-white/10 backdrop-blur-md"
+          className="border border-white/10 bg-white/5 text-white backdrop-blur-md"
         >
-          <p className="text-xs sm:text-sm tracking-[0.25em] text-white/65 uppercase">
+          <p className="text-xs uppercase tracking-[0.25em] text-white/65 sm:text-sm">
             Featured Case Studies
           </p>
         </HoverBorderGradient>
 
-        <h2 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-semibold text-white tracking-tight">
+        <h2 className="mt-5 text-4xl font-semibold tracking-tight text-white sm:text-5xl md:text-6xl">
           Curated Work
         </h2>
 
-        <p className="mt-4 max-w-2xl text-sm sm:text-base text-white/55 leading-relaxed">
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/55 sm:text-base">
           A selection of high-impact builds — crafted with clean UI systems,
           strong performance, and production-ready architecture.
         </p>
@@ -261,12 +268,8 @@ export default function ProjectsSection({
 
       {/* CTA */}
       {showCTA && (
-        <div className="relative mt-16 md:mt-20 flex justify-center">
-          <ArrowSwapButton
-            label="All Projects"
-            href="/projects"
-            className="bg-primary text-white"
-          />
+        <div className="relative mt-16 flex justify-center md:mt-20">
+          <ArrowSwapButton label="All Projects" href="/projects" className="bg-primary text-white" />
         </div>
       )}
     </section>
