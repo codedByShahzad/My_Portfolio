@@ -331,7 +331,7 @@ function Lightbox({
             animate={{ y: 0, scale: 1, opacity: 1 }}
             exit={{ y: 12, scale: 0.98, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-5xl overflow-hidden rounded-[28px] bg-white/[0.06] ring-1 ring-white/12 backdrop-blur shadow-[0_30px_120px_rgba(0,0,0,0.75)]"
+            className="relative w-full max-w-5xl overflow-hidden rounded-[28px] bg-white/6 ring-1 ring-white/12 backdrop-blur shadow-[0_30px_120px_rgba(0,0,0,0.75)]"
           >
             <div className={cn("absolute left-0 top-0 h-1 w-full", accentLineClass)} />
 
@@ -353,7 +353,7 @@ function Lightbox({
             </div>
 
             <div className="relative">
-              <div className="relative mx-auto aspect-[16/9] w-full overflow-hidden bg-black/35">
+              <div className="relative mx-auto aspect-video w-full overflow-hidden bg-black/35">
                 {img ? (
                   <Image
                     src={img}
@@ -510,7 +510,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative overflow-hidden rounded-[28px] bg-white/[0.06] ring-1 ring-white/10 backdrop-blur shadow-[0_20px_80px_rgba(0,0,0,0.55)]"
+            className="relative overflow-hidden rounded-[28px] bg-white/6 ring-1 ring-white/10 backdrop-blur shadow-[0_20px_80px_rgba(0,0,0,0.55)]"
           >
             <div className="relative h-[420px] md:h-[720px]">
               <Image
@@ -523,8 +523,8 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
               <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute inset-0 bg-black/15" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 h-[55%] bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/40 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 h-[55%] bg-linear-to-t from-black/90 via-black/45 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 h-[45%] backdrop-blur-[2px]" />
               </div>
 
@@ -554,7 +554,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
                   <Link
                     href={project.detailHref}
-                    className="inline-flex items-center gap-2 rounded-2xl bg-white/[0.08] px-4 py-2 text-sm text-white/90 ring-1 ring-white/12 backdrop-blur transition hover:bg-white/[0.12]"
+                    className="inline-flex items-center gap-2 rounded-2xl bg-white/8 px-4 py-2 text-sm text-white/90 ring-1 ring-white/12 backdrop-blur transition hover:bg-white/12"
                   >
                     Open Route
                     <ExternalLink className="h-4 w-4" />
@@ -577,7 +577,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
+              className="relative overflow-hidden rounded-[28px] bg-white/6 p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
             >
               <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
 
@@ -976,7 +976,6 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
           </div>
         </section>
 
-        {/* Lightbox */}
         <Lightbox
           open={lightboxOpen}
           images={galleryImages}
