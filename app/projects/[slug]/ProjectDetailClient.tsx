@@ -655,7 +655,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               </div>
 
               {/* Tech stack (icons) */}
-              <div className="mt-7 rounded-[24px] bg-black/35 p-5 ring-1 ring-white/10">
+              <div className="mt-7 rounded-3xl bg-black/35 p-5 ring-1 ring-white/10">
                 <div className="flex items-center gap-2 text-sm font-semibold text-white/80">
                   <LayoutGrid className="h-4 w-4" />
                   Tech Stack
