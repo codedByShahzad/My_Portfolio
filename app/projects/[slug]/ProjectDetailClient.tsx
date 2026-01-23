@@ -689,7 +689,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="relative overflow-hidden rounded-[28px] bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
+              className="relative overflow-hidden rounded-[28px] bg-white/6 p-6 ring-1 ring-white/10 backdrop-blur md:p-8"
             >
               <div className={cn("absolute left-0 top-0 h-1 w-full", line)} />
 
