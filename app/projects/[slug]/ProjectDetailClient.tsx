@@ -275,7 +275,7 @@ function getGalleryImages(project: Project): StaticImageData[] {
 }
 
 /* =======================
-   LIGHTBOX (StaticImageData[])
+   
 ======================= */
 function Lightbox({
   open,
