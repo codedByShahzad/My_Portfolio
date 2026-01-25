@@ -145,7 +145,7 @@ const Footer = () => {
                 <li>
                   <a
                     href="mailto:mr.shahzad.developer@gmail.com"
-                    className="hover:text-white transition break-words"
+                    className="hover:text-white transition wrap-break-word"
                   >
                     mr.shahzad.developer@gmail.com
                   </a>
