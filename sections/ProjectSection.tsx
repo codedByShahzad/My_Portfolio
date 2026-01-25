@@ -143,7 +143,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
                 alt={project.title}
                 fill
                 priority={index === 0}
-                className="object-cover object-top transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-0"
+                className="object-fit object-top transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-0"
               />
 
               {project.images.hover && (
@@ -151,7 +151,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
                   src={project.images.hover}
                   alt={`${project.title} hover`}
                   fill
-                  className="object-cover object-top opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:scale-[1.03]"
+                  className="object-fit object-top opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:scale-[1.03]"
                 />
               )}
 
