@@ -6,6 +6,7 @@ import ArrowSwapButton from "@/components/ui/ArrowButton";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import p1 from "../public/images/projectLaptop.png";
 import p2 from "../public/images/projectMobile.png";
+import profile from "../public/images/Profile Image.png";
 
 export default function HeroSection() {
   // ✅ Fix hydration mismatch by rendering the badge only after client mounts
@@ -16,35 +17,54 @@ export default function HeroSection() {
     <section className="relative min-h-screen px-3 lg:px-10 xl:px-20 overflow-hidden">
       {/* Centered layout */}
       <div className="relative flex flex-col items-center text-center">
-        <div className="flex justify-center items-center gap-2 mt-5">
-          {/* Badge */}
-          {mounted ? (
-            <HoverBorderGradient
-              containerClassName="rounded-full "
-              className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-            >
-              <div className="flex justify-center items-center gap-2">
-                <span className="text-sm md:text-base font-semibold">
-                  <span className="hidden md:inline-block">Hi there,</span> I am
-                  Shahzad
-                </span>
-                <div className="w-2 h-2 md:w-3 md:h-3 bg-linear-to-r from-primary to-purple-600 rounded-full" />
-                <span className="text-xs md:text-base font-semibold">
-                  Full Stack Developer
-                </span>
-              </div>
-            </HoverBorderGradient>
-          ) : (
-            // Placeholder to keep layout stable before mount (prevents flicker)
-            <div className="h-11 md:h-12" aria-hidden="true" />
-          )}
+ <div className="flex justify-center items-center mt-5 z-50">
+  {mounted ? (
+    <HoverBorderGradient
+      containerClassName="rounded-full"
+      className="bg-background/60 text-white backdrop-blur-md"
+    >
+      {/* IMPORTANT: Only inner layout is grid */}
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center px-0 md:px-4 ">
+        
+        {/* Left text */}
+        <div className="flex justify-end">
+          <span className="text-sm md:text-base font-semibold whitespace-nowrap">
+           Hi <span className="inline-block md:hidden">,{" "}</span> <span className="hidden md:inline-block">there,</span> I'm Shahzad
+          </span>
         </div>
+
+        {/* Avatar (center, overlapping top & bottom of pill) */}
+        <div className="-my-4 mx-4 z-[1000px]">
+          <div className="h-14 w-14 rounded-full  bg-linear-to-r from-primary to-purple-600 p-0.5 ">
+            <div className="h-full w-full rounded-full bg-black overflow-hidden">
+              <Image
+                src={profile}
+                alt="Shahzad"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Right text */}
+        <div className="flex justify-start">
+          <span className="text-sm md:text-base font-semibold whitespace-nowrap">
+            Full Stack Developer
+          </span>
+        </div>
+      </div>
+    </HoverBorderGradient>
+  ) : (
+    <div className="h-11 md:h-12" aria-hidden="true" />
+  )}
+</div>
+
+
 
         {/* Title + subtitle */}
         <div className="mt-8 md:max-w-6xl space-y-4">
           <h1 className="text-balance text-4xl font-bold text-white md:text-4xl lg:text-5xl leading-tight">
-            Helping founders turn ideas{" "}
-            <br className="hidden lg:block" />
+            Helping founders turn ideas <br className="hidden lg:block" />
             <span className="inline md:block">
               into{" "}
               <span className="bg-linear-to-r from-primary to-purple-600 bg-clip-text text-transparent">
