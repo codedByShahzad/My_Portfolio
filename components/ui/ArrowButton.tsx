@@ -25,14 +25,14 @@ export default function ArrowSwapButton({
   label = "Check it out",
   href,
   className = "",
-  direction = "auto",
+  direction = "up-right", // ✅ CHANGED: default no longer auto
   style,
 }: {
   label?: string;
   href?: string;
   className?: string;
   direction?: DirectionMode;
-  style?: React.CSSProperties; // ✅ FIX
+  style?: React.CSSProperties;
 }) {
   const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const [dir, setDir] = useState<Dir>("up-right");
@@ -85,7 +85,6 @@ export default function ArrowSwapButton({
       whileHover="hover"
       className={[
         "group inline-flex items-center gap-3 rounded-full",
-        
         "px-6 py-3 font-medium",
         "shadow-[0_10px_40px_rgba(0,0,0,0.35)]",
         "overflow-hidden select-none",

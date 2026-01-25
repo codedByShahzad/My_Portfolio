@@ -89,7 +89,7 @@ export const projects: Project[] = [
     accent: "purple",
     title: "CryptoPlays",
     subtitle:
-      "A crypto tracking dashboard.\nDesigned for speed, clarity, and daily use.",
+      "A crypto tracking dashboard. Designed for speed, clarity, and daily use.",
     bullets: [
       "Clear data hierarchy",
       "Reusable dashboard widgets",
@@ -123,7 +123,7 @@ export const projects: Project[] = [
     accent: "green",
     title: "Hā Wellness",
     subtitle:
-      "A calm wellness platform.\nDesigned for clarity, conversion, and comfort.",
+      "A calm wellness platform. Designed for clarity, conversion, and comfort.",
     bullets: [
       "Conversion-focused layout",
       "Mobile-first UX",
@@ -157,7 +157,7 @@ export const projects: Project[] = [
     accent: "pink",
     title: "BrainBox",
     subtitle:
-      "A bold product landing page.\nHigh contrast visuals with clean hierarchy.",
+      "A bold product landing page. High contrast visuals with clean hierarchy.",
     bullets: [
       "Dark-theme optimized UI",
       "Strong visual rhythm",
@@ -191,7 +191,7 @@ export const projects: Project[] = [
     accent: "parrot",
     title: "Portfolio Pro",
     subtitle:
-      "A modern portfolio crafted for a client.\nClean typography, smooth motion, and structured case studies.",
+      "A modern portfolio crafted for a client. Clean typography, smooth motion, and structured case studies.",
     bullets: [
       "Sticky-scroll storytelling",
       "Reusable sections",
@@ -225,7 +225,7 @@ export const projects: Project[] = [
     accent: "orange",
     title: "ArcadeVerse",
     subtitle:
-      "A cinematic gaming website.\nScroll-driven visuals with immersive motion.",
+      "A cinematic gaming website. Scroll-driven visuals with immersive motion.",
     bullets: [
       "Cinematic scroll animations",
       "Responsive grid system",
@@ -259,7 +259,7 @@ export const projects: Project[] = [
     accent: "blue",
     title: "Nivy Studio",
     subtitle:
-      "A premium brand website.\nMinimal, modular, and visually consistent.",
+      "A premium brand website. Minimal, modular, and visually consistent.",
     bullets: [
       "Modular UI sections",
       "Optimized image handling",

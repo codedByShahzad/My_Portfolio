@@ -12,9 +12,9 @@ const HomePage = () => {
     <div className='mt-2 sm:mt-10 '>
 
       <HeroSection />
-    {/* <ProjectsSection limit={3} showCTA />
+    <ProjectsSection limit={3} showCTA />
 
-    <SkillsSection />
+    {/* <SkillsSection />
     <AboutMeSection />
 
 
