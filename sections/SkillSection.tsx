@@ -41,11 +41,6 @@ type SkillGroup = {
   skills: Skill[];
 };
 
-/**
- * ✅ TS FIX:
- * Explicitly type variants as `Variants` (or `satisfies Variants`)
- * so `initial="hidden"` / `whileInView="show"` keys are recognized.
- */
 const floatVariants = {
   initial: { y: 0 },
   animate: {
@@ -77,27 +72,11 @@ const groups: SkillGroup[] = [
     skills: [
       { name: "HTML5", icon: <SiHtml5 className="h-5 w-5" />, level: "Advanced" },
       { name: "CSS3", icon: <SiCss3 className="h-5 w-5" />, level: "Advanced" },
-      {
-        name: "JavaScript",
-        icon: <SiJavascript className="h-5 w-5" />,
-        level: "Advanced",
-      },
-      {
-        name: "Tailwind CSS",
-        icon: <SiTailwindcss className="h-5 w-5" />,
-        level: "Advanced",
-      },
-      {
-        name: "React / React Native",
-        icon: <SiReact className="h-5 w-5" />,
-        level: "Advanced",
-      },
+      { name: "JavaScript", icon: <SiJavascript className="h-5 w-5" />, level: "Advanced" },
+      { name: "Tailwind CSS", icon: <SiTailwindcss className="h-5 w-5" />, level: "Advanced" },
+      { name: "React / React Native", icon: <SiReact className="h-5 w-5" />, level: "Advanced" },
       { name: "Next.js", icon: <SiNextdotjs className="h-5 w-5" />, level: "Advanced" },
-      {
-        name: "TypeScript",
-        icon: <SiTypescript className="h-5 w-5" />,
-        level: "Advanced",
-      },
+      { name: "TypeScript", icon: <SiTypescript className="h-5 w-5" />, level: "Advanced" },
       { name: "Webflow", icon: <SiWebflow className="h-5 w-5" />, level: "Intermediate" },
     ],
   },
@@ -109,11 +88,7 @@ const groups: SkillGroup[] = [
       { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" />, level: "Advanced" },
       { name: "Express", icon: <SiExpress className="h-5 w-5" />, level: "Advanced" },
       { name: "MongoDB", icon: <SiMongodb className="h-5 w-5" />, level: "Advanced" },
-      {
-        name: "SQL / PostgreSQL",
-        icon: <SiPostgresql className="h-5 w-5" />,
-        level: "Intermediate",
-      },
+      { name: "SQL / PostgreSQL", icon: <SiPostgresql className="h-5 w-5" />, level: "Intermediate" },
       { name: "Auth / JWT", icon: <ShieldCheck className="h-5 w-5" />, level: "Intermediate" },
       { name: "REST APIs", icon: <GitBranch className="h-5 w-5" />, level: "Advanced" },
       { name: "Firebase", icon: <SiFirebase className="h-5 w-5" />, level: "Intermediate" },
@@ -129,11 +104,7 @@ const groups: SkillGroup[] = [
       { name: "Slack", icon: <SiSlack className="h-5 w-5" />, level: "Intermediate" },
       { name: "Postman", icon: <SiPostman className="h-5 w-5" />, level: "Intermediate" },
       { name: "Testing / Jest", icon: <SiJest className="h-5 w-5" />, level: "Intermediate" },
-      {
-        name: "Figma / Design Tools",
-        icon: <SiFigma className="h-5 w-5" />,
-        level: "Intermediate",
-      },
+      { name: "Figma / Design Tools", icon: <SiFigma className="h-5 w-5" />, level: "Intermediate" },
       { name: "ESLint / Prettier", icon: <SiEslint className="h-5 w-5" />, level: "Advanced" },
     ],
   },
@@ -154,29 +125,28 @@ const groups: SkillGroup[] = [
 
 const SkillSection = () => {
   return (
-    <section className="relative w-full px-4 lg:px-10 xl:px-20 py-20">
+    <section className="relative w-full px-4 lg:px-10 xl:px-20 py-12 sm:py-16 overflow-hidden">
+      {/* ✅ constrain width for large screens */}
       <div className="mx-auto">
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center text-center">
           {/* Top label */}
-          <div className="flex items-center">
-            <HoverBorderGradient
-              containerClassName="rounded-full"
-              className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-            >
-              <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
-                My Skills
-              </p>
-            </HoverBorderGradient>
-          </div>
+          <HoverBorderGradient
+            containerClassName="rounded-full"
+            className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+          >
+            <p className="px-1 text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
+              My Skills
+            </p>
+          </HoverBorderGradient>
 
           {/* Heading */}
-          <h2 className="mt-4 text-4xl font-semibold font-serif leading-[1.15] md:text-5xl text-white">
+          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif leading-[1.15] text-white">
             The Secret <span className="text-fuchsia-500 italic">Sauce</span>
           </h2>
 
-          <p className="mt-3 max-w-2xl text-white/60 text-center leading-relaxed">
-            A modern stack for building fast, scalable web apps — from UI to APIs, databases,
-            and essential developer tools.
+          <p className="mt-3 max-w-2xl text-sm sm:text-base text-white/60 leading-relaxed">
+            A modern stack for building fast, scalable web apps — from UI to APIs,
+            databases, and essential developer tools.
           </p>
         </div>
 
@@ -186,38 +156,42 @@ const SkillSection = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5"
+          className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5"
         >
           {groups.map((group) => (
             <motion.div
               key={group.title}
               variants={itemVariants}
-              className={`relative overflow-hidden rounded-2xl border border-white/10 bg-white/3 p-6 backdrop-blur-md ${glow}`}
+              className={`relative overflow-hidden w-full rounded-2xl border border-white/10 bg-white/3 p-4 sm:p-6 backdrop-blur-md ${glow}`}
             >
               {/* Group header */}
               <div className="flex items-start justify-between gap-4">
-                <div>
+                <div className="min-w-0">
                   <div className="flex items-center gap-2 text-white">
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 border border-white/10">
+                    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/5 border border-white/10">
                       {group.icon}
                     </span>
-                    <h3 className="text-lg font-semibold">{group.title}</h3>
+                    <h3 className="text-base sm:text-lg font-semibold truncate">
+                      {group.title}
+                    </h3>
                   </div>
-                  <p className="mt-2 text-sm text-white/60">{group.subtitle}</p>
+                  <p className="mt-2 text-xs sm:text-sm text-white/60">
+                    {group.subtitle}
+                  </p>
                 </div>
 
                 <motion.div
                   variants={floatVariants}
                   initial="initial"
                   animate="animate"
-                  className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-fuchsia-500/15 to-cyan-500/15 border border-white/10"
+                  className="hidden sm:inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-fuchsia-500/15 to-cyan-500/15 border border-white/10"
                 >
                   <SparkleIcon />
                 </motion.div>
               </div>
 
               {/* Skills grid */}
-              <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-1 md:gap-3">
                 {group.skills.map((skill) => (
                   <motion.div
                     key={skill.name}
@@ -227,7 +201,7 @@ const SkillSection = () => {
                   >
                     <div className="flex items-center gap-2">
                       <motion.div
-                        className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 border border-white/10"
+                        className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5 border border-white/10"
                         whileHover={{ rotate: 6 }}
                         transition={{ type: "spring", stiffness: 260, damping: 14 }}
                       >
@@ -235,7 +209,9 @@ const SkillSection = () => {
                       </motion.div>
 
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-white truncate">{skill.name}</p>
+                        <p className="text-sm font-medium text-white truncate">
+                          {skill.name}
+                        </p>
                         <p className="text-[11px] text-white/50 truncate">
                           {skill.level ?? "—"}
                         </p>

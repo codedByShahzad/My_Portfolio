@@ -240,7 +240,7 @@ export default function ProjectsSection({
   );
 
   return (
-    <section className="relative mx-4 py-20  lg:px-10 xl:px-20">
+    <section className="relative py-20 px-4 lg:px-10 xl:px-20 ">
       {/* Header */}
       <motion.div
         variants={sectionVariants}

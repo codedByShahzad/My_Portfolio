@@ -14,8 +14,8 @@ const HomePage = () => {
       <HeroSection />
     <ProjectsSection limit={3} showCTA />
 
-    {/* <SkillsSection />
-    <AboutMeSection />
+    <SkillsSection />
+    {/* <AboutMeSection />
 
 
 <InfiniteRibbonMarquee  />
