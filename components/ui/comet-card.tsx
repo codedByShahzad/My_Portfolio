@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   motion,
   useMotionValue,
@@ -21,6 +21,7 @@ export const CometCard = ({
   children: React.ReactNode;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [isHover, setIsHover] = useState(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -31,35 +32,35 @@ export const CometCard = ({
   const rotateX = useTransform(
     mouseYSpring,
     [-0.5, 0.5],
-    [`-${rotateDepth}deg`, `${rotateDepth}deg`],
+    [`-${rotateDepth}deg`, `${rotateDepth}deg`]
   );
   const rotateY = useTransform(
     mouseXSpring,
     [-0.5, 0.5],
-    [`${rotateDepth}deg`, `-${rotateDepth}deg`],
+    [`${rotateDepth}deg`, `-${rotateDepth}deg`]
   );
 
   const translateX = useTransform(
     mouseXSpring,
     [-0.5, 0.5],
-    [`-${translateDepth}px`, `${translateDepth}px`],
+    [`-${translateDepth}px`, `${translateDepth}px`]
   );
   const translateY = useTransform(
     mouseYSpring,
     [-0.5, 0.5],
-    [`${translateDepth}px`, `-${translateDepth}px`],
+    [`${translateDepth}px`, `-${translateDepth}px`]
   );
 
   const glareX = useTransform(mouseXSpring, [-0.5, 0.5], [0, 100]);
   const glareY = useTransform(mouseYSpring, [-0.5, 0.5], [0, 100]);
 
+  // ✅ Keep the same glow look, but we'll show it ONLY on hover
   const glareBackground = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0.75) 20%, rgba(255, 255, 255, 0) 80%)`;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
 
     const rect = ref.current.getBoundingClientRect();
-
     const width = rect.width;
     const height = rect.height;
 
@@ -76,6 +77,7 @@ export const CometCard = ({
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
+    setIsHover(false);
   };
 
   return (
@@ -83,6 +85,7 @@ export const CometCard = ({
       <motion.div
         ref={ref}
         onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHover(true)}
         onMouseLeave={handleMouseLeave}
         style={{
           rotateX,
@@ -101,12 +104,14 @@ export const CometCard = ({
         className="relative rounded-2xl"
       >
         {children}
+
+        {/* ✅ Glow is 0 when not hovering, and fades in on hover */}
         <motion.div
-          className="pointer-events-none absolute inset-0 z-50 h-full w-full rounded-[16px] mix-blend-overlay"
+          className="pointer-events-none absolute inset-0 z-50 h-full w-full rounded-2xl mix-blend-overlay"
           style={{
             background: glareBackground,
-            opacity: 0.6,
           }}
+          animate={{ opacity: isHover ? 0.6 : 0 }}
           transition={{ duration: 0.2 }}
         />
       </motion.div>

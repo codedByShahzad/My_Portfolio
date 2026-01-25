@@ -15,10 +15,10 @@ const HomePage = () => {
     <ProjectsSection limit={3} showCTA />
 
     <SkillsSection />
-    {/* <AboutMeSection />
+    <AboutMeSection />
 
 
-<InfiniteRibbonMarquee  />
+{/* <InfiniteRibbonMarquee  />
 
 
     <Services />
