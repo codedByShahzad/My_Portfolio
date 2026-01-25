@@ -18,12 +18,11 @@ const HomePage = () => {
     <AboutMeSection />
 
 
-{/* <InfiniteRibbonMarquee  />
+<InfiniteRibbonMarquee  />
 
 
     <Services />
 
-    <TestmonialSection /> */}
 
     </div>
   )

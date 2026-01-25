@@ -29,7 +29,7 @@ export default function HeroSection() {
         
         {/* Left text */}
         <div className="flex justify-end">
-          <span className="text-xs md:text-base font-semibold whitespace-nowrap">
+          <span className="text-sm md:text-base font-semibold whitespace-nowrap">
            Hi <span className="inline-block md:hidden">,{" "}</span> <span className="hidden md:inline-block">there,</span> I'm Shahzad
           </span>
         </div>
@@ -49,7 +49,7 @@ export default function HeroSection() {
 
         {/* Right text */}
         <div className="flex justify-start">
-          <span className="text-xs md:text-base font-semibold whitespace-nowrap">
+          <span className="text-sm md:text-base font-semibold whitespace-nowrap">
             Full Stack Developer
           </span>
         </div>
