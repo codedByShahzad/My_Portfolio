@@ -83,11 +83,11 @@ const AboutMeSection = () => {
             {/* Heading */}
             <motion.h1
               variants={itemVariants}
-              className="mt-4 text-center lg:text-left text-3xl sm:text-4xl md:text-5xl font-semibold leading-[1.15]"
+              className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif leading-[1.15] text-center lg:text-start  text-white"
             >
-              Full-Stack Developer and <br className="hidden sm:block" />
+              Full-Stack Developer and <br className="hidden sm:block lg:hidden xl:block" />
               a little bit of{" "}
-              <span className="bg-linear-to-r from-primary via-indigo-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
+              <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
                 everything
               </span>
             </motion.h1>

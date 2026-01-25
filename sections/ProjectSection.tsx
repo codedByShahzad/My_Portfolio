@@ -258,8 +258,10 @@ export default function ProjectsSection({
           </p>
         </HoverBorderGradient>
 
-        <h2 className="mt-5 text-4xl font-semibold tracking-tight text-white sm:text-5xl md:text-6xl">
-          Curated Work
+        <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif  leading-[1.15] text-white">
+          Curated <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
+                Work
+              </span>
         </h2>
 
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/55 sm:text-base">

@@ -141,7 +141,9 @@ const SkillSection = () => {
 
           {/* Heading */}
           <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif leading-[1.15] text-white">
-            The Secret <span className="text-fuchsia-500 italic">Sauce</span>
+            The Secret <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
+                Sauce
+              </span>
           </h2>
 
           <p className="mt-3 max-w-2xl text-sm sm:text-base text-white/60 leading-relaxed">

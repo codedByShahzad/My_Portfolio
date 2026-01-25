@@ -102,12 +102,11 @@ const Services = () => {
       </div>
 
       {/* Heading */}
-      <h1 className="mt-4 text-4xl font-semibold text-center lg:text-start font-serif md:text-5xl text-white">
-        Services{" "}
-        <span className="bg-linear-to-r from-primary via-indigo-500 to-pink-500 bg-clip-text italic text-transparent">
-          We Provide
-        </span>
-      </h1>
+       <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif text-center lg:text-start leading-[1.15] text-white">
+          Services <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
+                I Provide
+              </span>
+        </h2>
 
       {/* Grid */}
       <motion.div
