@@ -28,7 +28,7 @@ export default function CTASection() {
       </div>
 
       {/* ================= CONTENT ================= */}
-      <div className="relative z-10 mx-auto max-w-6xl px-4 text-center">
+      <div className="relative z-10 mx-auto max-w-6xl  text-center">
 
         {/* ================= LOGO ================= */}
         <div className="mb-10 flex justify-center">
@@ -106,7 +106,7 @@ export default function CTASection() {
         <p className="mt-12 text-base font-semibold sm:text-lg">
           I&apos;m available for full-time roles & freelance projects.
         </p>
-        <p className="mx-auto mt-3 max-w-2xl text-sm text-white/60 sm:text-base">
+        <p className="mx-4 md:mx-auto mt-3 max-w-2xl text-sm text-white/60 sm:text-base">
           I build scalable, high-performance web applications with clean,
           modern user experiences.
         </p>

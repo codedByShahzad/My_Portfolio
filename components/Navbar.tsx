@@ -12,7 +12,6 @@ const Navbar = () => {
 
   const items = ["Home", "Project", "Services", "Resume", "About", "Contact"];
 
-  // ✅ FIX: Project should be /projects
   const routes: Record<string, string> = {
     Home: "/",
     Project: "/projects",
@@ -24,7 +23,6 @@ const Navbar = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
@@ -32,25 +30,25 @@ const Navbar = () => {
     };
   }, [menuOpen]);
 
-  // ✅ Determine active tab from URL
   const active = useMemo(() => {
-    // exact matches
     if (pathname === "/") return "Home";
-
-    // highlight "Project" for /projects and nested pages like /project-details/slug
-    if (pathname.startsWith("/projects") || pathname.startsWith("/project-details"))
+    if (
+      pathname.startsWith("/projects") ||
+      pathname.startsWith("/project-details")
+    )
       return "Project";
-
     if (pathname.startsWith("/services")) return "Services";
     if (pathname.startsWith("/resume")) return "Resume";
     if (pathname.startsWith("/about")) return "About";
     if (pathname.startsWith("/contact")) return "Contact";
-
     return "Home";
   }, [pathname]);
 
+  // navbar height offset (adjust if needed)
+  const NAV_OFFSET = 88;
+
   return (
-    <div className="mx-2 lg:mx-10 xl:mx-20 my-5 relative z-50">
+    <div className="mx-2 lg:mx-10 xl:mx-20 my-5 relative z-20000">
       <div className="absolute -top-30 -left-52 h-[350px] w-[380px] md:w-[580px] xl:w-[980px] rounded-full bg-primary/25 blur-3xl" />
 
       {/* MAIN BAR */}
@@ -68,7 +66,7 @@ const Navbar = () => {
           <button
             type="button"
             onClick={() => setMenuOpen((p) => !p)}
-            className="text-white text-3xl bg-primary p-2 rounded-full"
+            className="text-white text-3xl bg-primary p-2 rounded-full relative z-30000"
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
           >
@@ -117,14 +115,24 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
+      </div>
 
-        {/* MOBILE OVERLAY MENU */}
+      {/* ✅ MOBILE MENU OVERLAY (starts BELOW navbar, so it can't block the X) */}
+      <div
+        className={`md:hidden fixed left-0 right-0 bottom-0 z-10000 transition-all duration-300 ease-in-out
+          ${menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}
+        style={{ top: NAV_OFFSET }}
+      >
+        {/* Backdrop */}
         <div
-          className={`md:hidden absolute left-0 right-0 top-full z-50 transition-all duration-300 ease-in-out
-            ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}
-          `}
-        >
-          <div className="bg-background border border-gray-800 rounded-4xl mt-3 p-4 shadow-lg">
+          className="absolute inset-0 bg-black/60"
+          onClick={() => setMenuOpen(false)}
+        />
+
+        {/* Panel */}
+        <div className="absolute left-2 right-2 top-3">
+          <div className="bg-background border border-gray-800 rounded-4xl p-4 shadow-lg max-h-[calc(100vh-110px)] overflow-auto pb-24">
             <ul className="flex flex-col gap-3 list-none">
               {items.map((item) => (
                 <Link href={routes[item]} key={item}>
@@ -144,14 +152,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
-      {/* click-outside backdrop for mobile */}
-      <div
-        className={`md:hidden fixed inset-0 z-40 transition-opacity duration-300
-          ${menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
-        `}
-        onClick={() => setMenuOpen(false)}
-      />
     </div>
   );
 };

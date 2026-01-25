@@ -15,7 +15,7 @@ export default function HeroSection() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section className="relative min-h-screen px-3 lg:px-10 xl:px-20 overflow-hidden">
+    <section className="relative min-h-[90vh] px-3 lg:px-10 xl:px-20 overflow-hidden">
       {/* Centered layout */}
       <div className="relative flex flex-col items-center text-center">
  <Link href="/about" className="flex justify-center items-center mt-5 z-50">
@@ -25,12 +25,12 @@ export default function HeroSection() {
       className="bg-background/60 text-white backdrop-blur-md"
     >
       {/* IMPORTANT: Only inner layout is grid */}
-      <div className="grid grid-cols-[0.5fr_auto_0.5fr] md:grid-cols-[1fr_auto_1fr] items-center px-0 md:px-4 ">
+      <div className="grid grid-cols-[0.5fr_auto_0.5fr] md:grid-cols-[1fr_auto_1fr] items-center px-0 md:px-4 z-50 ">
         
         {/* Left text */}
         <div className="flex justify-end">
           <span className="text-sm md:text-base font-semibold whitespace-nowrap">
-           Hi <span className="inline-block md:hidden">,{" "}</span> <span className="hidden md:inline-block">there,</span> I'm Shahzad
+           Hi<span className="inline-block md:hidden">,{" "}</span> <span className="hidden md:inline-block">there,</span> I'm Shahzad
           </span>
         </div>
 

@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
+import { motion, type Variants } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiUpwork, SiFiverr } from "react-icons/si";
 
@@ -8,8 +11,21 @@ import profile from "../public/images/profile2.png";
 import { CometCard } from "@/components/ui/comet-card";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
+/** ✅ Same scroll animation style as your SkillSection */
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+} as const satisfies Variants;
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 14, scale: 0.98 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4 } },
+} as const satisfies Variants;
+
 const AboutMeSection = () => {
-const socials = [
+  const socials = [
     {
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/shahzad-sohail",
@@ -33,19 +49,27 @@ const socials = [
   ];
 
   return (
-    <section className="w-full px-2 lg:px-10 xl:px-20 py-14 md:py-16 text-white relative">
-      <div className="mx-auto px-4 sm:px-6 py-10 md:py-14 relative z-10">
+    <section className="w-full px-3 lg:px-10 xl:px-20 py-10 lg:py-20 text-white relative overflow-hidden">
+      <div className="mx-auto relative z-10">
         {/* 
           Layout Rules:
           - sm/md: single column (image between heading and text)
           - lg+: two columns (TEXT LEFT, IMAGE RIGHT)
           ✅ lg/xl: make grid columns 2fr 1fr (text takes more space)
         */}
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10 lg:gap-12 items-start lg:items-center">
+
+        {/* ✅ Added scroll reveal wrapper (same approach as SkillSection) */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10 lg:gap-12 items-start lg:items-center"
+        >
           {/* TEXT (LEFT on lg+) */}
-          <div className="order-1">
+          <motion.div variants={itemVariants} className="order-1">
             {/* Badge */}
-            <div className="flex justify-center lg:justify-start mt-2">
+            <motion.div variants={itemVariants} className="flex justify-center lg:justify-start mt-2">
               <HoverBorderGradient
                 containerClassName="rounded-full"
                 className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
@@ -54,19 +78,22 @@ const socials = [
                   Know about me
                 </p>
               </HoverBorderGradient>
-            </div>
+            </motion.div>
 
             {/* Heading */}
-            <h1 className="mt-4 text-center lg:text-left text-3xl sm:text-4xl md:text-5xl font-semibold leading-[1.15]">
+            <motion.h1
+              variants={itemVariants}
+              className="mt-4 text-center lg:text-left text-3xl sm:text-4xl md:text-5xl font-semibold leading-[1.15]"
+            >
               Full-Stack Developer and <br className="hidden sm:block" />
               a little bit of{" "}
               <span className="bg-linear-to-r from-primary via-indigo-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
                 everything
               </span>
-            </h1>
+            </motion.h1>
 
             {/* IMAGE for sm/md ONLY (between heading and text) */}
-            <div className="mt-8 lg:hidden">
+            <motion.div variants={itemVariants} className="mt-8 lg:hidden">
               <div className="flex items-center justify-center">
                 <CometCard>
                   <div className="relative">
@@ -99,10 +126,13 @@ const socials = [
                   </div>
                 </CometCard>
               </div>
-            </div>
+            </motion.div>
 
             {/* Text */}
-            <div className="mt-8 flex flex-col gap-7 text-white/60 leading-7 text-left max-w-3xl mx-auto lg:mx-0">
+            <motion.div
+              variants={itemVariants}
+              className="mt-8 flex flex-col gap-7 text-white/60 leading-7 text-left max-w-3xl mx-auto lg:mx-0"
+            >
               <p>
                 I’m Shahzad Sohail, a full-stack developer with hands-on
                 experience building real-world web applications. I work across
@@ -125,10 +155,13 @@ const socials = [
                 consistency, curiosity, and problem-solving, and I bring that
                 mindset to every project I work on.
               </p>
-            </div>
+            </motion.div>
 
             {/* Socials */}
-            <div className="mt-8 flex items-center justify-center lg:justify-start gap-4">
+            <motion.div
+              variants={itemVariants}
+              className="mt-8 flex items-center justify-center lg:justify-start gap-4"
+            >
               {socials.map(({ label, href, Icon }) => (
                 <a
                   key={label}
@@ -165,28 +198,30 @@ const socials = [
                   />
 
                   <Icon
-  className={`
-    relative z-10 text-white/70 group-hover:text-white
-    ${label === "Fiverr" ? "text-[32px]" : "text-[18px]"}
-  `}
-/>
-
+                    className={`
+                      relative z-10 text-white/70 group-hover:text-white
+                      ${label === "Fiverr" ? "text-[32px]" : "text-[18px]"}
+                    `}
+                  />
                 </a>
               ))}
-            </div>
+            </motion.div>
 
             {/* Button */}
-            <div className="mt-10 flex justify-center lg:justify-start">
+            <motion.div variants={itemVariants} className="mt-10 flex justify-center lg:justify-start">
               <ArrowSwapButton
                 label="Work Experience"
                 href="/projects"
                 className="bg-primary text-white"
               />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* IMAGE (RIGHT on lg+) */}
-          <div className="hidden lg:flex order-2 items-end justify-end rotate-3 lg:rotate-5">
+          <motion.div
+            variants={itemVariants}
+            className="hidden lg:flex order-2 items-end justify-end rotate-3 lg:rotate-5"
+          >
             <CometCard>
               <div className="relative">
                 {/* soft glow */}
@@ -218,8 +253,8 @@ const socials = [
                 </div>
               </div>
             </CometCard>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

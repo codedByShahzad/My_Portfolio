@@ -1,4 +1,4 @@
-import HeroSection from "@/sections/HeroSection"
+import HeroSection from "@/sections/HeroSection";
 import AboutMeSection from "@/sections/AboutMeSection";
 import TestmonialSection from "@/sections/TestmonialSection";
 import Services from "@/sections/Services";
@@ -8,24 +8,17 @@ import ProjectsSection from "../sections/ProjectSection";
 
 const HomePage = () => {
   return (
-    
-    <div className='mt-2 sm:mt-10 '>
-
+    <div className="mt-2 sm:mt-10 ">
       <HeroSection />
-    <ProjectsSection limit={3} showCTA />
+      <ProjectsSection limit={3} showCTA />
 
-    <SkillsSection />
-    <AboutMeSection />
+      <SkillsSection />
+      <InfiniteRibbonMarquee />
+      <AboutMeSection />
 
-
-<InfiniteRibbonMarquee  />
-
-
-    <Services />
-
-
+      <Services />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

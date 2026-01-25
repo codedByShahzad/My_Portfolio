@@ -125,7 +125,7 @@ const groups: SkillGroup[] = [
 
 const SkillSection = () => {
   return (
-    <section className="relative w-full px-4 lg:px-10 xl:px-20 py-12 sm:py-16 overflow-hidden">
+    <section className="relative w-full px-3 lg:px-10 xl:px-20 py-10 lg:py-20  overflow-hidden">
       {/* ✅ constrain width for large screens */}
       <div className="mx-auto">
         <div className="flex flex-col justify-center items-center text-center">

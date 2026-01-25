@@ -85,7 +85,7 @@ const cardHover: Variants = {
 
 const Services = () => {
   return (
-    <section className="px-4 lg:px-10 xl:px-20 py-10 md:py-20">
+    <section className="px-3 lg:px-10 xl:px-20 py-10 md:py-20">
       {/* Badge */}
       <div className="flex justify-center lg:justify-start  gap-2 mt-5">
         {/* Badge */}
