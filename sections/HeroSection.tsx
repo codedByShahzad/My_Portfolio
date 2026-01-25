@@ -6,7 +6,8 @@ import ArrowSwapButton from "@/components/ui/ArrowButton";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import p1 from "../public/images/projectLaptop.png";
 import p2 from "../public/images/projectMobile.png";
-import profile from "../public/images/Profile Image.png";
+import profile from "../public/images/profile2.png";
+import Link from "next/link";
 
 export default function HeroSection() {
   // ✅ Fix hydration mismatch by rendering the badge only after client mounts
@@ -17,24 +18,24 @@ export default function HeroSection() {
     <section className="relative min-h-screen px-3 lg:px-10 xl:px-20 overflow-hidden">
       {/* Centered layout */}
       <div className="relative flex flex-col items-center text-center">
- <div className="flex justify-center items-center mt-5 z-50">
+ <Link href="/about" className="flex justify-center items-center mt-5 z-50">
   {mounted ? (
     <HoverBorderGradient
       containerClassName="rounded-full"
       className="bg-background/60 text-white backdrop-blur-md"
     >
       {/* IMPORTANT: Only inner layout is grid */}
-      <div className="grid grid-cols-[1fr_auto_1fr] items-center px-0 md:px-4 ">
+      <div className="grid grid-cols-[0.5fr_auto_0.5fr] md:grid-cols-[1fr_auto_1fr] items-center px-0 md:px-4 ">
         
         {/* Left text */}
         <div className="flex justify-end">
-          <span className="text-sm md:text-base font-semibold whitespace-nowrap">
+          <span className="text-xs md:text-base font-semibold whitespace-nowrap">
            Hi <span className="inline-block md:hidden">,{" "}</span> <span className="hidden md:inline-block">there,</span> I'm Shahzad
           </span>
         </div>
 
         {/* Avatar (center, overlapping top & bottom of pill) */}
-        <div className="-my-4 mx-4 z-[1000px]">
+        <div className="-my-4 mx-4 z-[1000px] cursor-pointer">
           <div className="h-14 w-14 rounded-full  bg-linear-to-r from-primary to-purple-600 p-0.5 ">
             <div className="h-full w-full rounded-full bg-black overflow-hidden">
               <Image
@@ -48,7 +49,7 @@ export default function HeroSection() {
 
         {/* Right text */}
         <div className="flex justify-start">
-          <span className="text-sm md:text-base font-semibold whitespace-nowrap">
+          <span className="text-xs md:text-base font-semibold whitespace-nowrap">
             Full Stack Developer
           </span>
         </div>
@@ -57,7 +58,7 @@ export default function HeroSection() {
   ) : (
     <div className="h-11 md:h-12" aria-hidden="true" />
   )}
-</div>
+</Link>
 
 
 
@@ -138,7 +139,7 @@ export default function HeroSection() {
 
           {/* Hide View Work ONLY on mobile */}
           <a
-            href="#work"
+            href="/projects"
             className="hidden sm:inline-flex items-center justify-center rounded-full px-6 py-3 border border-white/15 text-white/90 hover:bg-white/5 transition"
           >
             View Work
