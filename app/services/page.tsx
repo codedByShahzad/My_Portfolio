@@ -1,14 +1,13 @@
-
 import Services from "@/sections/Services";
 import WorkProcessSection from "@/sections/WorkProcessSection";
 
-const page = () => {
+const Page = () => {
   return (
     <>
-    <Services />
-    <WorkProcessSection />
+      <Services />
+      <WorkProcessSection />
     </>
   );
 };
 
-export default page;
+export default Page;
