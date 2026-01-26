@@ -85,9 +85,9 @@ const cardHover: Variants = {
 
 const Services = () => {
   return (
-    <section className="px-3 lg:px-10 xl:px-20 py-10 md:py-20">
+    <section className="px-3 lg:px-10 xl:px-20 py-10">
       {/* Badge */}
-      <div className="flex justify-center lg:justify-start  gap-2 mt-5">
+      <div className="flex justify-center lg:justify-start  gap-2  ">
         {/* Badge */}
         <HoverBorderGradient
           containerClassName="rounded-full "
@@ -165,7 +165,7 @@ const Services = () => {
                   {/* Footer action (functional) */}
                   <div className="mt-6 flex items-center justify-between">
                     <a
-                      href={service.href ?? "#contact"}
+                      href="/contact"
                       className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors"
                     >
                       Learn more
