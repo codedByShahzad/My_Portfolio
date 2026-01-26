@@ -5,14 +5,12 @@
 
 /* ✅ Your Tailwind v4 theme tokens */
 @theme {
-  --font-heading: "Poppins", sans-serif;
-  --font-body: "Inter", sans-serif;
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "Outfit", sans-serif;
 
-  /* Brand */
-  --color-primary: #502FEB;
+  --color-primary: #502feb;
   --color-secondary: #000001;
 
-  /* Custom Screens (Breakpoints) */
   --breakpoint-mbs: 320px;
   --breakpoint-mbm: 375px;
   --breakpoint-mbl: 425px;
@@ -21,6 +19,7 @@
   --breakpoint-lpl: 1440px;
   --breakpoint-4k: 2560px;
 }
+
 
 /* -----------------------------
    Your custom utility classes

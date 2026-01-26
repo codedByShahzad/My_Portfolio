@@ -64,7 +64,7 @@ export default function HeroSection() {
 
         {/* Title + subtitle */}
         <div className="mt-8 md:max-w-6xl space-y-4">
-          <h1 className="text-balance text-4xl font-bold text-white md:text-4xl lg:text-5xl leading-tight">
+          <h1 className="text-balance text-4xl font-semibold font-serif text-white md:text-4xl lg:text-5xl leading-tight">
             Helping founders turn ideas <br className="hidden lg:block" />
             <span className="inline md:block">
               into{" "}

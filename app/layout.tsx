@@ -3,10 +3,22 @@ import "./globals.css";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { BackgroundBeams } from "@/components/ui/background-beams";
 import { ShootingStars } from "@/components/ui/shooting-stars";
 import { StarsBackground } from "@/components/ui/stars-background";
 import CTASection from "@/sections/CTASection";
+
+import { Outfit } from "next/font/google";
+
+/* =======================
+   FONT
+======================= */
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 /* =======================
    METADATA
@@ -23,22 +35,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
+    <html lang="en" className={outfit.variable}>
       <body
         className="
           antialiased
           bg-background
           overflow-x-hidden
-          font-sans
         "
       >
         {/* Background Effects */}
         <StarsBackground />
-        {/* <BackgroundBeams className="absolute inset-0 z-0 pointer-events-none" /> */}
         <ShootingStars />
 
         {/* Layout */}
