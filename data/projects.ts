@@ -300,7 +300,7 @@ export const industries = [
     tags: ["Mobile", "AI", "Compliance UX"],
   },
   {
-    title: "Sports & Fan Engagement",
+    title: "Sports & Fan Management",
     desc: "Team apps, live experiences, and interactive fan features built for performance.",
     icon: GraduationCap,
     tags: ["Live", "Events", "Engagement"],

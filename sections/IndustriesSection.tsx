@@ -7,10 +7,11 @@ import { GlareCard } from "@/components/ui/glare-card";
 import { ShootingStars } from "@/components/ui/shooting-stars";
 import { StarsBackground } from "@/components/ui/stars-background";
 import { ArrowUpRight } from "lucide-react";
+import { HoverBorderGradient } from "../components/ui/hover-border-gradient";
 
 const industryToProject: Record<string, string> = {
   HealthTech: "/projects/ha-wellness",
-  "Sports & Fan Engagement": "/projects/nivy-studio",
+  "Sports & Fan Management": "/projects/nivy-studio",
   "E-commerce": "/projects/brainbox",
 };
 
@@ -26,12 +27,31 @@ const IndustriesSection = () => {
 
       {/* CONTENT */}
       <div className="relative z-20">
-        {/* Header (UNCHANGED) */}
-        <div className="max-w-2xl space-y-2">
-          <p className="text-white/60 text-sm">Know About</p>
-          <h2 className="text-3xl md:text-4xl font-semibold text-white">
-            Industries I Have Worked In
+        <div className="flex flex-col justify-center items-center text-center">
+          {/* Top label */}
+          <HoverBorderGradient
+            containerClassName="rounded-full"
+            className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
+          >
+            <p className="px-1 text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
+              INDUSTRY EXPERIENCE
+            </p>
+          </HoverBorderGradient>
+
+          {/* Heading */}
+          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif leading-[1.15] text-white">
+            Industries{" "}
+            <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
+              I’ve Worked
+            </span>{" "}
+            In
           </h2>
+
+          <p className="mt-3 max-w-2xl text-sm sm:text-base text-white/60 leading-relaxed">
+            Hands-on experience across multiple industries — building
+            production-ready products with strong UX, scalable architecture, and
+            performance at the core.
+          </p>
         </div>
 
         {/* Cards */}
@@ -39,7 +59,7 @@ const IndustriesSection = () => {
           <div
             className="
               mx-auto w-full max-w-6xl
-              grid gap-8
+              grid gap-6 sm:gap-8
               grid-cols-1 md:grid-cols-2 lg:grid-cols-3
               items-stretch justify-items-stretch
             "
@@ -60,8 +80,9 @@ const IndustriesSection = () => {
                       group w-full h-full
                       relative overflow-hidden
                       flex flex-col items-center text-center
-                      px-8 py-10
-                      min-h-[420px]
+                      px-6 sm:px-8
+                      py-8 sm:py-10
+                      min-h-[340px] sm:min-h-[420px]
                       border border-white/10
                       bg-linear-to-b from-[#12062f] via-[#090b22] to-[#040711]
                       transition
@@ -90,51 +111,51 @@ const IndustriesSection = () => {
                     />
 
                     {/* hover aura */}
-                    <div className="pointer-events-none absolute -top-24 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                    <div className="pointer-events-none absolute -bottom-28 right-10 h-60 w-60 rounded-full bg-white/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="pointer-events-none absolute -top-20 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="pointer-events-none absolute -bottom-24 right-6 h-52 w-52 rounded-full bg-white/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                     {/* THEME DOT */}
-                    <span className="absolute top-5 right-5 h-3 w-3 rounded-full bg-primary shadow-[0_0_18px_rgba(168,85,247,0.65)]" />
+                    <span className="absolute top-4 right-4 h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_18px_rgba(168,85,247,0.65)]" />
 
                     {/* ICON */}
-                    <div className="relative mb-6">
+                    <div className="relative mb-5 sm:mb-6">
                       <div className="pointer-events-none absolute inset-0 rounded-xl bg-primary/15 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                      <div className="relative h-20 w-20 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 shadow-[0_0_55px_rgba(168,85,247,0.18)] transition-transform duration-300 group-hover:-translate-y-0.5">
-                        <Icon className="h-10 w-10 text-primary" />
+                      <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 shadow-[0_0_55px_rgba(168,85,247,0.18)] transition-transform duration-300 group-hover:-translate-y-0.5">
+                        <Icon className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
                       </div>
                     </div>
 
-                    {/* TITLE (✅ fixed height so wrapping doesn't shift layout) */}
-                    <h3 className="text-xl font-semibold text-white min-h-14 flex items-center justify-center">
+                    {/* TITLE */}
+                    <h3 className="text-lg sm:text-xl font-semibold text-white min-h-12 sm:min-h-14 flex items-center justify-center">
                       {item.title}
                     </h3>
 
-                    {/* DESCRIPTION (✅ consistent height / clamp) */}
-                    <p className="mt-4 text-sm md:text-base text-white/70 leading-relaxed max-w-[92%] line-clamp-4 min-h-24">
+                    {/* DESCRIPTION */}
+                    <p className="mt-3 sm:mt-4 text-sm sm:text-base text-white/70 leading-relaxed max-w-[92%] line-clamp-4 min-h-20 sm:min-h-24">
                       {item.desc}
                     </p>
 
                     {/* divider */}
-                    <div className="mt-8 h-px w-full bg-linear-to-r from-transparent via-white/10 to-transparent" />
+                    <div className="mt-6 sm:mt-8 h-px w-full bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
                     {/* CTA */}
-                    <div className="mt-auto pt-6">
+                    <div className="mt-auto pt-5 sm:pt-6">
                       <span
                         className="
                           inline-flex items-center gap-2 rounded-full
                           border border-white/10 bg-white/5
-                          px-5 py-2 text-xs text-white/75 backdrop-blur
+                          px-4 sm:px-5 py-2 text-[11px] sm:text-xs text-white/75 backdrop-blur
                           transition
                           group-hover:border-white/20 group-hover:bg-white/10
                         "
                       >
                         Explore
-                        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </span>
                     </div>
 
                     {/* corner highlight */}
-                    <div className="pointer-events-none absolute -right-28 -top-28 h-56 w-56 rounded-full bg-white/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-white/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   </GlareCard>
                 </Link>
               );

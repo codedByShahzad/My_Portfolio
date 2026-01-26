@@ -265,8 +265,8 @@ export default function ProjectsSection({
         </h2>
 
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/55 sm:text-base">
-          A selection of high-impact builds — crafted with clean UI systems,
-          strong performance, and production-ready architecture.
+          A curated selection of real-world projects — designed with clean UI systems, performance in mind, and production-ready architecture.
+
         </p>
       </motion.div>
 

@@ -147,8 +147,8 @@ const SkillSection = () => {
           </h2>
 
           <p className="mt-3 max-w-2xl text-sm sm:text-base text-white/60 leading-relaxed">
-            A modern stack for building fast, scalable web apps — from UI to APIs,
-            databases, and essential developer tools.
+            A modern, battle-tested stack for building fast, scalable applications — from UI and APIs to databases and developer tooling.
+
           </p>
         </div>
 

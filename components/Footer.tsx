@@ -99,14 +99,14 @@ const Footer = () => {
 
         {/* RIGHT */}
         <div className="w-full max-w-2xl mx-auto lg:mx-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+          <div className="grid grid-cols-2 sm:grid-cols-2 gap-10">
             {/* NAVIGATION */}
             <div className="text-left">
               <h3 className="text-lg font-semibold mb-4 bg-linear-to-r from-primary to-purple-400 bg-clip-text text-transparent">
                 Navigation
               </h3>
 
-              <ul className="grid grid-cols-2 gap-y-3 gap-x-6 sm:block sm:space-y-3">
+              <ul className="grid  gap-y-3 gap-x-6 sm:block sm:space-y-3">
                 {navItems.map((item) => (
                   <li key={item.label} className="group relative w-fit">
                     <Link
