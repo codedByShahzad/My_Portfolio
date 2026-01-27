@@ -20,8 +20,9 @@ import {
 import { TbArrowsShuffle } from "react-icons/tb";
 import { SquareStack, ArrowUpRight } from "lucide-react";
 
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import ArrowSwapButton from "@/components/ui/ArrowButton";
+import { BorderBeam } from "@/components/ui/border-beam";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 /* =======================
    TECH ICON MAP
@@ -236,7 +237,7 @@ export default function ProjectsSection({
 }: ProjectsSectionProps) {
   const visibleProjects = useMemo(
     () => (limit ? projects.slice(0, limit) : projects),
-    [limit]
+    [limit],
   );
 
   return (
@@ -249,24 +250,24 @@ export default function ProjectsSection({
         viewport={{ once: true, amount: 0.4 }}
         className="relative mb-14 flex flex-col items-center text-center md:mb-18"
       >
-        <HoverBorderGradient
-          containerClassName="rounded-full"
-          className="border border-white/10 bg-white/5 text-white backdrop-blur-md"
-        >
-          <p className="text-xs uppercase tracking-[0.25em] text-white/65 sm:text-sm">
+        <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
+          {/* Text */}
+          <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+          <p className="relative z-10 text-xs uppercase tracking-[0.25em] text-white/70 sm:text-sm">
             Featured Case Studies
           </p>
-        </HoverBorderGradient>
+        </div>
 
         <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif  leading-[1.15] text-white">
-          Curated <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
-                Work
-              </span>
+          Curated{" "}
+          <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
+            Work
+          </span>
         </h2>
 
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/55 sm:text-base">
-          A curated selection of real-world projects — designed with clean UI systems, performance in mind, and production-ready architecture.
-
+          A curated selection of real-world projects — designed with clean UI
+          systems, performance in mind, and production-ready architecture.
         </p>
       </motion.div>
 

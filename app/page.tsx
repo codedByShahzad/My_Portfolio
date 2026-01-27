@@ -1,6 +1,5 @@
 import HeroSection from "@/sections/HeroSection";
 import AboutMeSection from "@/sections/AboutMeSection";
-import TestmonialSection from "@/sections/TestmonialSection";
 import Services from "@/sections/Services";
 import SkillsSection from "@/sections/SkillSection";
 import InfiniteRibbonMarquee from "@/components/InfiniteRibbonMarquee";

@@ -16,9 +16,10 @@ import {
 
 import { StarsBackground } from "@/components/ui/stars-background";
 import { ShootingStars } from "@/components/ui/shooting-stars";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { cn } from "@/lib/utils";
 import ArrowSwapButton from "@/components/ui/ArrowButton";
+import { ShineBorder } from "@/components/ui/shine-border";
+import { MagicCard } from "@/components/ui/magic-card";
 
 type Step = {
   step: string; // "01"
@@ -143,14 +144,14 @@ export default function WorkflowCardsSection() {
       <div className="relative mx-auto w-full px-3 sm:px-6 lg:px-10 xl:px-20">
         {/* Header */}
         <div className="flex flex-col items-center justify-center text-center">
-          <HoverBorderGradient
-            containerClassName="rounded-full"
-            className="bg-background/60 border border-white/10 text-white backdrop-blur-md"
-          >
-            <p className="px-3 text-xs uppercase tracking-[0.25em] text-white/60 sm:text-sm">
-              Development Approach
-            </p>
-          </HoverBorderGradient>
+          
+          <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
+                      {/* Text */}
+                      <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+                      <p className="relative z-10 text-xs uppercase tracking-[0.25em] text-white/70 sm:text-sm">
+                        Development Approach
+                      </p>
+                    </div>
 
           <h2 className="mt-4 font-serif text-3xl font-semibold leading-[1.15] text-white sm:text-4xl md:text-5xl">
             A clear build process
@@ -168,103 +169,81 @@ export default function WorkflowCardsSection() {
           </p>
         </div>
 
-        {/* Cards grid */}
-        <div className="mt-5 grid grid-cols-1 gap-6 md:mt-16 md:grid-cols-2 md:gap-5 xl:grid-cols-3">
-          {steps.map((s) => {
-            const Icon = s.Icon;
+      {/* Cards grid */}
+<div className="mt-5 grid grid-cols-1 gap-6 md:mt-16 md:grid-cols-2 md:gap-5 xl:grid-cols-3">
+  {steps.map((s) => {
+    const Icon = s.Icon;
 
-            return (
-              <motion.div
-                key={s.step}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                variants={cardVariants}
-                className="w-full"
-              >
-                {/* ✅ Premium gradient border wrapper */}
-                <div
-                  className={cn(
-                    "h-full w-full rounded-2xl",
-                    "bg-black/30 backdrop-blur-md",
-                    "border border-white/10 rounded-2xl"
-                  )}
-                >
-                  <div className="relative h-full w-full overflow-hidden rounded-2xl p-6">
-                    {/* ✅ Top animated line (subtle) */}
-                    <motion.div
-                      aria-hidden
-                      className="pointer-events-none absolute left-0 top-0 h-0.5 w-full bg-linear-to-r from-transparent via-white/25 to-transparent"
-                      animate={
-                        reduce
-                          ? { opacity: 0.35 }
-                          : { opacity: [0.12, 0.75, 0.12] }
-                      }
-                      transition={{ duration: 2.2, repeat: Infinity }}
-                    />
+    return (
+      <motion.div
+        key={s.step}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        variants={cardVariants}
+        className="w-full"
+      >
+        {/* ✅ Make MagicCard the actual visible surface */}
+        <MagicCard
+          gradientColor="#262626"
+          className={cn(
+            "relative h-full w-full overflow-hidden rounded-2xl p-6",
+            "border border-white/10",
+            "bg-black/30 backdrop-blur-md" // keep your surface here
+          )}
+        >
 
-                    {/* ✅ Soft inner glow (static, premium) */}
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 rounded-2xl"
-                      style={{
-                        background:
-                          "radial-gradient(900px circle at 18% 10%, rgba(80,47,235,0.16), transparent 45%)",
-                      }}
-                    />
+          {/* ✅ Content */}
+          <div className="relative">
+            {/* Top row */}
+            <div className="flex items-start gap-4">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-white/10 bg-white/5">
+                <Icon className="h-6 w-6 text-white" />
+              </div>
 
-                    {/* ✅ Content */}
-                    <div className="relative">
-                      {/* Top row */}
-                      <div className="flex items-start gap-4">
-                        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-white/10 bg-white/5">
-                          <Icon className="h-6 w-6 text-white" />
-                        </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="text-start text-lg font-semibold md:text-xl">
+                    {s.title}
+                  </h3>
 
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-start justify-between gap-4">
-                            <h3 className="text-start text-lg font-semibold md:text-xl">
-                              {s.title}
-                            </h3>
-
-                            <div className="select-none text-5xl font-bold leading-none text-white/30">
-                              {s.step}
-                            </div>
-                          </div>
-
-                          <p className="mt-1 text-start text-sm text-white/70">
-                            {s.subtitle}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Key Deliverables */}
-                      <div className="mt-6">
-                        <div className="flex items-center gap-2 text-sm font-semibold text-white/90">
-                          <FileText className="h-4 w-4 text-white/80" />
-                          Key Deliverables
-                        </div>
-
-                        <ul className="mt-3 space-y-2.5 text-sm text-white/75">
-                          {s.points.map((p) => (
-                            <li key={p} className="flex items-start gap-3">
-                              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary/90" />
-                              <span className="leading-6">{p}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* subtle bottom divider */}
-                      <div className="mt-7 h-px w-full bg-linear-to-r from-transparent via-white/10 to-transparent" />
-                    </div>
+                  <div className="select-none text-5xl font-bold leading-none text-white/30">
+                    {s.step}
                   </div>
                 </div>
-              </motion.div>
-            );
-          })}
-        </div>
+
+                <p className="mt-1 text-start text-sm text-white/70">
+                  {s.subtitle}
+                </p>
+              </div>
+            </div>
+
+            {/* Key Deliverables */}
+            <div className="mt-6">
+              <div className="flex items-center gap-2 text-sm font-semibold text-white/90">
+                <FileText className="h-4 w-4 text-white/80" />
+                Key Deliverables
+              </div>
+
+              <ul className="mt-3 space-y-2.5 text-sm text-white/75">
+                {s.points.map((p) => (
+                  <li key={p} className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary/90" />
+                    <span className="leading-6">{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* subtle bottom divider */}
+          </div>
+        </MagicCard>
+      </motion.div>
+    );
+  })}
+</div>
+
 
         {/* Footer */}
         <motion.div
@@ -274,7 +253,6 @@ export default function WorkflowCardsSection() {
           transition={{ duration: 0.5 }}
           className="mx-auto mt-14 flex max-w-3xl flex-col items-center gap-4 text-center"
         >
-          <div className="h-px w-full max-w-2xl bg-linear-to-r from-transparent via-white/15 to-transparent" />
           <p className="text-sm text-white/70">
             Want this process applied to your project? I’ll keep everything
             clear, structured, and production-ready.

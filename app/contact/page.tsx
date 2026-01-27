@@ -1,6 +1,6 @@
 "use client";
 
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { ShineBorder } from "@/components/ui/shine-border";
 import React, { useState } from "react";
 import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
@@ -59,17 +59,12 @@ const Page = () => {
       {/* Heading */}
       <div className="mb-16">
         <div className="flex   gap-2 mt-5">
-                {/* Badge */}
-                <HoverBorderGradient
-                  containerClassName="rounded-full "
-                  className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-                >
-                  <div className="flex justify-center items-center gap-2">
-                    <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
-                      Contact me
-                    </p>
-                  </div>
-                </HoverBorderGradient>
+                 <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
+                              <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+                              <p className="relative z-10 text-xs uppercase tracking-[0.25em] text-white/70 sm:text-sm">
+                                Resume
+                              </p>
+                            </div>
               </div>
         
               {/* Heading */}

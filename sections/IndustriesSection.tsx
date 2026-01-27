@@ -7,7 +7,7 @@ import { GlareCard } from "@/components/ui/glare-card";
 import { ShootingStars } from "@/components/ui/shooting-stars";
 import { StarsBackground } from "@/components/ui/stars-background";
 import { ArrowUpRight } from "lucide-react";
-import { HoverBorderGradient } from "../components/ui/hover-border-gradient";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 const industryToProject: Record<string, string> = {
   HealthTech: "/projects/ha-wellness",
@@ -29,14 +29,14 @@ const IndustriesSection = () => {
       <div className="relative z-20">
         <div className="flex flex-col justify-center items-center text-center">
           {/* Top label */}
-          <HoverBorderGradient
-            containerClassName="rounded-full"
-            className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-          >
-            <p className="px-1 text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
-              INDUSTRY EXPERIENCE
-            </p>
-          </HoverBorderGradient>
+         
+          <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
+                    {/* Text */}
+                    <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+                    <p className="relative z-10 text-xs uppercase tracking-[0.25em] text-white/70 sm:text-sm">
+                      INDUSTRY EXPERIENCE
+                    </p>
+                  </div>
 
           {/* Heading */}
           <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif leading-[1.15] text-white">

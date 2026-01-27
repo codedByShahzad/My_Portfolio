@@ -1,4 +1,4 @@
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+
 import { Timeline } from "@/components/ui/timeline";
 
 const ExperienceSection = () => {
@@ -164,14 +164,7 @@ const ExperienceSection = () => {
       <div className="flex flex-col justify-center text-center items-center">
         {/* Top label */}
         <div className="flex items-center  ">
-          <HoverBorderGradient
-            containerClassName="rounded-full"
-            className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-          >
-            <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
-              The Experience
-            </p>
-          </HoverBorderGradient>
+          The Experience
         </div>
 
         {/* Heading */}

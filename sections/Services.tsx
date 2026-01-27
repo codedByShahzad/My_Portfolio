@@ -3,10 +3,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
 import { SiReact, SiFigma, SiShopify } from "react-icons/si";
 import { Smartphone, Database, CloudLightning, ArrowUpRight } from "lucide-react";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 type Service = {
   title: string;
@@ -89,16 +89,13 @@ const Services = () => {
       {/* Badge */}
       <div className="flex justify-center lg:justify-start  gap-2  ">
         {/* Badge */}
-        <HoverBorderGradient
-          containerClassName="rounded-full "
-          className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-        >
-          <div className="flex justify-center items-center gap-2">
-            <p className="text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
-              Want to Work With Us
-            </p>
-          </div>
-        </HoverBorderGradient>
+        <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
+                  {/* Text */}
+                  <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+                  <p className="relative z-10 text-xs uppercase tracking-[0.25em] text-white/70 sm:text-sm">
+                    Want to work with me
+                  </p>
+                </div>
       </div>
 
       {/* Heading */}

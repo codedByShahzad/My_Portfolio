@@ -1,31 +1,185 @@
 "use client";
 
 import React from "react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { SiUpwork, SiFiverr } from "react-icons/si";
 import {
-  GithubIcon,
-  LinkedinIcon,
   Download,
   Mail,
   Phone,
   MapPin,
   Briefcase,
   GraduationCap,
-  Sparkles,
   FolderKanban,
+  ExternalLink,
+  ArrowUpRight,
 } from "lucide-react";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import type { LucideIcon } from "lucide-react";
+import type { IconType } from "react-icons";
 
-const chips = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "Node.js",
-  "Express",
-  "MongoDB",
-  "SQL",
-  "REST APIs",
+import { ShineBorder } from "@/components/ui/shine-border";
+
+/* ----------------------------- */
+/* Data                          */
+/* ----------------------------- */
+
+type SocialItem = {
+  label: string;
+  href: string;
+  Icon: IconType;
+};
+
+const socials: SocialItem[] = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/shahzad-sohail",
+    Icon: FaLinkedin,
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/codedByShahzad",
+    Icon: FaGithub,
+  },
+  {
+    label: "Upwork",
+    href: "https://www.upwork.com/freelancers/~01a95637283911ba95?mp_source=share",
+    Icon: SiUpwork,
+  },
+  {
+    label: "Fiverr",
+    href: "https://www.fiverr.com/s/DBAz77Q",
+    Icon: SiFiverr,
+  },
 ];
+
+const chips = ["React", "Next.js", "TypeScript", "Node.js", "Express", "MongoDB", "SQL", "REST APIs"];
+
+type Experience = {
+  role: string;
+  company: string;
+  meta: string;
+  summary: string;
+  highlights: string[];
+};
+
+const experience: Experience[] = [
+  {
+    role: "Front-End Developer",
+    company: "Hā Health Website",
+    meta: "Remote • Jun 16, 2025 – Sep 21, 2025",
+    summary:
+      "Built a polished web experience for an AI-powered wellness platform: personalized meal plans, fitness tracking, and mindfulness flows.",
+    highlights: [
+      "Shipped responsive UI in React/Next.js + Tailwind with consistent design tokens",
+      "Integrated recommendation-driven screens for meals, workouts, and mindfulness",
+      "Worked closely with design + backend to deliver clean, reliable user journeys",
+    ],
+  },
+  {
+    role: "Web Developer (Client Project)",
+    company: "NIVY App",
+    meta: "Remote • Dec 16, 2024 – Apr 03, 2025",
+    summary:
+      "Contributed to a match scheduling web platform enabling colleges to manage and update inter-institution sports fixtures.",
+    highlights: [
+      "Owned Matches Management with full CRUD flows and clean form UX",
+      "Implemented dynamic state handling and real-time updates for better efficiency",
+      "Improved usability with structured layouts and clear information hierarchy",
+    ],
+  },
+];
+
+type Project = {
+  title: string;
+  meta: string;
+  desc: string;
+  bullets: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+};
+
+const projects: Project[] = [
+  {
+    title: "Crypto Place",
+    meta: "React • Tailwind • CoinGecko",
+    desc: "Real-time crypto tracker with search and trend insights.",
+    bullets: [
+      "Live market data + historical insights via CoinGecko API",
+      "Interactive charts for trends and comparisons",
+      "Responsive layout optimized for mobile + desktop",
+    ],
+    githubUrl: "https://github.com/codedByShahzad",
+    liveUrl: "https://example.com",
+  },
+  {
+    title: "Tomato",
+    meta: "React • Redux Toolkit • REST APIs",
+    desc: "Food delivery experience with listing, cart, and checkout flow.",
+    bullets: [
+      "Dynamic restaurants/products fetched via REST APIs",
+      "Cart + checkout state handled with Redux Toolkit",
+      "Mobile-first UI focused on speed and clarity",
+    ],
+    githubUrl: "https://github.com/codedByShahzad",
+    liveUrl: "https://example.com",
+  },
+  {
+    title: "Corto",
+    meta: "React Native • Redux Toolkit • REST APIs",
+    desc: "Multi-feature mobile app: product search, flight tracking, and deals.",
+    bullets: [
+      "Robust fetching from multiple endpoints for live content",
+      "Predictable global state with Redux Toolkit",
+      "Intuitive navigation across 3 core modules",
+    ],
+    githubUrl: "https://github.com/codedByShahzad",
+    liveUrl: "https://example.com",
+  },
+];
+
+type EducationItem = {
+  title: string;
+  subtitle: string;
+  meta: string;
+};
+
+const education: EducationItem[] = [
+  { title: "FG Sir Syed Public School", subtitle: "Matriculation", meta: "Graduated: 2020" },
+  { title: "Punjab Group of Colleges", subtitle: "ICS", meta: "2021 – 2023" },
+  {
+    title: "University of Central Punjab",
+    subtitle: "BS Computer Science",
+    meta: "Expected Graduation: 2027",
+  },
+];
+
+type SkillGroup = {
+  title: string;
+  items: string[];
+};
+
+const skills: SkillGroup[] = [
+  {
+    title: "Frontend",
+    items: ["React, Next.js", "TypeScript", "Tailwind CSS", "Responsive UI + component systems"],
+  },
+  {
+    title: "Backend",
+    items: ["Node.js, Express", "REST APIs + middleware", "JWT auth", "Validation + error handling"],
+  },
+  {
+    title: "Databases",
+    items: ["MongoDB (Mongoose)", "SQL basics (MySQL/PostgreSQL)", "Schema design"],
+  },
+  {
+    title: "Tooling",
+    items: ["Git/GitHub", "Postman", "Basic Docker/Swagger", "Jira, VS Code"],
+  },
+];
+
+/* ----------------------------- */
+/* Page                          */
+/* ----------------------------- */
 
 export default function Page() {
   return (
@@ -39,260 +193,147 @@ export default function Page() {
       </div>
 
       <div className="relative px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-10 sm:py-12">
-        {/* ✅ keep XL same, add stable container for md/lg */}
         <div className="mx-auto w-full">
           {/* Top Label */}
           <div className="flex flex-col items-center text-center">
-            <HoverBorderGradient
-              containerClassName="rounded-full"
-              className="bg-neutral-950/40 text-white border border-white/10 backdrop-blur-md"
-            >
-              <p className="px-3 py-1 text-xs sm:text-sm tracking-[0.35em] text-white/60 uppercase">
-                My Resume
+            <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
+              <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+              <p className="relative z-10 text-xs uppercase tracking-[0.25em] text-white/70 sm:text-sm">
+                Resume
               </p>
-            </HoverBorderGradient>
+            </div>
           </div>
 
-          {/* HERO CARD */}
-          <section className="mt-8 relative overflow-hidden rounded-[28px] border border-white/10 bg-neutral-950/35 backdrop-blur-xl shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_30px_120px_rgba(0,0,0,0.65)]">
-            {/* glow blobs */}
-            <div className="pointer-events-none absolute -top-28 -left-28 h-80 w-80 rounded-full bg-primary/18 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-fuchsia-500/14 blur-3xl" />
-            {/* top shine */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.08),transparent)]" />
-
-            <div className="relative p-6 sm:p-8 lg:p-10">
-              {/* ✅ md was cramped -> switch to lg for row layout */}
-              <div className="flex flex-col gap-5 xl:flex-row lg:items-start lg:justify-between">
-                <div className="max-w-3xl">
-                  <h1 className="text-4xl sm:text-5xl xl:text-6xl font-semibold tracking-tight text-white">
-                    Shahzad Sohail
-                  </h1>
-
-                  <p className="mt-4 text-sm sm:text-base lg:text-lg xl:text-xl text-neutral-300/80 leading-relaxed">
-                    Full-Stack JavaScript Developer building modern, high-performance web apps with{" "}
-                    <span className="text-white">React / Next.js</span> on the frontend and{" "}
-                    <span className="text-white">Node.js / Express</span> on the backend — powered by{" "}
-                    <span className="text-white">MongoDB</span> and <span className="text-white">SQL</span>.
-                  </p>
+          {/* ================= LAYOUT ================= */}
+          <div className="mt-8 grid gap-6 lg:gap-8 xl:grid-cols-[460px_1fr] xl:items-start">
+            {/* ================= SIDEBAR (STICKY) ================= */}
+            {/* ✅ Sticky works on desktop (xl+) and doesn't break mobile layout */}
+            <aside className="self-start xl:sticky xl:top-8">
+              <Card>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+                      Shahzad Sohail
+                    </h1>
+                    <p className="mt-2 text-sm sm:text-base text-neutral-300/75 leading-relaxed">
+                      Full-Stack JavaScript Developer focused on clean UI, fast performance, and
+                      production-ready delivery.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="flex lg:justify-end lg:pt-1">
+                {/* chips */}
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {chips.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full border border-white/10 bg-black/35 px-3 py-1.5 text-xs sm:text-sm text-neutral-100/90 backdrop-blur-md"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                {/* contact */}
+                <div className="mt-6 space-y-3 text-sm sm:text-base text-neutral-200/85">
+                  <ContactRow Icon={Mail} text="mr.shahzad.developer@gmail.com" />
+                  <ContactRow Icon={Phone} text="+92 345 2789601" />
+                  <ContactRow Icon={MapPin} text="Rawalpindi, Pakistan" />
+                </div>
+
+                {/* socials */}
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                  {socials.map((item) => (
+                    <SocialPill key={item.label} {...item} />
+                  ))}
+                </div>
+
+                {/* quick actions */}
+                <div className="mt-6 grid gap-3">
                   <a
                     href="/Shahzad Resume.pdf"
                     download
-                    className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3.5 text-sm sm:text-base lg:text-lg text-white hover:bg-white/10 hover:border-white/25 transition"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm sm:text-base hover:bg-white/10 hover:border-white/25 transition"
                   >
-                    <Download size={18} className="opacity-90" />
-                    Download Resume
+                    <Download size={18} />
+                    Download Full Resume
+                  </a>
+
+                  <a
+                    href="mailto:mr.shahzad.developer@gmail.com"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-black/35 px-5 py-3 text-sm sm:text-base hover:bg-black/50 hover:border-white/20 transition"
+                  >
+                    <ArrowUpRight size={18} />
+                    Email Me
                   </a>
                 </div>
-              </div>
+              </Card>
+            </aside>
 
-              <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-                <div className="max-w-3xl">
-                  {/* chips */}
-                  <div className="mt-1 flex flex-wrap gap-2.5">
-                    {chips.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-white/10 bg-black/35 px-3.5 py-1.5 text-xs sm:text-sm lg:text-[15px] text-neutral-100/90 backdrop-blur-md"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* ✅ contact row: fix email breaking on md/lg */}
-                  <div className="mt-7 grid gap-3 sm:grid-cols-2 text-sm sm:text-base lg:text-lg text-neutral-200/85">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <Mail size={18} className="text-neutral-300/70 shrink-0" />
-                      <span
-                        className="text-neutral-200/85 wrap-break-word min-w-0 "
-                        title="mr.shahzad.developer@gmail.com"
-                      >
-                        mr.shahzad.developer@gmail.com
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-2.5">
-                      <Phone size={18} className="text-neutral-300/70 shrink-0" />
-                      <span className="text-neutral-200/85">+92 345 2789601</span>
-                    </div>
-
-                    <div className="flex items-center gap-2.5 sm:col-span-2">
-                      <MapPin size={18} className="text-neutral-300/70 shrink-0" />
-                      <span className="text-neutral-200/85">Rawalpindi, Pakistan</span>
-                    </div>
-                  </div>
-
-                  {/* socials */}
-                  <div className="mt-7 flex flex-wrap items-center gap-3">
-                    <SocialPill
-                      href="https://github.com/codedByShahzad"
-                      label="GitHub"
-                      Icon={GithubIcon}
-                    />
-                    <SocialPill href="" label="LinkedIn" Icon={LinkedinIcon} />
-                    <SocialPill href="https://www.upwork.com/" label="Upwork" Icon={Briefcase} />
-                    <SocialPill href="https://www.fiverr.com/" label="Fiverr" Icon={Sparkles} />
-                  </div>
+            {/* ================= MAIN CONTENT (SCROLLS) ================= */}
+            <section className="space-y-6 lg:space-y-8">
+              {/* Experience */}
+              <Section
+                title="Experience"
+                Icon={Briefcase}
+                subtitle="Recent work with ownership and measurable impact."
+                action={
+                  <a
+                    href="/Shahzad Resume.pdf"
+                    download
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm sm:text-base hover:bg-white/10 hover:border-white/25 transition"
+                  >
+                    <Download size={18} />
+                    Download Full Resume
+                  </a>
+                }
+              >
+                <div className="space-y-4">
+                  {experience.map((x) => (
+                    <ExperienceCard key={`${x.company}-${x.role}`} item={x} />
+                  ))}
                 </div>
+              </Section>
 
-                {/* right spacer */}
-                <div className="hidden lg:block" />
-              </div>
-            </div>
-          </section>
+              {/* Projects */}
+              <Section
+                title="Projects"
+                Icon={FolderKanban}
+                subtitle="Selected builds that show product thinking and execution."
+              >
+                <div className="grid gap-4">
+                  {projects.map((p) => (
+                    <ProjectCard key={p.title} item={p} />
+                  ))}
+                </div>
+              </Section>
 
-          {/* SECTIONS */}
-          <div className="mt-10 space-y-10">
-            {/* Education */}
-            <Section
-              title="Education"
-              Icon={GraduationCap}
-              subtitle="Academic background and current studies."
-            >
-              {/* ✅ md 3 cols was too tight -> push to lg */}
-              <div className="grid gap-4 lg:grid-cols-3">
-                <MiniCard
-                  title="FG Sir Syed Public School"
-                  subtitle="Matriculation"
-                  meta="Graduated: 2020"
-                />
-                <MiniCard title="Punjab Group of Colleges" subtitle="ICS" meta="2021 – 2023" />
-                <MiniCard
-                  title="University of Central Punjab"
-                  subtitle="BS Computer Science"
-                  meta="Expected Graduation: 2027"
-                />
-              </div>
-            </Section>
+              {/* Skills */}
+              <Section
+                title="Skills"
+                Icon={FolderKanban}
+                subtitle="A focused stack for shipping production-grade apps."
+              >
+                <div className="grid gap-4 lg:grid-cols-2">
+                  {skills.map((g) => (
+                    <SkillGroupCard key={g.title} item={g} />
+                  ))}
+                </div>
+              </Section>
 
-            {/* Skills */}
-            <Section
-              title="Skills Summary"
-              Icon={FolderKanban}
-              subtitle="A battle-tested stack for shipping production-grade apps."
-            >
-              {/* ✅ md 2 cols was too tight -> push to lg */}
-              <div className="grid gap-4 lg:grid-cols-2">
-                <SkillBlock
-                  title="Frontend"
-                  items={[
-                    "HTML, CSS, JavaScript, TypeScript",
-                    "React.js, Next.js, Tailwind CSS",
-                    "React Native, Expo",
-                    "Redux Toolkit",
-                  ]}
-                />
-                <SkillBlock
-                  title="Backend"
-                  items={[
-                    "Node.js, Express.js",
-                    "REST APIs, Middleware",
-                    "Authentication (JWT)",
-                    "API Validation & Error Handling",
-                  ]}
-                />
-                <SkillBlock
-                  title="Databases"
-                  items={[
-                    "MongoDB (Mongoose)",
-                    "SQL (MySQL/PostgreSQL basics)",
-                    "Schema Design, Indexing",
-                  ]}
-                />
-                <SkillBlock
-                  title="Tools & Others"
-                  items={[
-                    "Git, GitHub, Postman",
-                    "Swagger/OpenAPI (basic), Docker (basic)",
-                    "Webpack, Jira, VS Code",
-                    "Word, Excel, PowerPoint, Tableau",
-                  ]}
-                />
-              </div>
-            </Section>
-
-            {/* Experience */}
-            <Section
-              title="Work Experience"
-              Icon={Briefcase}
-              subtitle="Real-world projects, ownership, and impact."
-            >
-              <TimelineItem
-                title="Client Project – NIVY App"
-                right="Remote | Dec 16, 2024 – Apr 03, 2025"
-                desc="Collaborated with the NIVY development team to build a match scheduling platform that enabled colleges to efficiently organize, manage, and update inter-institutional sports matches via a web application."
-                bullets={[
-                  "Designed and developed the Matches Management page with full CRUD workflows",
-                  "Implemented clean, intuitive UI/UX for creating, editing, updating, and deleting matches",
-                  "Ensured dynamic data handling and real-time updates to improve efficiency and user experience",
-                ]}
-              />
-
-              <TimelineItem
-                title="Front-End Developer – Ha Health Website"
-                right="Remote | Jun 16, 2025 – Sep 21, 2025"
-                desc="Worked with the Hā Health team to build an AI-powered wellness platform offering personalized meal plans, fitness tracking, and mindfulness tools."
-                bullets={[
-                  "Built responsive UI components with React, Next.js, and Tailwind for cross-device performance",
-                  "Integrated AI-driven recommendations for meals, workouts, and mindfulness experiences",
-                  "Collaborated closely with design + backend to deliver smooth, consistent user flows",
-                ]}
-              />
-            </Section>
-
-            {/* Projects */}
-            <Section
-              title="Projects"
-              Icon={FolderKanban}
-              subtitle="Selected work that shows problem-solving and product thinking."
-            >
-              <TimelineItem
-                title="Crypto Place – Real-Time Cryptocurrency Tracker"
-                right="React.js | Tailwind CSS | CoinGecko"
-                desc="Built an interactive cryptocurrency tracker with real-time updates, powerful search, and historical trend visualizations."
-                bullets={[
-                  "Integrated CoinGecko API for live market data and historical insights",
-                  "Built interactive charts for trend analysis and comparisons",
-                  "Designed a clean, responsive interface optimized for web + mobile screens",
-                ]}
-              />
-
-              <TimelineItem
-                title="Tomato – Food Delivery Website"
-                right="React.js | Tailwind CSS | Redux Toolkit | REST APIs"
-                desc="Developed a full food delivery experience with listings, cart flows, and a smooth checkout journey."
-                bullets={[
-                  "Fetched restaurants + products dynamically using REST APIs",
-                  "Implemented scalable global state for cart & checkout with Redux Toolkit",
-                  "Optimized a mobile-first UI for speed and usability across devices",
-                ]}
-              />
-
-              <TimelineItem
-                title="Corto – Product & Flight Search, Deals App"
-                right="React Native | Redux Toolkit | REST APIs"
-                desc="Created a multi-functional mobile app combining product search, flight tracking, and real-time deal discovery."
-                bullets={[
-                  "Implemented robust data fetching from multiple endpoints for live content",
-                  "Used Redux Toolkit for scalable, predictable global state management",
-                  "Designed intuitive navigation across Product Search, Flight Tracker, and Deals screens",
-                ]}
-              />
-
-              <div className="flex justify-center pt-2">
-                <a
-                  href="/Shahzad Resume.pdf"
-                  download
-                  className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3.5 text-sm sm:text-base lg:text-lg hover:bg-white/10 hover:border-white/25 transition"
-                >
-                  <Download size={18} /> Download Resume
-                </a>
-              </div>
-            </Section>
+              {/* Education */}
+              <Section
+                title="Education"
+                Icon={GraduationCap}
+                subtitle="Academic background and current studies."
+              >
+                <div className="grid gap-4 lg:grid-cols-3">
+                  {education.map((e) => (
+                    <MiniCard key={e.title} title={e.title} subtitle={e.subtitle} meta={e.meta} />
+                  ))}
+                </div>
+              </Section>
+            </section>
           </div>
 
           <div className="h-10" />
@@ -303,20 +344,27 @@ export default function Page() {
 }
 
 /* ----------------------------- */
-/* Components                    */
+/* UI Components                 */
 /* ----------------------------- */
+
+function Card({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-neutral-950/35 backdrop-blur-xl p-6 sm:p-7 shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_30px_120px_rgba(0,0,0,0.65)]">
+      <div className="pointer-events-none absolute -top-20 -left-20 h-56 w-56 rounded-full bg-primary/12 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-fuchsia-500/10 blur-3xl" />
+      <div className="relative">{children}</div>
+    </div>
+  );
+}
 
 function PillHeading({ title, Icon }: { title: string; Icon: LucideIcon }) {
   return (
-    <div className="flex items-center justify-center lg:justify-start">
+    <div className="flex items-center justify-start">
       <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/35 px-4 py-2 backdrop-blur-md">
         <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5">
           <Icon size={18} className="text-white/85" />
         </span>
-
-        <h2 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-semibold text-white">
-          {title}
-        </h2>
+        <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-white">{title}</h2>
       </div>
     </div>
   );
@@ -326,44 +374,62 @@ function Section({
   title,
   Icon,
   subtitle,
+  action,
   children,
 }: {
   title: string;
   Icon: LucideIcon;
   subtitle?: string;
+  action?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden rounded-[28px] border border-white/10 bg-neutral-950/30 backdrop-blur-xl p-6 sm:p-8 lg:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_20px_80px_rgba(0,0,0,0.55)]">
-      <div className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-primary/12 blur-3xl" />
+    <section className="relative overflow-hidden rounded-[24px] border border-white/10 bg-neutral-950/30 backdrop-blur-xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_20px_80px_rgba(0,0,0,0.55)]">
+      <div className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-fuchsia-500/10 blur-3xl" />
 
       <div className="relative">
-        <PillHeading title={title} Icon={Icon} />
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <PillHeading title={title} Icon={Icon} />
+          {action ? <div className="shrink-0">{action}</div> : null}
+        </div>
 
         {subtitle && (
-          <p className="mt-4 text-center lg:text-left text-sm sm:text-base lg:text-lg text-neutral-300/75 leading-relaxed">
-            {subtitle}
-          </p>
+          <p className="mt-3 text-sm sm:text-base text-neutral-300/75 leading-relaxed">{subtitle}</p>
         )}
 
-        <div className="mt-7">{children}</div>
+        <div className="mt-6">{children}</div>
       </div>
     </section>
   );
 }
 
-function MiniCard({
-  title,
-  subtitle,
-  meta,
-}: {
-  title: string;
-  subtitle: string;
-  meta: string;
-}) {
+function ContactRow({ Icon, text }: { Icon: LucideIcon; text: string }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/25 p-5 sm:p-6 backdrop-blur-md hover:bg-black/35 transition">
+    <div className="flex items-center gap-2.5 min-w-0">
+      <Icon size={18} className="text-neutral-300/70 shrink-0" />
+      <span className="text-neutral-200/85 break-words min-w-0">{text}</span>
+    </div>
+  );
+}
+
+function SocialPill({ href, label, Icon }: SocialItem) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm text-white/90 bg-black/40 border border-white/10 backdrop-blur-md transition hover:bg-black/60 hover:border-white/20"
+    >
+      <Icon className="h-[18px] w-[18px] opacity-90" />
+      <span className="truncate">{label}</span>
+    </a>
+  );
+}
+
+function MiniCard({ title, subtitle, meta }: { title: string; subtitle: string; meta: string }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/25 p-5 sm:p-6 backdrop-blur-md transition hover:bg-black/35">
       <p className="text-white font-semibold text-base sm:text-lg">{title}</p>
       <p className="mt-1 text-neutral-300/75 text-sm sm:text-base">{subtitle}</p>
       <p className="mt-3 text-neutral-400/70 text-sm sm:text-base">{meta}</p>
@@ -371,17 +437,25 @@ function MiniCard({
   );
 }
 
-function SkillBlock({ title, items }: { title: string; items: string[] }) {
+/* ✅ NO COLLAPSIBLE: show all details */
+function ExperienceCard({ item }: { item: Experience }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/25 p-5 sm:p-6 backdrop-blur-md">
-      <p className="text-white font-semibold text-base sm:text-lg lg:text-xl">
-        {title}
-      </p>
-      <ul className="mt-4 space-y-3 text-neutral-200/80 text-sm sm:text-base lg:text-lg">
-        {items.map((it) => (
-          <li key={it} className="flex gap-3">
+    <div className="rounded-2xl border border-white/10 bg-black/25 p-6 sm:p-7 backdrop-blur-md">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+        <div>
+          <p className="text-white font-semibold text-lg sm:text-xl">{item.role}</p>
+          <p className="mt-1 text-neutral-300/80 text-sm sm:text-base">{item.company}</p>
+        </div>
+        <p className="text-neutral-300/60 text-sm sm:text-base">{item.meta}</p>
+      </div>
+
+      <p className="mt-4 text-neutral-200/80 text-sm sm:text-base leading-relaxed">{item.summary}</p>
+
+      <ul className="mt-4 space-y-2 text-neutral-200/80 text-sm sm:text-base">
+        {item.highlights.map((h) => (
+          <li key={h} className="flex gap-3">
             <span className="mt-2.5 h-2 w-2 rounded-full bg-primary/90 shrink-0" />
-            <span className="leading-relaxed">{it}</span>
+            <span className="leading-relaxed">{h}</span>
           </li>
         ))}
       </ul>
@@ -389,67 +463,73 @@ function SkillBlock({ title, items }: { title: string; items: string[] }) {
   );
 }
 
-function TimelineItem({
-  title,
-  right,
-  desc,
-  bullets,
-}: {
-  title: string;
-  right: string;
-  desc: string;
-  bullets: string[];
-}) {
+/* ✅ NO COLLAPSIBLE + add GitHub + Live preview icons */
+function ProjectCard({ item }: { item: Project }) {
   return (
-    <div className="relative rounded-2xl border border-white/10 bg-black/25 p-6 sm:p-7 lg:p-8 mb-6 backdrop-blur-md">
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-[3px] bg-[linear-gradient(to_bottom,rgba(80,47,235,0.0),rgba(80,47,235,0.55),rgba(217,70,239,0.35),rgba(80,47,235,0.0))]" />
+    <div className="rounded-2xl border border-white/10 bg-black/25 p-6 sm:p-7 backdrop-blur-md transition hover:bg-black/35">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-white font-semibold text-lg sm:text-xl truncate">{item.title}</p>
+          <p className="mt-1 text-neutral-300/65 text-sm sm:text-base">{item.meta}</p>
+        </div>
 
-      {/* ✅ md row was tight -> switch to lg */}
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-2">
-        <p className="text-white font-semibold text-lg sm:text-xl xl:text-2xl">
-          {title}
-        </p>
-        <p className="text-neutral-300/60 text-sm sm:text-base lg:text-lg">
-          {right}
-        </p>
+        <div className="flex items-center gap-2 shrink-0">
+          {/* GitHub */}
+          {item.githubUrl ? (
+            <a
+              href={item.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${item.title} GitHub`}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white/80 hover:text-white hover:border-white/20 transition"
+            >
+              <FaGithub className="h-[18px] w-[18px]" />
+            </a>
+          ) : null}
+
+          {/* Live Preview */}
+          {item.liveUrl ? (
+            <a
+              href={item.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${item.title} Live Preview`}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white/80 hover:text-white hover:border-white/20 transition"
+            >
+              <ExternalLink size={18} />
+            </a>
+          ) : null}
+        </div>
       </div>
 
-      <div className="mt-5 pl-5 sm:pl-6 border-l-2 border-primary/25">
-        <p className="text-neutral-200/80 leading-relaxed text-sm sm:text-base lg:text-lg">
-          {desc}
-        </p>
+      <p className="mt-4 text-neutral-200/80 text-sm sm:text-base leading-relaxed">{item.desc}</p>
 
-        <ul className="mt-5 space-y-3 text-neutral-200/80 text-sm sm:text-base lg:text-lg">
-          {bullets.map((b) => (
-            <li key={b} className="flex gap-3">
-              <span className="mt-2.5 h-2.5 w-2.5 rounded-full bg-primary shrink-0" />
-              <span className="leading-relaxed">{b}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ul className="mt-4 space-y-2 text-neutral-200/80 text-sm sm:text-base">
+        {item.bullets.map((b) => (
+          <li key={b} className="flex gap-3">
+            <span className="mt-2.5 h-2 w-2 rounded-full bg-primary/90 shrink-0" />
+            <span className="leading-relaxed">{b}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-function SocialPill({
-  href,
-  label,
-  Icon,
-}: {
-  href: string;
-  label: string;
-  Icon: LucideIcon;
-}) {
+function SkillGroupCard({ item }: { item: SkillGroup }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/30 px-4 py-2.5 text-sm sm:text-base lg:text-lg text-white/90 hover:bg-black/45 hover:border-white/20 transition backdrop-blur-md"
-    >
-      <Icon size={18} className="opacity-90" />
-      {label}
-    </a>
+    <div className="rounded-2xl border border-white/10 bg-black/25 p-6 sm:p-7 backdrop-blur-md">
+      <p className="text-white font-semibold text-base sm:text-lg">{item.title}</p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {item.items.map((it) => (
+          <span
+            key={it}
+            className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs sm:text-sm text-neutral-100/85"
+          >
+            {it}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }

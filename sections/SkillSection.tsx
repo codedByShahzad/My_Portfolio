@@ -3,7 +3,6 @@
 import React from "react";
 import { motion, type Variants } from "framer-motion";
 import { Code2, Server, GitBranch, ShieldCheck, Zap } from "lucide-react";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import {
   SiHtml5,
   SiCss3,
@@ -27,6 +26,7 @@ import {
   SiPrettier,
   SiSlack,
 } from "react-icons/si";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 type Skill = {
   name: string;
@@ -70,14 +70,42 @@ const groups: SkillGroup[] = [
     subtitle: "UI, performance, and delightful UX",
     icon: <Code2 className="h-5 w-5" />,
     skills: [
-      { name: "HTML5", icon: <SiHtml5 className="h-5 w-5" />, level: "Advanced" },
+      {
+        name: "HTML5",
+        icon: <SiHtml5 className="h-5 w-5" />,
+        level: "Advanced",
+      },
       { name: "CSS3", icon: <SiCss3 className="h-5 w-5" />, level: "Advanced" },
-      { name: "JavaScript", icon: <SiJavascript className="h-5 w-5" />, level: "Advanced" },
-      { name: "Tailwind CSS", icon: <SiTailwindcss className="h-5 w-5" />, level: "Advanced" },
-      { name: "React / React Native", icon: <SiReact className="h-5 w-5" />, level: "Advanced" },
-      { name: "Next.js", icon: <SiNextdotjs className="h-5 w-5" />, level: "Advanced" },
-      { name: "TypeScript", icon: <SiTypescript className="h-5 w-5" />, level: "Advanced" },
-      { name: "Webflow", icon: <SiWebflow className="h-5 w-5" />, level: "Intermediate" },
+      {
+        name: "JavaScript",
+        icon: <SiJavascript className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "Tailwind CSS",
+        icon: <SiTailwindcss className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "React / React Native",
+        icon: <SiReact className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "Next.js",
+        icon: <SiNextdotjs className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "TypeScript",
+        icon: <SiTypescript className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "Webflow",
+        icon: <SiWebflow className="h-5 w-5" />,
+        level: "Intermediate",
+      },
     ],
   },
   {
@@ -85,14 +113,46 @@ const groups: SkillGroup[] = [
     subtitle: "APIs, auth, and reliable storage",
     icon: <Server className="h-5 w-5" />,
     skills: [
-      { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" />, level: "Advanced" },
-      { name: "Express", icon: <SiExpress className="h-5 w-5" />, level: "Advanced" },
-      { name: "MongoDB", icon: <SiMongodb className="h-5 w-5" />, level: "Advanced" },
-      { name: "SQL / PostgreSQL", icon: <SiPostgresql className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Auth / JWT", icon: <ShieldCheck className="h-5 w-5" />, level: "Intermediate" },
-      { name: "REST APIs", icon: <GitBranch className="h-5 w-5" />, level: "Advanced" },
-      { name: "Firebase", icon: <SiFirebase className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Vite", icon: <SiVite className="h-5 w-5" />, level: "Intermediate" },
+      {
+        name: "Node.js",
+        icon: <SiNodedotjs className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "Express",
+        icon: <SiExpress className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "MongoDB",
+        icon: <SiMongodb className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "SQL / PostgreSQL",
+        icon: <SiPostgresql className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "Auth / JWT",
+        icon: <ShieldCheck className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "REST APIs",
+        icon: <GitBranch className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "Firebase",
+        icon: <SiFirebase className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "Vite",
+        icon: <SiVite className="h-5 w-5" />,
+        level: "Intermediate",
+      },
     ],
   },
   {
@@ -100,12 +160,36 @@ const groups: SkillGroup[] = [
     subtitle: "Boost productivity and streamline workflow",
     icon: <Zap className="h-5 w-5" />,
     skills: [
-      { name: "Git / GitHub", icon: <GitBranch className="h-5 w-5" />, level: "Advanced" },
-      { name: "Slack", icon: <SiSlack className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Postman", icon: <SiPostman className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Testing / Jest", icon: <SiJest className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Figma / Design Tools", icon: <SiFigma className="h-5 w-5" />, level: "Intermediate" },
-      { name: "ESLint / Prettier", icon: <SiEslint className="h-5 w-5" />, level: "Advanced" },
+      {
+        name: "Git / GitHub",
+        icon: <GitBranch className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "Slack",
+        icon: <SiSlack className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "Postman",
+        icon: <SiPostman className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "Testing / Jest",
+        icon: <SiJest className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "Figma / Design Tools",
+        icon: <SiFigma className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "ESLint / Prettier",
+        icon: <SiEslint className="h-5 w-5" />,
+        level: "Advanced",
+      },
     ],
   },
   {
@@ -113,12 +197,36 @@ const groups: SkillGroup[] = [
     subtitle: "Hosting, cloud, and web platforms",
     icon: <Zap className="h-5 w-5" />,
     skills: [
-      { name: "Vercel", icon: <SiVercel className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Firebase", icon: <SiFirebase className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Webflow", icon: <SiWebflow className="h-5 w-5" />, level: "Intermediate" },
-      { name: "Vite", icon: <SiVite className="h-5 w-5" />, level: "Intermediate" },
-      { name: "VS Code", icon: <Code2 className="h-5 w-5" />, level: "Advanced" },
-      { name: "Netlify", icon: <SiVercel className="h-5 w-5" />, level: "Intermediate" },
+      {
+        name: "Vercel",
+        icon: <SiVercel className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "Firebase",
+        icon: <SiFirebase className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "Webflow",
+        icon: <SiWebflow className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "Vite",
+        icon: <SiVite className="h-5 w-5" />,
+        level: "Intermediate",
+      },
+      {
+        name: "VS Code",
+        icon: <Code2 className="h-5 w-5" />,
+        level: "Advanced",
+      },
+      {
+        name: "Netlify",
+        icon: <SiVercel className="h-5 w-5" />,
+        level: "Intermediate",
+      },
     ],
   },
 ];
@@ -130,25 +238,24 @@ const SkillSection = () => {
       <div className="mx-auto">
         <div className="flex flex-col justify-center items-center text-center">
           {/* Top label */}
-          <HoverBorderGradient
-            containerClassName="rounded-full"
-            className="bg-background/60 text-white border border-white/10 backdrop-blur-md"
-          >
-            <p className="px-1 text-xs sm:text-sm tracking-[0.25em] text-white/60 uppercase">
+          <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
+            {/* Text */}
+            <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+            <p className="relative z-10 text-xs uppercase tracking-[0.25em] text-white/70 sm:text-sm">
               My Skills
             </p>
-          </HoverBorderGradient>
-
+          </div>
           {/* Heading */}
           <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif leading-[1.15] text-white">
-            The Secret <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
-                Sauce
-              </span>
+            The Secret{" "}
+            <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
+              Sauce
+            </span>
           </h2>
 
           <p className="mt-3 max-w-2xl text-sm sm:text-base text-white/60 leading-relaxed">
-            A modern, battle-tested stack for building fast, scalable applications — from UI and APIs to databases and developer tooling.
-
+            A modern, battle-tested stack for building fast, scalable
+            applications — from UI and APIs to databases and developer tooling.
           </p>
         </div>
 
@@ -205,7 +312,11 @@ const SkillSection = () => {
                       <motion.div
                         className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5 border border-white/10"
                         whileHover={{ rotate: 6 }}
-                        transition={{ type: "spring", stiffness: 260, damping: 14 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 260,
+                          damping: 14,
+                        }}
                       >
                         {skill.icon}
                       </motion.div>

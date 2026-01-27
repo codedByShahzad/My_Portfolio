@@ -29,8 +29,8 @@ export default function HeroSection() {
           relative w-full rounded-full overflow-visible
           border border-white/10 bg-white/5 text-white backdrop-blur-xl
           shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_60px_rgba(0,0,0,0.55)]
-          px-3 sm:px-5 md:px-6
-          py-2 sm:py-2.5 md:py-3
+          px-3 sm:px-5
+          py-2 sm:py-2.5 
         "
       >
         {/* Beams layer */}
@@ -71,7 +71,7 @@ export default function HeroSection() {
 
         {/* Avatar (responsive) */}
         <div className="absolute left-1/2 top-1/2 z-60 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-          <div className="h-11 w-11 sm:h-14 sm:w-14 md:h-20 md:w-20 rounded-full bg-linear-to-r from-primary to-purple-600 p-0.5 shadow-[0_0_0_8px_rgba(124,58,237,0.16)] md:shadow-[0_0_0_10px_rgba(124,58,237,0.18)]">
+          <div className="h-11 w-11 sm:h-18 sm:w-18  rounded-full bg-linear-to-r from-primary to-purple-600 p-0.5 shadow-[0_0_0_8px_rgba(124,58,237,0.16)] md:shadow-[0_0_0_10px_rgba(124,58,237,0.18)]">
             <div className="relative h-full w-full rounded-full bg-black overflow-hidden">
               <Image
                 src={profile}
