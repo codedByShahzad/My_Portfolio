@@ -3,58 +3,88 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ArrowSwapButton from "@/components/ui/ArrowButton";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import p1 from "../public/images/projectLaptop.png";
 import p2 from "../public/images/projectMobile.png";
 import profile from "../public/images/profile2.png";
 import Link from "next/link";
 
+import { BorderBeam } from "@/components/ui/border-beam";
+
 export default function HeroSection() {
-  // ✅ Fix hydration mismatch by rendering the badge only after client mounts
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
   return (
     <section className="relative min-h-[90vh] px-3 lg:px-10 xl:px-20 overflow-hidden">
-      {/* Centered layout */}
       <div className="relative flex flex-col items-center text-center">
- <Link href="/about" className="flex justify-center items-center mt-5 z-50">
+<Link
+  href="/about"
+  className="flex justify-center items-center mt-5 z-50 px-4 sm:px-6 md:px-0"
+>
   {mounted ? (
-    <HoverBorderGradient
-      containerClassName="rounded-full"
-      className="bg-background/60 text-white backdrop-blur-md"
-    >
-      {/* IMPORTANT: Only inner layout is grid */}
-      <div className="grid grid-cols-[0.5fr_auto_0.5fr] md:grid-cols-[1fr_auto_1fr] items-center px-0 md:px-4 z-50 ">
-        
-        {/* Left text */}
-        <div className="flex justify-end">
-          <span className="text-sm md:text-base font-semibold whitespace-nowrap">
-           Hi<span className="inline-block md:hidden">,{" "}</span> <span className="hidden md:inline-block">there,</span> I'm Shahzad
-          </span>
+    <div className="relative rounded-full overflow-visible w-full max-w-[760px]">
+      {/* Pill container */}
+      <div
+        className="
+          relative w-full rounded-full overflow-visible
+          border border-white/10 bg-white/5 text-white backdrop-blur-xl
+          shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_60px_rgba(0,0,0,0.55)]
+          px-3 sm:px-5 md:px-6
+          py-2 sm:py-2.5 md:py-3
+        "
+      >
+        {/* Beams layer */}
+        <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+          <BorderBeam
+            duration={6}
+            size={520}
+            className="from-transparent via-purple-500 to-transparent"
+          />
+          <BorderBeam
+            duration={6}
+            delay={3}
+            size={520}
+            borderWidth={2}
+            className="from-transparent via-primary to-transparent"
+          />
         </div>
 
-        {/* Avatar (center, overlapping top & bottom of pill) */}
-        <div className="-my-4 mx-4 z-[1000px] cursor-pointer">
-          <div className="h-14 w-14 rounded-full  bg-linear-to-r from-primary to-purple-600 p-0.5 ">
-            <div className="h-full w-full rounded-full bg-black overflow-hidden">
+        {/* ✅ Content (same layout on all sizes) */}
+        <div className="relative w-full grid grid-cols-[1fr_auto_1fr] items-center">
+          {/* Left */}
+          <div className="text-right pr-2 sm:pr-4 md:pr-6">
+            <span className="block whitespace-nowrap font-semibold text-white/90 text-[11px] xs:text-xs sm:text-sm md:text-base">
+              Hi <span className="inline-block">there,</span> {" "} I&apos;m Shahzad
+            </span>
+          </div>
+
+          {/* Center spacer — EXACTLY avatar width */}
+          <div className="w-11 sm:w-14 md:w-20" />
+
+          {/* Right */}
+          <div className="text-left pl-2 sm:pl-4 md:pl-6">
+            <span className="block whitespace-nowrap font-semibold text-white/90 text-[11px] xs:text-xs sm:text-sm md:text-base">
+              Full Stack Developer
+            </span>
+          </div>
+        </div>
+
+        {/* Avatar (responsive) */}
+        <div className="absolute left-1/2 top-1/2 z-60 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          <div className="h-11 w-11 sm:h-14 sm:w-14 md:h-20 md:w-20 rounded-full bg-linear-to-r from-primary to-purple-600 p-0.5 shadow-[0_0_0_8px_rgba(124,58,237,0.16)] md:shadow-[0_0_0_10px_rgba(124,58,237,0.18)]">
+            <div className="relative h-full w-full rounded-full bg-black overflow-hidden">
               <Image
                 src={profile}
                 alt="Shahzad"
-                className="h-full w-full object-cover"
+                fill
+                className="object-cover"
+                priority
               />
             </div>
           </div>
         </div>
-
-        {/* Right text */}
-        <div className="flex justify-start">
-          <span className="text-sm md:text-base font-semibold whitespace-nowrap">
-            Full Stack Developer
-          </span>
-        </div>
       </div>
-    </HoverBorderGradient>
+    </div>
   ) : (
     <div className="h-11 md:h-12" aria-hidden="true" />
   )}
@@ -63,7 +93,7 @@ export default function HeroSection() {
 
 
         {/* Title + subtitle */}
-        <div className="mt-8 md:max-w-6xl space-y-4">
+        <div className="mt-8 md:mt-12 md:max-w-6xl space-y-4">
           <h1 className="text-balance text-4xl font-semibold font-serif text-white md:text-4xl lg:text-5xl leading-tight">
             Helping founders turn ideas <br className="hidden lg:block" />
             <span className="inline md:block">
