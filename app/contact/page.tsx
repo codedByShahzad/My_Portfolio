@@ -1,149 +1,170 @@
 "use client";
 
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { ShineBorder } from "@/components/ui/shine-border";
-import React, { useState } from "react";
-import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Mail, Copy, Check, CalendarDays, MessageSquare } from "lucide-react";
+
+const CALENDLY_BASE = "https://calendly.com/shahzadsohail1678/30min";
+
+function pad2(n: number) {
+  return String(n).padStart(2, "0");
+}
+
+function formatLocalDateTime(d: Date) {
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(
+    d.getDate()
+  )}T${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`;
+}
 
 const Page = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [active, setActive] = useState<"call" | "message">("call");
+  const [copied, setCopied] = useState(false);
+  const calendlyRef = useRef<HTMLDivElement>(null);
 
-  const [status, setStatus] = useState<"idle" | "sending">("idle");
+  const email = "mr.shahzad.developer@gmail.com";
 
-  // Handle input change
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // Load Calendly script once
+  useEffect(() => {
+    if (document.getElementById("calendly-script")) return;
 
-  // Handle submit
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("sending");
+    const script = document.createElement("script");
+    script.id = "calendly-script";
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
-    try {
-      const response = await fetch(
-        "https://formsubmit.co/ajax/mr.shahzad.developer@gmail.com",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+  // Prepare Calendly URL
+  const calendlyUrl = useMemo(() => {
+    const start = new Date();
+    start.setDate(start.getDate() + 2);
+    start.setHours(10, 0, 0, 0);
 
-      if (response.ok) {
-        toast.success("Message sent successfully!");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        throw new Error("Failed to send");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong. Try again!");
-    } finally {
-      setStatus("idle");
+    const params = new URLSearchParams({
+      background_color: "07070b",
+      text_color: "ffffff",
+      primary_color: "7c3aed",
+      hide_landing_page_details: "1",
+      hide_gdpr_banner: "1",
+      date: formatLocalDateTime(start),
+      prefill_date: formatLocalDateTime(start),
+    });
+
+    return `${CALENDLY_BASE}?${params.toString()}`;
+  }, []);
+
+  // Initialize Calendly widget whenever active tab or URL changes
+  useEffect(() => {
+    if (active === "call" && calendlyRef.current && (window as any).Calendly) {
+      // Clear previous iframe if exists
+      calendlyRef.current.innerHTML = "";
+
+      (window as any).Calendly.initInlineWidget({
+        url: calendlyUrl,
+        parentElement: calendlyRef.current,
+        prefill: {},
+        utm: {},
+        styles: {
+          height: "100%",
+        },
+      });
     }
+  }, [active, calendlyUrl]);
+
+  const copyEmail = async () => {
+    await navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1400);
   };
 
   return (
-    <section className="bg-black text-white px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-10 sm:py-12 my-10">
-      {/* Heading */}
-      <div className="mb-16">
-        <div className="flex   gap-2 mt-5">
-                 <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
-                              <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-                              <p className="relative z-10 text-xs uppercase tracking-[0.25em] text-white/70 sm:text-sm">
-                                Resume
-                              </p>
-                            </div>
-              </div>
-        
-              {/* Heading */}
-              <h1 className="mt-4 text-4xl font-semibold font-serif md:text-5xl text-white">
-                Let's get{" "}
-                <span className="bg-linear-to-r from-primary via-indigo-500 to-pink-500 bg-clip-text italic text-transparent">
-                  in touch
-                </span>
-              </h1>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-        {/* Contact Info */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-4">
-            <FiPhone className="text-primary text-xl" />
-            <p>+92 341 5278601</p>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <FiMail className="text-primary text-xl" />
-            <p>mr.shahzad.developer@gmail.com</p>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <FiMapPin className="text-primary text-xl" />
-            <p>Rawalpindi, Pakistan</p>
+    <section className="relative px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-16 my-10">
+      {/* Header */}
+      <div className="relative mx-auto max-w-6xl text-center">
+        <div className="flex justify-center">
+          <div className="relative inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
+            <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+            <span className="text-xs uppercase tracking-[0.25em] text-white/70">
+              Contact
+            </span>
           </div>
         </div>
 
-        {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
-          <div>
-            <label className="block mb-2 text-sm">Your Name</label>
-            <input
-              type="text"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full bg-transparent border-b border-gray-700 py-2 focus:outline-none"
-            />
-          </div>
+        <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-semibold font-serif">
+          Let&apos;s Get{" "}
+          <span className="bg-linear-to-r from-primary via-indigo-500 to-fuchsia-500 bg-clip-text italic text-transparent">
+            In Touch
+          </span>
+        </h1>
 
-          <div>
-            <label className="block mb-2 text-sm">Email Address</label>
-            <input
-              type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full bg-transparent border-b border-gray-700 py-2 focus:outline-none"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 text-sm">Message</label>
-            <textarea
-              name="message"
-              rows={4}
-              required
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full h-40 resize-none bg-transparent border-b border-gray-700 py-2 focus:outline-none"
-            />
+        <div className="mt-5 flex justify-center gap-3 text-white/80 flex-wrap">
+          <div className="flex items-center gap-2">
+            <Mail className="h-4 w-4" />
+            <span>{email}</span>
           </div>
 
           <button
-            type="submit"
-            disabled={status === "sending"}
-            className="bg-primary text-white cursor-pointer hover:bg-[#603df9] px-6 py-3 font-semibold "
+            onClick={copyEmail}
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs hover:bg-white/10"
           >
-            {status === "sending" ? "Sending..." : "Send Message"}
+            {copied ? <Check size={14} /> : <Copy size={14} />}
+            {copied ? "Copied" : "Copy"}
           </button>
-        </form>
+        </div>
+
+        {/* Tabs */}
+        <div className="mt-8 flex justify-center">
+          <div className="inline-flex rounded-xl border border-white/10 bg-white/5 p-1">
+            <button
+              onClick={() => setActive("call")}
+              className={`px-4 py-2 rounded-lg text-sm flex items-center gap-2 ${
+                active === "call"
+                  ? "bg-white/10 text-white"
+                  : "text-white/70 hover:bg-white/5"
+              }`}
+            >
+              <CalendarDays size={16} />
+              Book a Call
+            </button>
+
+            <button
+              onClick={() => setActive("message")}
+              className={`px-4 py-2 rounded-lg text-sm flex items-center gap-2 ${
+                active === "message"
+                  ? "bg-white/10 text-white"
+                  : "text-white/70 hover:bg-white/5"
+              }`}
+            >
+              <MessageSquare size={16} />
+              Send Message
+            </button>
+          </div>
+        </div>
       </div>
 
-      <ToastContainer position="top-right" autoClose={2000} />
+      {/* Content */}
+      <div className="relative mx-auto max-w-6xl mt-10 lg:mt-0">
+        {/* Calendly — ALWAYS mounted */}
+        {active === "call" && (
+          <div
+            ref={calendlyRef}
+            className="w-full"
+            style={{ height: "calc(100vh - 200px)" }}
+          />
+        )}
+
+        {/* Message */}
+        {active === "message" && (
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-10 text-center">
+            <h2 className="text-3xl font-semibold font-serif">
+              Prefer to message?
+            </h2>
+            <p className="mt-3 text-white/65">
+              Email your project details and I’ll reply with next steps.
+            </p>
+          </div>
+        )}
+      </div>
     </section>
   );
 };
