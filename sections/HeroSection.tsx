@@ -162,7 +162,7 @@ export default function HeroSection() {
         {/* Buttons */}
         <div className="mt-10 md:mt-0 flex flex-col sm:flex-row gap-3 sm:items-center order-3 sm:order-2">
           <ArrowSwapButton
-            label="Lets Connect"
+            label="Let’s Connect"
             href="/projects"
             className="bg-primary text-white"
           />
