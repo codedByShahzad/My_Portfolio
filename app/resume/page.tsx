@@ -18,6 +18,33 @@ import type { LucideIcon } from "lucide-react";
 import type { IconType } from "react-icons";
 
 import { ShineBorder } from "@/components/ui/shine-border";
+import Image from "next/image";
+import profile from "../../public/images/profile2.png";
+import { motion, type Variants } from "framer-motion";
+
+/* ----------------------------- */
+/* Motion (same vibe as service) */
+/* ----------------------------- */
+
+const pageIn: Variants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.45, ease: "easeOut" } },
+};
+
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.08 } },
+};
+
+const itemUp: Variants = {
+  hidden: { opacity: 0, y: 14, scale: 0.985 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease: "easeOut" } },
+};
+
+const itemSoft: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+};
 
 /* ----------------------------- */
 /* Data                          */
@@ -183,7 +210,12 @@ const skills: SkillGroup[] = [
 
 export default function Page() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-black text-neutral-200">
+    <motion.main
+      variants={pageIn}
+      initial="hidden"
+      animate="show"
+      className="relative min-h-dvh lg:min-h-screen bg-black text-neutral-200"
+    >
       {/* ================= BACKGROUND ================= */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(1000px_600px_at_20%_-10%,rgba(80,47,235,0.28),transparent_60%),radial-gradient(900px_520px_at_90%_10%,rgba(217,70,239,0.22),transparent_55%),radial-gradient(800px_520px_at_50%_110%,rgba(59,130,246,0.18),transparent_55%)]" />
@@ -192,154 +224,182 @@ export default function Page() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.85)_100%)]" />
       </div>
 
-      <div className="relative px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-10 sm:py-12">
+      <div className="relative px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 pt-10 sm:pt-12 pb-24 sm:pb-28 lg:pb-12">
         <div className="mx-auto w-full">
           {/* Top Label */}
-          <div className="flex flex-col items-center text-center">
+          <motion.div variants={itemSoft} initial="hidden" animate="show" className="flex flex-col items-center text-center">
             <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
               <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
               <p className="relative z-10 text-xs uppercase tracking-[0.25em] text-white/70 sm:text-sm">
                 Resume
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* ================= LAYOUT ================= */}
           <div className="mt-8 grid gap-6 lg:gap-8 xl:grid-cols-[460px_1fr] xl:items-start">
             {/* ================= SIDEBAR (STICKY) ================= */}
-            {/* ✅ Sticky works on desktop (xl+) and doesn't break mobile layout */}
-            <aside className="self-start xl:sticky xl:top-8">
+            <motion.aside variants={itemUp} initial="hidden" animate="show" className="self-start xl:sticky xl:top-8">
               <Card>
-                <div className="flex items-start justify-between gap-3">
-                  <div>
+                {/* Sidebar stagger */}
+                <motion.div variants={container} initial="hidden" animate="show">
+                  {/* Header */}
+                  <motion.div variants={itemUp} className="flex flex-col items-center text-center">
+                    <div className="relative mb-4">
+                      <div className="relative h-28 w-28 sm:h-32 sm:w-32 rounded-full overflow-visible">
+                        <div className="h-full w-full rounded-full overflow-hidden border border-white/15 bg-black/40">
+                          <Image
+                            src={profile}
+                            alt="Shahzad Sohail"
+                            width={160}
+                            height={160}
+                            className="h-full w-full object-cover"
+                            priority
+                          />
+                        </div>
+
+                        {/* Dot (ping) */}
+                        <div className="absolute right-4 bottom-2 translate-x-[15%] translate-y-[15%] z-40">
+                          <span className="relative flex h-3.5 w-3.5 sm:h-4 sm:w-4">
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400/70 opacity-75 animate-ping" />
+                            <span className="relative inline-flex h-full w-full rounded-full bg-emerald-500 ring-2 ring-neutral-950" />
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="pointer-events-none absolute inset-0 rounded-full shadow-[0_0_40px_rgba(168,85,247,0.35)]" />
+                    </div>
+
                     <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
                       Shahzad Sohail
                     </h1>
-                    <p className="mt-2 text-sm sm:text-base text-neutral-300/75 leading-relaxed">
+
+                    <p className="mt-2 text-sm sm:text-base text-neutral-300/75 leading-relaxed max-w-[38ch]">
                       Full-Stack JavaScript Developer focused on clean UI, fast performance, and
                       production-ready delivery.
                     </p>
-                  </div>
-                </div>
+                  </motion.div>
 
-                {/* chips */}
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {chips.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-white/10 bg-black/35 px-3 py-1.5 text-xs sm:text-sm text-neutral-100/90 backdrop-blur-md"
+                  {/* chips */}
+                  <motion.div variants={itemUp} className="mt-5 flex flex-wrap gap-2 justify-center">
+                    {chips.map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-full border border-white/10 bg-black/35 px-3 py-1.5 text-xs sm:text-sm text-neutral-100/90 backdrop-blur-md"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </motion.div>
+
+                  {/* contact */}
+                  <motion.div variants={itemUp} className="mt-6 space-y-3 text-sm sm:text-base text-neutral-200/85">
+                    <ContactRow Icon={Mail} text="mr.shahzad.developer@gmail.com" />
+                    <ContactRow Icon={Phone} text="+92 345 2789601" />
+                    <ContactRow Icon={MapPin} text="Rawalpindi, Pakistan" />
+                  </motion.div>
+
+                  {/* socials */}
+                  <motion.div variants={itemUp} className="mt-6 grid grid-cols-2 gap-3">
+                    {socials.map((item) => (
+                      <SocialPill key={item.label} {...item} />
+                    ))}
+                  </motion.div>
+
+                  {/* quick actions */}
+                  <motion.div variants={itemUp} className="mt-6 grid gap-3">
+                    <a
+                      href="/Shahzad Resume.pdf"
+                      download
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm sm:text-base hover:bg-white/10 hover:border-white/25 transition"
                     >
-                      {t}
-                    </span>
-                  ))}
-                </div>
+                      <Download size={18} />
+                      Download Full Resume
+                    </a>
 
-                {/* contact */}
-                <div className="mt-6 space-y-3 text-sm sm:text-base text-neutral-200/85">
-                  <ContactRow Icon={Mail} text="mr.shahzad.developer@gmail.com" />
-                  <ContactRow Icon={Phone} text="+92 345 2789601" />
-                  <ContactRow Icon={MapPin} text="Rawalpindi, Pakistan" />
-                </div>
-
-                {/* socials */}
-                <div className="mt-6 grid grid-cols-2 gap-3">
-                  {socials.map((item) => (
-                    <SocialPill key={item.label} {...item} />
-                  ))}
-                </div>
-
-                {/* quick actions */}
-                <div className="mt-6 grid gap-3">
-                  <a
-                    href="/Shahzad Resume.pdf"
-                    download
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm sm:text-base hover:bg-white/10 hover:border-white/25 transition"
-                  >
-                    <Download size={18} />
-                    Download Full Resume
-                  </a>
-
-                  <a
-                    href="mailto:mr.shahzad.developer@gmail.com"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-black/35 px-5 py-3 text-sm sm:text-base hover:bg-black/50 hover:border-white/20 transition"
-                  >
-                    <ArrowUpRight size={18} />
-                    Email Me
-                  </a>
-                </div>
+                    <a
+                      href="mailto:mr.shahzad.developer@gmail.com"
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-black/35 px-5 py-3 text-sm sm:text-base hover:bg-black/50 hover:border-white/20 transition"
+                    >
+                      <ArrowUpRight size={18} />
+                      Email Me
+                    </a>
+                  </motion.div>
+                </motion.div>
               </Card>
-            </aside>
+            </motion.aside>
 
             {/* ================= MAIN CONTENT (SCROLLS) ================= */}
-            <section className="space-y-6 lg:space-y-8">
-              {/* Experience */}
-              <Section
-                title="Experience"
-                Icon={Briefcase}
-                subtitle="Recent work with ownership and measurable impact."
-                action={
-                  <a
-                    href="/Shahzad Resume.pdf"
-                    download
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm sm:text-base hover:bg-white/10 hover:border-white/25 transition"
-                  >
-                    <Download size={18} />
-                    Download Full Resume
-                  </a>
-                }
-              >
-                <div className="space-y-4">
-                  {experience.map((x) => (
-                    <ExperienceCard key={`${x.company}-${x.role}`} item={x} />
-                  ))}
-                </div>
-              </Section>
+            <motion.section
+              variants={container}
+              initial="hidden"
+              animate="show"
+              className="space-y-6 lg:space-y-8"
+            >
+              <motion.div variants={itemUp}>
+                <Section
+                  title="Experience"
+                  Icon={Briefcase}
+                  subtitle="Recent work with ownership and measurable impact."
+                  action={
+                    <a
+                      href="/Shahzad Resume.pdf"
+                      download
+                      className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm sm:text-base hover:bg-white/10 hover:border-white/25 transition"
+                    >
+                      <Download size={18} />
+                      Download Full Resume
+                    </a>
+                  }
+                >
+                  <div className="space-y-4">
+                    {experience.map((x) => (
+                      <ExperienceCard key={`${x.company}-${x.role}`} item={x} />
+                    ))}
+                  </div>
+                </Section>
+              </motion.div>
 
-              {/* Projects */}
-              <Section
-                title="Projects"
-                Icon={FolderKanban}
-                subtitle="Selected builds that show product thinking and execution."
-              >
-                <div className="grid gap-4">
-                  {projects.map((p) => (
-                    <ProjectCard key={p.title} item={p} />
-                  ))}
-                </div>
-              </Section>
+              <motion.div variants={itemUp}>
+                <Section
+                  title="Projects"
+                  Icon={FolderKanban}
+                  subtitle="Selected builds that show product thinking and execution."
+                >
+                  <div className="grid gap-4">
+                    {projects.map((p) => (
+                      <ProjectCard key={p.title} item={p} />
+                    ))}
+                  </div>
+                </Section>
+              </motion.div>
 
-              {/* Skills */}
-              <Section
-                title="Skills"
-                Icon={FolderKanban}
-                subtitle="A focused stack for shipping production-grade apps."
-              >
-                <div className="grid gap-4 lg:grid-cols-2">
-                  {skills.map((g) => (
-                    <SkillGroupCard key={g.title} item={g} />
-                  ))}
-                </div>
-              </Section>
+              <motion.div variants={itemUp}>
+                <Section title="Skills" Icon={FolderKanban} subtitle="A focused stack for shipping production-grade apps.">
+                  <div className="grid gap-4 lg:grid-cols-2">
+                    {skills.map((g) => (
+                      <SkillGroupCard key={g.title} item={g} />
+                    ))}
+                  </div>
+                </Section>
+              </motion.div>
 
-              {/* Education */}
-              <Section
-                title="Education"
-                Icon={GraduationCap}
-                subtitle="Academic background and current studies."
-              >
-                <div className="grid gap-4 lg:grid-cols-3">
-                  {education.map((e) => (
-                    <MiniCard key={e.title} title={e.title} subtitle={e.subtitle} meta={e.meta} />
-                  ))}
-                </div>
-              </Section>
-            </section>
+              <motion.div variants={itemUp}>
+                <Section title="Education" Icon={GraduationCap} subtitle="Academic background and current studies.">
+                  <div className="grid gap-4 lg:grid-cols-3">
+                    {education.map((e) => (
+                      <MiniCard key={e.title} title={e.title} subtitle={e.subtitle} meta={e.meta} />
+                    ))}
+                  </div>
+                </Section>
+              </motion.div>
+            </motion.section>
           </div>
 
           <div className="h-10" />
         </div>
       </div>
-    </main>
+    </motion.main>
   );
 }
 
@@ -349,7 +409,7 @@ export default function Page() {
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-neutral-950/35 backdrop-blur-xl p-6 sm:p-7 shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_30px_120px_rgba(0,0,0,0.65)]">
+    <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-950/35 backdrop-blur-xl p-6 sm:p-7 shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_30px_120px_rgba(0,0,0,0.65)]">
       <div className="pointer-events-none absolute -top-20 -left-20 h-56 w-56 rounded-full bg-primary/12 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-fuchsia-500/10 blur-3xl" />
       <div className="relative">{children}</div>
@@ -384,7 +444,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden rounded-[24px] border border-white/10 bg-neutral-950/30 backdrop-blur-xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_20px_80px_rgba(0,0,0,0.55)]">
+    <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-950/30 backdrop-blur-xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_20px_80px_rgba(0,0,0,0.55)]">
       <div className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-fuchsia-500/10 blur-3xl" />
 
@@ -408,7 +468,7 @@ function ContactRow({ Icon, text }: { Icon: LucideIcon; text: string }) {
   return (
     <div className="flex items-center gap-2.5 min-w-0">
       <Icon size={18} className="text-neutral-300/70 shrink-0" />
-      <span className="text-neutral-200/85 break-words min-w-0">{text}</span>
+      <span className="text-neutral-200/85 wrap-break-word min-w-0">{text}</span>
     </div>
   );
 }
@@ -437,7 +497,6 @@ function MiniCard({ title, subtitle, meta }: { title: string; subtitle: string; 
   );
 }
 
-/* ✅ NO COLLAPSIBLE: show all details */
 function ExperienceCard({ item }: { item: Experience }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/25 p-6 sm:p-7 backdrop-blur-md">
@@ -463,7 +522,6 @@ function ExperienceCard({ item }: { item: Experience }) {
   );
 }
 
-/* ✅ NO COLLAPSIBLE + add GitHub + Live preview icons */
 function ProjectCard({ item }: { item: Project }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/25 p-6 sm:p-7 backdrop-blur-md transition hover:bg-black/35">
@@ -474,7 +532,6 @@ function ProjectCard({ item }: { item: Project }) {
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          {/* GitHub */}
           {item.githubUrl ? (
             <a
               href={item.githubUrl}
@@ -487,7 +544,6 @@ function ProjectCard({ item }: { item: Project }) {
             </a>
           ) : null}
 
-          {/* Live Preview */}
           {item.liveUrl ? (
             <a
               href={item.liveUrl}
