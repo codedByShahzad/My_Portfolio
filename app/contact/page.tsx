@@ -26,23 +26,35 @@ const Page = () => {
 
   // Load Calendly script once + mark ready when loaded
   useEffect(() => {
-    const existing = document.getElementById("calendly-script") as
-      | HTMLScriptElement
-      | null;
+    const w = window as any;
 
     // If Calendly already present, mark ready
-    if ((window as any).Calendly) {
+    if (w.Calendly && typeof w.Calendly.initInlineWidget === "function") {
       setCalendlyReady(true);
       return;
     }
 
+    const existing = document.getElementById("calendly-script") as
+      | HTMLScriptElement
+      | null;
+
     // If script tag exists but Calendly isn't ready yet, wait for it
     if (existing) {
-      const onLoad = () => setCalendlyReady(true);
+      const onLoad = () => {
+        const ww = window as any;
+        if (ww.Calendly && typeof ww.Calendly.initInlineWidget === "function") {
+          setCalendlyReady(true);
+        }
+      };
+
       existing.addEventListener("load", onLoad);
-      // In case it already loaded but global wasn't checked yet
+
+      // In case it already loaded but event didn't fire for this mount
       const t = window.setTimeout(() => {
-        if ((window as any).Calendly) setCalendlyReady(true);
+        const ww = window as any;
+        if (ww.Calendly && typeof ww.Calendly.initInlineWidget === "function") {
+          setCalendlyReady(true);
+        }
       }, 0);
 
       return () => {
@@ -57,7 +69,12 @@ const Page = () => {
     script.src = "https://assets.calendly.com/assets/external/widget.js";
     script.async = true;
 
-    script.onload = () => setCalendlyReady(true);
+    script.onload = () => {
+      const ww = window as any;
+      if (ww.Calendly && typeof ww.Calendly.initInlineWidget === "function") {
+        setCalendlyReady(true);
+      }
+    };
     script.onerror = () => setCalendlyReady(false);
 
     document.body.appendChild(script);
@@ -82,24 +99,63 @@ const Page = () => {
     return `${CALENDLY_BASE}?${params.toString()}`;
   }, []);
 
-  // Init Calendly only when: tab is call + script is ready + ref exists
+  // Robust init: wait for paint + ensure container has non-zero height
   useEffect(() => {
     if (active !== "call") return;
     if (!calendlyReady) return;
-    if (!calendlyRef.current) return;
 
-    // Clear previous iframe if exists (important for tab switching / remounts)
-    calendlyRef.current.innerHTML = "";
+    const w = window as any;
+    const el = calendlyRef.current;
+    if (!el) return;
+    if (!w.Calendly || typeof w.Calendly.initInlineWidget !== "function") return;
 
-    (window as any).Calendly.initInlineWidget({
-      url: calendlyUrl,
-      parentElement: calendlyRef.current,
-      prefill: {},
-      utm: {},
-      styles: {
-        height: "100%",
-      },
+    let raf1 = 0;
+    let raf2 = 0;
+    let timer = 0;
+    let cancelled = false;
+
+    const tryInit = () => {
+      if (cancelled) return;
+
+      const height = el.getBoundingClientRect().height;
+      const width = el.getBoundingClientRect().width;
+
+      // If layout hasn't settled yet, retry next frame
+      if (height < 200 || width < 200) {
+        raf2 = window.requestAnimationFrame(tryInit);
+        return;
+      }
+
+      // Clear previous widget
+      el.innerHTML = "";
+
+      w.Calendly.initInlineWidget({
+        url: calendlyUrl,
+        parentElement: el,
+        prefill: {},
+        utm: {},
+        styles: { height: "100%" },
+      });
+    };
+
+    // Wait for React commit + next paint + small delay (Calendly is timing-sensitive)
+    raf1 = window.requestAnimationFrame(() => {
+      timer = window.setTimeout(() => {
+        tryInit();
+      }, 50);
     });
+
+    return () => {
+      cancelled = true;
+      if (raf1) window.cancelAnimationFrame(raf1);
+      if (raf2) window.cancelAnimationFrame(raf2);
+      if (timer) window.clearTimeout(timer);
+
+      // Optional: clear on unmount/tab switch to avoid stale iframes
+      if (calendlyRef.current) {
+        calendlyRef.current.innerHTML = "";
+      }
+    };
   }, [active, calendlyUrl, calendlyReady]);
 
   const copyEmail = async () => {
@@ -177,19 +233,14 @@ const Page = () => {
       <div className="relative mx-auto max-w-6xl mt-10">
         {/* Calendly */}
         {active === "call" && (
-          <div className="w-full">
-            {!calendlyReady && (
-              <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-10 text-center text-white/70">
-                Loading calendar…
-              </div>
-            )}
-
+          <div className="w-full -mt-5">
+            
             <div
               ref={calendlyRef}
               className="w-full"
               style={{
                 height: "calc(100vh - 200px)",
-                minHeight: 720, // helps avoid “blank” look on some screens
+                minHeight: 720,
               }}
             />
           </div>
