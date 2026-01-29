@@ -1,10 +1,27 @@
 "use client";
 
 import React, { useEffect, useMemo, useState, useRef } from "react";
+import {
+  Mail,
+  Copy,
+  Check,
+  CalendarDays,
+  MessageSquare,
+  Send,
+  Loader2,
+} from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { ShineBorder } from "@/components/ui/shine-border";
-import { Mail, Copy, Check, CalendarDays, MessageSquare } from "lucide-react";
+import { motion } from 'framer-motion';
 
 const CALENDLY_BASE = "https://calendly.com/shahzadsohail1678/30min";
+
+const EMAILJS_SERVICE_ID = "service_wsxw9eb";
+const EMAILJS_TEMPLATE_ID = "template_f2gozlj";
+const EMAILJS_PUBLIC_KEY = "iELAqtu3pD_Jc_jqZ";
 
 function pad2(n: number) {
   return String(n).padStart(2, "0");
@@ -17,18 +34,22 @@ function formatLocalDateTime(d: Date) {
 }
 
 const Page = () => {
-  const [active, setActive] = useState<"call" | "message">("call");
+  const [active, setActive] = useState<"call" | "message">("message");
   const [copied, setCopied] = useState(false);
   const [calendlyReady, setCalendlyReady] = useState(false);
 
   const calendlyRef = useRef<HTMLDivElement>(null);
-  const email = "mr.shahzad.developer@gmail.com";
+  const email = "shahzadsohail1678@gmail.com";
+
+  const [fromName, setFromName] = useState("");
+  const [fromEmail, setFromEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
 
   // Load Calendly script once + mark ready when loaded
   useEffect(() => {
     const w = window as any;
 
-    // If Calendly already present, mark ready
     if (w.Calendly && typeof w.Calendly.initInlineWidget === "function") {
       setCalendlyReady(true);
       return;
@@ -38,7 +59,6 @@ const Page = () => {
       | HTMLScriptElement
       | null;
 
-    // If script tag exists but Calendly isn't ready yet, wait for it
     if (existing) {
       const onLoad = () => {
         const ww = window as any;
@@ -49,7 +69,6 @@ const Page = () => {
 
       existing.addEventListener("load", onLoad);
 
-      // In case it already loaded but event didn't fire for this mount
       const t = window.setTimeout(() => {
         const ww = window as any;
         if (ww.Calendly && typeof ww.Calendly.initInlineWidget === "function") {
@@ -63,7 +82,6 @@ const Page = () => {
       };
     }
 
-    // Otherwise, create script
     const script = document.createElement("script");
     script.id = "calendly-script";
     script.src = "https://assets.calendly.com/assets/external/widget.js";
@@ -80,7 +98,7 @@ const Page = () => {
     document.body.appendChild(script);
   }, []);
 
-  // Prepare Calendly URL
+  // Prepare Calendly URL (DON'T CHANGE)
   const calendlyUrl = useMemo(() => {
     const start = new Date();
     start.setDate(start.getDate() + 2);
@@ -99,7 +117,7 @@ const Page = () => {
     return `${CALENDLY_BASE}?${params.toString()}`;
   }, []);
 
-  // Robust init: wait for paint + ensure container has non-zero height
+  // Robust init for Calendly
   useEffect(() => {
     if (active !== "call") return;
     if (!calendlyReady) return;
@@ -120,13 +138,11 @@ const Page = () => {
       const height = el.getBoundingClientRect().height;
       const width = el.getBoundingClientRect().width;
 
-      // If layout hasn't settled yet, retry next frame
       if (height < 200 || width < 200) {
         raf2 = window.requestAnimationFrame(tryInit);
         return;
       }
 
-      // Clear previous widget
       el.innerHTML = "";
 
       w.Calendly.initInlineWidget({
@@ -138,7 +154,6 @@ const Page = () => {
       });
     };
 
-    // Wait for React commit + next paint + small delay (Calendly is timing-sensitive)
     raf1 = window.requestAnimationFrame(() => {
       timer = window.setTimeout(() => {
         tryInit();
@@ -150,11 +165,7 @@ const Page = () => {
       if (raf1) window.cancelAnimationFrame(raf1);
       if (raf2) window.cancelAnimationFrame(raf2);
       if (timer) window.clearTimeout(timer);
-
-      // Optional: clear on unmount/tab switch to avoid stale iframes
-      if (calendlyRef.current) {
-        calendlyRef.current.innerHTML = "";
-      }
+      if (calendlyRef.current) calendlyRef.current.innerHTML = "";
     };
   }, [active, calendlyUrl, calendlyReady]);
 
@@ -164,97 +175,220 @@ const Page = () => {
     setTimeout(() => setCopied(false), 1400);
   };
 
+  const onSubmitMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (sending) return;
+
+    setSending(true);
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: fromName,
+          from_email: fromEmail,
+          message,
+        },
+        {
+          publicKey: EMAILJS_PUBLIC_KEY,
+        }
+      );
+
+      toast.success("Message sent successfully!", {
+        position: "top-right",
+        autoClose: 2500,
+        theme: "dark",
+      });
+
+      setFromName("");
+      setFromEmail("");
+      setMessage("");
+    } catch (err) {
+      toast.error("Failed to send. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "dark",
+      });
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
-    <section className="relative px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-16 my-10">
+    <section className="relative px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-10 overflow-hidden">
+      <ToastContainer />
+
       {/* Header */}
-      <div className="relative mx-auto max-w-6xl text-center">
-        <div className="flex justify-center">
-          <div className="relative inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
-            <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-            <span className="text-xs uppercase tracking-[0.25em] text-white/70">
-              Contact
-            </span>
-          </div>
+      <div className="relative mx-auto text-center">
+         <motion.div
+        // variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.4 }}
+        className="relative mb-10 flex flex-col items-center text-center "
+      >
+        <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 backdrop-blur-md">
+          {/* Text */}
+          <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+          <p className="relative z-10 text-xs uppercase tracking-[0.25em] text-white/70 sm:text-sm">
+            Featured Case Studies
+          </p>
         </div>
 
-        <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-semibold font-serif">
-          Let&apos;s Get{" "}
-          <span className="bg-linear-to-r from-primary via-indigo-500 to-fuchsia-500 bg-clip-text italic text-transparent">
+        <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif  leading-[1.15] text-white">
+          Let's Get {" "}
+          <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
             In Touch
           </span>
-        </h1>
+        </h2>
 
-        <div className="mt-5 flex justify-center gap-3 text-white/80 flex-wrap">
-          <div className="flex items-center gap-2">
+      </motion.div>
+
+        <div className="mt-0 flex justify-center text-white/80">
+          <div className="flex items-center gap-5 rounded-lg border border-white/10 bg-white/5 px-4 py-2 backdrop-blur shadow-[0_0_0_1px_rgba(255,255,255,0.05)]">
             <Mail className="h-4 w-4" />
             <span>{email}</span>
+            <button onClick={copyEmail} className="opacity-90 hover:opacity-100">
+              {copied ? <Check size={14} /> : <Copy size={14} />}
+            </button>
           </div>
-
-          <button
-            onClick={copyEmail}
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs hover:bg-white/10"
-          >
-            {copied ? <Check size={14} /> : <Copy size={14} />}
-            {copied ? "Copied" : "Copy"}
-          </button>
         </div>
 
-        {/* Tabs */}
+        {/* Tabs (equal width) */}
         <div className="mt-8 flex justify-center">
-          <div className="inline-flex rounded-xl border border-white/10 bg-white/5 p-1">
-            <button
-              onClick={() => setActive("call")}
-              className={`px-4 py-2 rounded-lg text-sm flex items-center gap-2 ${
-                active === "call"
-                  ? "bg-white/10 text-white"
-                  : "text-white/70 hover:bg-white/5"
-              }`}
-            >
-              <CalendarDays size={16} />
-              Book a Call
-            </button>
-
+          <div className="grid grid-cols-2 w-full max-w-xs rounded-lg border gap-1 border-white/10 bg-white/5 p-1 backdrop-blur-md shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_18px_60px_rgba(0,0,0,0.35)]">
             <button
               onClick={() => setActive("message")}
-              className={`px-4 py-2 rounded-lg text-sm flex items-center gap-2 ${
+              className={`w-full px-4 py-2 rounded-lg text-sm flex items-center justify-center gap-2 transition ${
                 active === "message"
-                  ? "bg-white/10 text-white"
+                  ? "bg-white/10 text-white shadow-[0_10px_30px_rgba(124,58,237,0.12)]"
                   : "text-white/70 hover:bg-white/5"
               }`}
             >
               <MessageSquare size={16} />
               Send Message
             </button>
+
+            <button
+              onClick={() => setActive("call")}
+              className={`w-full px-4 py-2 rounded-lg text-sm flex items-center justify-center gap-2 transition ${
+                active === "call"
+                  ? "bg-white/10 text-white shadow-[0_10px_30px_rgba(124,58,237,0.12)]"
+                  : "text-white/70 hover:bg-white/5"
+              }`}
+            >
+              <CalendarDays size={16} />
+              Book a Call
+            </button>
           </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="relative mx-auto max-w-6xl mt-10">
-        {/* Calendly */}
-        {active === "call" && (
-          <div className="w-full -mt-5">
-            
-            <div
-              ref={calendlyRef}
-              className="w-full"
-              style={{
-                height: "calc(100vh - 200px)",
-                minHeight: 720,
-              }}
-            />
+      <div className="relative mx-auto max-w-6xl mt-10 w-full">
+        {/* ✅ ONLY FORM (no side box) */}
+        {active === "message" && (
+          <div className="flex justify-center">
+            <div className="w-full max-w-2xl">
+              <div className="relative rounded-3xl overflow-hidden p-[1.5px]">
+                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+
+                <div className="relative rounded-3xl border border-white/10 bg-[#0b0b12]/80 backdrop-blur-xl p-8 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden">
+                  <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-violet-500/15 blur-3xl" />
+                  <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-fuchsia-500/10 blur-3xl" />
+
+                  <form onSubmit={onSubmitMessage} className="mx-auto max-w-xl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="text-left">
+                        <label className="text-sm text-white/70">Name</label>
+                        <input
+                          value={fromName}
+                          onChange={(e) => setFromName(e.target.value)}
+                          placeholder="Jane Doe"
+                          required
+                          className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 outline-none transition focus:border-violet-400/40 focus:bg-white/7.5 focus:ring-2 focus:ring-violet-500/20"
+                        />
+                      </div>
+
+                      <div className="text-left">
+                        <label className="text-sm text-white/70">Email</label>
+                        <input
+                          value={fromEmail}
+                          onChange={(e) => setFromEmail(e.target.value)}
+                          placeholder="jane@example.com"
+                          type="email"
+                          required
+                          className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 outline-none transition focus:border-violet-400/40 focus:bg-white/7.5 focus:ring-2 focus:ring-violet-500/20"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-6 text-left">
+                      <div className="flex items-center justify-between">
+                        <label className="text-sm text-white/70">Message</label>
+                        <span className="text-xs text-white/40">
+                          {Math.min(message.length, 1000)}/1000
+                        </span>
+                      </div>
+
+                      <textarea
+                        value={message}
+                        onChange={(e) =>
+                          setMessage(e.target.value.slice(0, 1000))
+                        }
+                        placeholder="Tell me about your project (scope, timeline, budget, references)..."
+                        required
+                        rows={6}
+                        className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 outline-none transition focus:border-violet-400/40 focus:bg-white/7.5 focus:ring-2 focus:ring-violet-500/20"
+                      />
+                    </div>
+
+                    <div className="mt-8">
+                      <button
+                        type="submit"
+                        disabled={sending}
+                        className="group w-full rounded-2xl bg-linear-to-r from-violet-800 to-primary text-white font-medium py-3.5 hover:opacity-95 disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_18px_60px_rgba(124,58,237,0.20)] transition"
+                      >
+                        <span className="inline-flex items-center justify-center gap-2">
+                          {sending ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Sending...
+                            </>
+                          ) : (
+                            <>
+                              <Send className="h-4 w-4" />
+                              Send Message
+                            </>
+                          )}
+                        </span>
+                      </button>
+
+                      <p className="mt-3 text-center text-xs text-white/45">
+                        By submitting, you agree to be contacted back via email.
+                      </p>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
-        {/* Message */}
-        {active === "message" && (
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-10 text-center">
-            <h2 className="text-3xl font-semibold font-serif">
-              Prefer to message?
-            </h2>
-            <p className="mt-3 text-white/65">
-              Email your project details and I’ll reply with next steps.
-            </p>
+        {/* Calendly (keep wide so it stays horizontal on large screens) */}
+        {active === "call" && (
+          <div className="w-full -mt-6">
+            <div className="relative w-full">
+              <div
+                ref={calendlyRef}
+                className="relative w-full"
+                style={{
+                  height: "calc(100vh - 200px)",
+                  minHeight: 720,
+                }}
+              />
+            </div>
           </div>
         )}
       </div>

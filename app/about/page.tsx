@@ -7,11 +7,11 @@ import React from "react";
 const page = () => {
   return (
     <>
-      <div className="-mt-20">
+      <div className="mt-0">
         <AboutMeSection />
       </div>
       <ExperienceSection />
-      <div className="-mt-20">
+      <div className="mt-0">
         <SkillSection />
       </div>
       <IndustriesSection />
