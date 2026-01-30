@@ -160,7 +160,7 @@ const ExperienceSection = () => {
   ];
 
   return (
-    <div className="relative w-full overflow-clip">
+    <div className="relative w-full overflow-clip" id="experience">
       <div className="flex flex-col justify-center text-center items-center">
         {/* Top label */}
         <div className="flex items-center  ">

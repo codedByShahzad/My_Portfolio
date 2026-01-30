@@ -163,7 +163,7 @@ export default function HeroSection() {
         <div className="mt-10 md:mt-0 flex flex-col sm:flex-row gap-3 sm:items-center order-3 sm:order-2">
           <ArrowSwapButton
             label="Let’s Connect"
-            href="/projects"
+            href="/contact"
             className="bg-primary text-white"
           />
 

@@ -210,7 +210,7 @@ const AboutMeSection = () => {
             <motion.div variants={itemVariants} className="mt-10 flex justify-center lg:justify-start">
               <ArrowSwapButton
                 label="Work Experience"
-                href="/projects"
+                href="/about"
                 className="bg-primary text-white"
               />
             </motion.div>
@@ -219,7 +219,7 @@ const AboutMeSection = () => {
           {/* IMAGE (RIGHT on lg+) */}
           <motion.div
             variants={itemVariants}
-            className="hidden lg:flex order-2 items-end justify-end rotate-3 lg:rotate-5"
+            className="hidden lg:flex order-2 items-end justify-center rotate-3 lg:rotate-5"
           >
             <CometCard>
               <div className="relative">
