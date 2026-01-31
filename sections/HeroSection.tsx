@@ -15,86 +15,85 @@ export default function HeroSection() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section className="relative min-h-[90vh] px-3 lg:px-10 xl:px-20 overflow-hidden">
+    <section className="relative min-h-[90vh] px-3 lg:px-10 xl:px-20 overflow-hidden z-800000">
       <div className="relative flex flex-col items-center text-center">
-<Link
-  href="/about"
-  className="flex justify-center items-center mt-5 z-50 px-4 sm:px-6 md:px-0"
->
-  {mounted ? (
-    <div className="relative rounded-full overflow-visible w-full max-w-[760px]">
-      {/* Pill container */}
-      <div
-        className="
+        <Link
+          href="/about"
+          className="flex justify-center items-center mt-5 z-50 px-4 sm:px-6 md:px-0 "
+        >
+          {mounted ? (
+            <div className="relative rounded-full overflow-visible w-full max-w-[760px]">
+              {/* Pill container */}
+              <div
+                className="
           relative w-full rounded-full overflow-visible
           border border-white/10 bg-white/5 text-white backdrop-blur-xl
           shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_60px_rgba(0,0,0,0.55)]
           px-3 sm:px-5
-          py-2 sm:py-2.5 
+          py-2 sm:py-2.5 mt-3
         "
-      >
-        {/* Beams layer */}
-        <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
-          <BorderBeam
-            duration={6}
-            size={520}
-            className="from-transparent via-purple-500 to-transparent"
-          />
-          <BorderBeam
-            duration={6}
-            delay={3}
-            size={520}
-            borderWidth={2}
-            className="from-transparent via-primary to-transparent"
-          />
-        </div>
+              >
+                {/* Beams layer */}
+                <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+                  <BorderBeam
+                    duration={6}
+                    size={520}
+                    className="from-transparent via-purple-500 to-transparent"
+                  />
+                  <BorderBeam
+                    duration={6}
+                    delay={3}
+                    size={520}
+                    borderWidth={2}
+                    className="from-transparent via-primary to-transparent"
+                  />
+                </div>
 
-        {/* ✅ Content (same layout on all sizes) */}
-        <div className="relative w-full grid grid-cols-[1fr_auto_1fr] items-center">
-          {/* Left */}
-          <div className="text-right pr-2 sm:pr-4 md:pr-6">
-            <span className="block whitespace-nowrap font-semibold text-white/90 text-[11px] xs:text-xs sm:text-sm md:text-base">
-              Hi <span className="inline-block">there,</span> {" "} I&apos;m Shahzad
-            </span>
-          </div>
+                {/* ✅ Content (same layout on all sizes) */}
+                <div className="relative w-full grid grid-cols-[1fr_auto_1fr] items-center">
+                  {/* Left */}
+                  <div className="text-right pr-4 sm:pr-4 md:pr-6">
+                    <span className="block whitespace-nowrap font-semibold text-white/90 text-[11px] xs:text-xs sm:text-sm md:text-base">
+                      Hi <span className="inline-block">there,</span> I&apos;m
+                      Shahzad
+                    </span>
+                  </div>
 
-          {/* Center spacer — EXACTLY avatar width */}
-          <div className="w-11 sm:w-14 md:w-20" />
+                  {/* Center spacer — EXACTLY avatar width */}
+                  <div className="w-11 sm:w-14 md:w-20" />
 
-          {/* Right */}
-          <div className="text-left pl-2 sm:pl-4 md:pl-6">
-            <span className="block whitespace-nowrap font-semibold text-white/90 text-[11px] xs:text-xs sm:text-sm md:text-base">
-              Full Stack Developer
-            </span>
-          </div>
-        </div>
+                  {/* Right */}
+                  <div className="text-left pl-4 sm:pl-4 md:pl-6">
+                    <span className="block whitespace-nowrap font-semibold text-white/90 text-[11px] xs:text-xs sm:text-sm md:text-base">
+                      Full Stack Developer
+                    </span>
+                  </div>
+                </div>
 
-        {/* Avatar (responsive) */}
-        <div className="absolute left-1/2 top-1/2 z-60 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-          <div className="h-11 w-11 sm:h-18 sm:w-18  rounded-full bg-linear-to-r from-primary to-purple-600 p-0.5 shadow-[0_0_0_8px_rgba(124,58,237,0.16)] md:shadow-[0_0_0_10px_rgba(124,58,237,0.18)]">
-            <div className="relative h-full w-full rounded-full bg-black overflow-hidden">
-              <Image
-                src={profile}
-                alt="Shahzad"
-                fill
-                className="object-cover"
-                priority
-              />
+                {/* Avatar (responsive) */}
+                <div className="absolute left-1/2 top-1/2 z-60 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                  <div className="h-15 w-15 sm:h-18 sm:w-18  rounded-full bg-linear-to-r from-primary to-purple-600 p-0.5 shadow-[0_0_0_8px_rgba(124,58,237,0.16)] md:shadow-[0_0_0_10px_rgba(124,58,237,0.18)]">
+                    <div className="relative h-full w-full rounded-full bg-black overflow-hidden">
+                      <Image
+                        src={profile}
+                        alt="Shahzad"
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  ) : (
-    <div className="h-11 md:h-12" aria-hidden="true" />
-  )}
-</Link>
-
-
+          ) : (
+            <div className="h-11 md:h-12" aria-hidden="true" />
+          )}
+        </Link>
 
         {/* Title + subtitle */}
         <div className="mt-8 md:mt-12 md:max-w-6xl space-y-4">
-          <h1 className="text-balance text-4xl font-semibold font-serif text-white md:text-4xl lg:text-5xl leading-tight">
+          <h1 className="text-balance text-4xl font-serif font-semibold text-white md:text-4xl lg:text-5xl leading-tight">
             Helping founders turn ideas <br className="hidden lg:block" />
             <span className="inline md:block">
               into{" "}

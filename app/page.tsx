@@ -7,7 +7,7 @@ import ProjectsSection from "../sections/ProjectSection";
 
 const HomePage = () => {
   return (
-    <div className="mt-2 sm:mt-10 ">
+    <div className="">
       <HeroSection />
       <ProjectsSection limit={3} showCTA />
       <AboutMeSection />
