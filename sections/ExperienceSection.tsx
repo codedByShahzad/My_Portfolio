@@ -1,5 +1,8 @@
+"use client";
 
+import { ShineBorder } from "@/components/ui/shine-border";
 import { Timeline } from "@/components/ui/timeline";
+import { motion } from "framer-motion";
 
 const ExperienceSection = () => {
   const data = [
@@ -58,9 +61,7 @@ const ExperienceSection = () => {
       content: (
         <div>
           <p className="mb-4 text-xs font-normal text-white md:text-sm dark:text-neutral-200">
-            <strong className="text-2xl">
-              Front-End Developer – Hā Health
-            </strong>{" "}
+            <strong className="text-2xl">Front-End Developer – Hā Health</strong>{" "}
             <br />
             Remote | Jun 16, 2025 – Sep 21, 2025
           </p>
@@ -108,9 +109,7 @@ const ExperienceSection = () => {
       content: (
         <div>
           <p className="mb-4 text-xs font-normal text-white md:text-sm dark:text-neutral-200">
-            <strong className="text-2xl">
-              Selected Projects & Ongoing Work
-            </strong>
+            <strong className="text-2xl">Selected Projects & Ongoing Work</strong>
           </p>
 
           <ul className="mb-8 list-disc pl-4 text-white dark:text-neutral-300">
@@ -161,21 +160,40 @@ const ExperienceSection = () => {
 
   return (
     <div className="relative w-full overflow-clip" id="experience">
-      <div className="flex flex-col justify-center text-center items-center">
-        {/* Top label */}
-        <div className="flex items-center  ">
-          The Experience
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.4 }}
+        className="relative flex flex-col items-center text-center"
+      >
+        {/* Pill */}
+        <div className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5 px-5 py-2.5 backdrop-blur-md">
+          <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+
+          <div className="relative z-10 flex flex-col items-center gap-1">
+            <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-white/75 sm:text-xs">
+              Experience
+            </p>
+
+          </div>
         </div>
 
-        {/* Heading */}
-        <h2 className="mt-4 text-4xl font-semibold font-serif leading-[1.15] md:text-5xl text-white">
-          Experience That <br /> Brings{" "}
-          <span className="bg-linear-to-r from-primary via-indigo-500 to-pink-500 bg-clip-text italic text-transparent">Ideas to Life</span>
-        </h2>
-      </div>
+         <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-serif leading-[1.15] text-white">
+            The Experience <br /> that brings {" "}
+            <span className="bg-linear-to-r from-primary via-fuchsia-500 to-pink-500 bg-clip-text font-semibold italic text-transparent">
+              ideas to life
+            </span>
+          </h2>
+
+      </motion.div>
+
       <Timeline data={data} />
     </div>
   );
 };
 
 export default ExperienceSection;
+
+
